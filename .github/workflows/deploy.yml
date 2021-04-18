@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
+          remote_branch: master
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "finance-web-qa" 
           heroku_email: "j176353@dac.unicamp.br"
