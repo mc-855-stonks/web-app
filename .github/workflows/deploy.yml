@@ -23,4 +23,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "finance-web-qa" 
           heroku_email: "j176353@dac.unicamp.br"
-      
+          justlogin: true
