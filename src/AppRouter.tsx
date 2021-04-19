@@ -1,13 +1,12 @@
-import React from "react"
+import React from "react";
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
   } from "react-router-dom";
   
-import Home from "./scenes/Home"
-import RoutingTest from "./scenes/RoutingTest"
+import Home from "./scenes/Home";
+import RoutingTest from "./scenes/RoutingTest";
 
 export default function AppRouter(){
     return(
@@ -21,5 +20,5 @@ export default function AppRouter(){
           </Route>
         </Switch>
         </Router>
-    )
+    );
 }
