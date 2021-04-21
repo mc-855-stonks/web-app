@@ -1,14 +1,18 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 // Define a type for the slice state
 interface CounterState {
   value: number;
+  email: string;
+  password: string;
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
   value: 0,
+  email: "",
+  password:""
 };
 
 export const counterSlice = createSlice({
@@ -28,6 +32,7 @@ export const counterSlice = createSlice({
     },
   },
 });
+
 
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
