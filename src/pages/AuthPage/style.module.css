@@ -1,3 +1,6 @@
 .container {
+    display: flex;
     background-color: #D4D4D4;
+    width: 100%;
+    min-height: 100vh;
 }

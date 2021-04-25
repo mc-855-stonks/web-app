@@ -1,0 +1,10 @@
+.container {
+    max-height: 617px;
+    height: 100%;
+}
+
+.link {
+    font-weight: bold;
+    font-size: 18px;
+    color: black;
+}
