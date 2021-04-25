@@ -12,7 +12,7 @@ interface CounterState {
 const initialState: CounterState = {
   value: 0,
   email: "",
-  password:""
+  password: ""
 };
 
 export const counterSlice = createSlice({
@@ -32,7 +32,6 @@ export const counterSlice = createSlice({
     },
   },
 });
-
 
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
