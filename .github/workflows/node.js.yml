@@ -34,6 +34,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_SECRET}}
           heroku_app_name: "finance-web-qa"
           heroku_email: "matheuszanotoesteves@gmail.com"
-          healthcheck: "https://finance-api-qa.herokuapp.com/healthcheck"
+          healthcheck: "https://finance-web-qa.herokuapp.com/healthcheck"
           delay: 120
           rollbackonhealthcheckfailed: true
