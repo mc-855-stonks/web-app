@@ -3,11 +3,7 @@
 
 name: Node.js CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [ push, pull_request ]
 
 jobs:
   build:
@@ -28,12 +24,23 @@ jobs:
     - run: yarn install --frozen-lockfile
     - run: yarn run build --if-present
     - run: yarn test
-    - name: Deploy application to Heroku
+    - name: Deploy application to Heroku QA
+      if: github.ref == 'refs/heads/develop'
       uses: akhileshns/heroku-deploy@v3.12.12
       with:
           heroku_api_key: ${{secrets.HEROKU_API_SECRET}}
           heroku_app_name: "finance-web-qa"
           heroku_email: "matheuszanotoesteves@gmail.com"
           healthcheck: "https://finance-web-qa.herokuapp.com/healthcheck"
+          delay: 120
+          rollbackonhealthcheckfailed: true
+    - name: Deploy application to Heroku Production
+      if: github.ref == 'refs/heads/main'
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+          heroku_api_key: ${{secrets.HEROKU_API_SECRET}}
+          heroku_app_name: "stonks-web-prod"
+          heroku_email: "matheuszanotoesteves@gmail.com"
+          healthcheck: "https://stonks-web-prod.herokuapp.com/healthcheck"
           delay: 120
           rollbackonhealthcheckfailed: true
