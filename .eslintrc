@@ -10,7 +10,8 @@
     "rules": {
       "semi": [2, "always"],
       "no-param-reassign": 0,
-      "@typescript-eslint/explicit-module-boundary-types": 0
+      "@typescript-eslint/explicit-module-boundary-types": 0,
+      "jsx-a11y/label-has-associated-control": 0
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {

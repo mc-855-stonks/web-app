@@ -10,7 +10,9 @@
 
 .container input {
     background-color: #F9F9F9;
-    border: #D4D4D4 1px;
+    border: 1px solid #D4D4D4;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 43px;
     border-radius: 4px;
     font-size: 20px;

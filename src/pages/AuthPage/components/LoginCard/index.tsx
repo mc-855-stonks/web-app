@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Input from "components/Input";
 import Button from "components/Button";
@@ -12,12 +13,20 @@ export default function LoginCard() {
   return (
     <div className={style.container}>
       <Card>
-        <Title>Acesse sua conta.</Title>
-        <Input type="email" label="Email" />
-        <Input type="password" label="Senha" />
-        <a href="/register" className={style.link}>
+        <span className={style.register}>
+          Ainda não possui uma conta?{" "}
+          <Link to="/register" className={style.link}>
+            Crie sua conta
+          </Link>
+        </span>
+        <Title style={{ marginBottom: 24, marginRight: "auto" }}>
+          Acesse sua conta.
+        </Title>
+        <Input style={{ marginBottom: 15 }} type="email" label="Email" />
+        <Input style={{ marginBottom: 24 }} type="password" label="Senha" />
+        <Link to="/register" className={style["forgot-password-link"]}>
           Esqueceu sua senha?
-        </a>
+        </Link>
         <Button value="ENTRAR" />
       </Card>
     </div>
