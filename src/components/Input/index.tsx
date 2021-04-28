@@ -7,18 +7,27 @@ interface Props {
   label: string;
   placeholder?: string;
   style?: React.CSSProperties;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export default function Input({
   type,
   label,
   placeholder,
+  value,
+  onChange,
   style: propStyle,
 }: Props) {
   return (
     <div className={style.container} style={propStyle}>
       <div className={style.label}>{label}</div>
-      <input placeholder={placeholder} type={type} />
+      <input
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        type={type}
+      />
     </div>
   );
 }
@@ -26,4 +35,6 @@ export default function Input({
 Input.defaultProps = {
   placeholder: "",
   style: {},
+  value: "",
+  onChange: () => {},
 };
