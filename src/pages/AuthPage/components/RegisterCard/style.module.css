@@ -1,0 +1,15 @@
+.container {
+  width: 590px;
+  margin-left: auto;
+}
+
+.login {
+  margin-left: auto;
+  margin-bottom: 63px;
+}
+
+.link {
+  font-weight: bold;
+  color: var(--color-light-blue);
+  text-decoration: none;
+}

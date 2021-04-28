@@ -1,0 +1,23 @@
+.container {
+  width: 590px;
+  margin-left: auto;
+}
+
+.register {
+  margin-left: auto;
+  margin-bottom: 110px;
+}
+
+.link {
+  font-weight: bold;
+  color: var(--color-light-blue);
+  text-decoration: none;
+}
+
+.forgot-password-link {
+  font-weight: bold;
+  font-size: 18px;
+  color: black;
+  text-decoration: none;
+  margin-bottom: 40px;
+}
