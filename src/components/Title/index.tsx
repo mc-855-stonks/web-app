@@ -1,20 +1,15 @@
 import React from "react";
-
 import style from "./style.module.css";
 
 interface Props {
   children: React.ReactNode;
-  style?: React.CSSProperties;
+  className?: string;
 }
 
-export default function Title({ children, style: propStyle }: Props) {
-  return (
-    <h1 className={style.title} style={propStyle}>
-      {children}
-    </h1>
-  );
+export default function Title({ children, className }: Props) {
+  return <h1 className={className}>{children}</h1>;
 }
 
 Title.defaultProps = {
-  style: {},
+  className: "",
 };

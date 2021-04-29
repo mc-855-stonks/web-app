@@ -18,7 +18,8 @@ import {
 
 import Card from "../Card";
 
-import style from "./style.module.css";
+import styleRegister from "./style.module.css";
+import stylePage from "../../style.module.css";
 
 export default function RegisterCard() {
   const {
@@ -31,17 +32,15 @@ export default function RegisterCard() {
   const dispatch = useAppDispatch();
 
   return (
-    <div className={style.container}>
+    <div className={styleRegister.container}>
       <Card>
-        <span className={style.login}>
+        <span className={styleRegister.login}>
           Já possui uma conta?{" "}
-          <Link to="/login" className={style.link}>
+          <Link to="/login" className={styleRegister.link}>
             Entrar
           </Link>
         </span>
-        <Title style={{ marginBottom: 24, marginRight: "auto" }}>
-          Crie sua conta.
-        </Title>
+        <Title className={stylePage.title}>Crie sua conta.</Title>
         <Input
           value={name}
           onChange={(e) => dispatch(updateName(e.target.value))}

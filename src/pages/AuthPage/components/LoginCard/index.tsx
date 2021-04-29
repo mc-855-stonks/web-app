@@ -16,7 +16,8 @@ import Title from "components/Title";
 
 import Card from "../Card";
 
-import style from "./style.module.css";
+import styleLogin from "./style.module.css";
+import stylePage from "../../style.module.css";
 
 export default function LoginCard() {
   const email = useAppSelector(selectEmail);
@@ -24,17 +25,15 @@ export default function LoginCard() {
   const dispatch = useAppDispatch();
 
   return (
-    <div className={style.container}>
+    <div className={styleLogin.container}>
       <Card>
-        <span className={style.register}>
+        <span className={styleLogin.register}>
           Ainda não possui uma conta?{" "}
-          <Link to="/register" className={style.link}>
+          <Link to="/register" className={styleLogin.link}>
             Crie sua conta
           </Link>
         </span>
-        <Title style={{ marginBottom: 24, marginRight: "auto" }}>
-          Acesse sua conta.
-        </Title>
+        <Title className={stylePage.title}>Acesse sua conta.</Title>
         <Input
           style={{ marginBottom: 15 }}
           type="email"
@@ -49,7 +48,7 @@ export default function LoginCard() {
           label="Senha"
           onChange={(e) => dispatch(updatePassword(e.target.value))}
         />
-        <Link to="/register" className={style["forgot-password-link"]}>
+        <Link to="/register" className={styleLogin["forgot-password-link"]}>
           Esqueceu sua senha?
         </Link>
         <Button value="ENTRAR" />
