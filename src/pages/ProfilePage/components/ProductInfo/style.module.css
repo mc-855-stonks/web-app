@@ -3,3 +3,33 @@
     flex-direction: column;
     width: 502px;
 }
+
+.productContent {
+    display: grid;
+    grid-row-gap: 20px;
+    background-color: var(--color-white-background);
+    border-radius: 12px;
+    padding: 40px;
+}
+
+.productInfoGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.productInfoText {
+    font-family: var(--font-family-default);
+    font-style: normal;
+    font-size: 18px;
+    line-height: 21.09px;
+    color: var(--font-color-default);
+}
+
+.productInfoTitle {
+    font-weight: bold;
+}
+
+.productInfoTextAbout {
+    text-align: justify;
+    font-weight: normal;
+}
