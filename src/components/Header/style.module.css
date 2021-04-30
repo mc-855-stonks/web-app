@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-family: var(--font-family-default);
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    height: 42px;
+    color: var(--font-color-default);
+    margin-top: 40px;
+}
+
+.separator {
+    background-color: #787878;
+    transform: matrix(1, 0, 0, -1, 0, 0);
+    height: 1px;
+    width: 100%;
+    margin-top: 25px;
+}

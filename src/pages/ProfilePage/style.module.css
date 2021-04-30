@@ -1,5 +1,8 @@
 .container {
-    display: flex;
+    display: grid;
+    grid-row-gap: 45px;
+    max-width: 1000px;
+    margin-left: auto;
 }
 
 .title {
