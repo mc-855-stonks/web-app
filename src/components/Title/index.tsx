@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function Title({ children, className }: Props) {
-  return <h1 className={className}>{children}</h1>;
+  return <h1 className={className || style.title}>{children}</h1>;
 }
 
 Title.defaultProps = {
