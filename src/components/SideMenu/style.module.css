@@ -1,0 +1,9 @@
+.container {
+  height: 100%;
+  background-color: #002642;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+}

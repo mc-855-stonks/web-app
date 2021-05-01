@@ -1,13 +1,15 @@
 import React from "react";
-import styles from "./style.module.css";
-import Header from "../../components/Header";
+
+import Header from "components/Header";
+import AppPage from "components/AppPage";
+
 import ProfileContainer from "./components/ProfileContainer";
 
 export default function ProfilePage() {
   return (
-    <div className={styles.container}>
+    <AppPage>
       <Header>Configurações</Header>
       <ProfileContainer />
-    </div>
+    </AppPage>
   );
 }

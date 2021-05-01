@@ -1,0 +1,33 @@
+.container {
+  margin-top: auto;
+  width: 100%;
+  padding-bottom: 36px;
+}
+
+.separator {
+  box-sizing: border-box;
+  width: calc(100%-34px);
+  background-color: #c4c4c4;
+  height: 1px;
+  margin-top: 33px;
+  margin-left: 34px;
+}
+
+.icons {
+  margin-top: 28px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.icon {
+  width: 29px;
+  height: 29px;
+  cursor: pointer;
+}
+
+.info-icon {
+  height: 26px;
+  width: 26px;
+  cursor: pointer;
+}
