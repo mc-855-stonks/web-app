@@ -34,7 +34,7 @@ const saveNewUser = (
     name,
     password,
   };
-  doPublicPostRequest("user", userData, onSuccess, onError);
+  doPublicPostRequest("user/", userData, onSuccess, onError);
 };
 
 export default saveNewUser;
