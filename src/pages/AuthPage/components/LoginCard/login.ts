@@ -1,4 +1,7 @@
+import Cookies from "js-cookie";
 import { doPublicPostRequest } from "../../../../utils/stonksApi";
+
+const SESSION_EXPIRATION_TIME_HOURS = 24;
 
 interface LoginResponseData {
   status: string;
@@ -12,6 +15,9 @@ interface LoginResponse {
 
 const onSuccess = (response: LoginResponse) => {
   console.info(response.data);
+  Cookies.set("STONKS_SESSION", response.data.Authorization, {
+    expires: SESSION_EXPIRATION_TIME_HOURS / 24,
+  });
   window.location.href = `${window.location.origin}/profile`;
 };
 
