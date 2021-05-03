@@ -20,6 +20,7 @@ import Card from "../Card";
 
 import styleRegister from "./style.module.css";
 import stylePage from "../../style.module.css";
+import saveNewUser from "./saveUser";
 
 export default function RegisterCard() {
   const {
@@ -80,7 +81,10 @@ export default function RegisterCard() {
           style={{ marginBottom: 40 }}
           label="Aceito os Termos de Serviço e Política de Privacidade"
         />
-        <Button value="ENTRAR" />
+        <Button
+          value="ENTRAR"
+          onClick={() => saveNewUser(email, investorProfile, name, password)}
+        />
       </Card>
     </div>
   );
