@@ -17,7 +17,7 @@ const doPublicPostRequest = (
   onError: any
 ) => {
   axios
-    .post(`${process.env.REACT_APP_STONKS_API_BASE_URL}${resource}/`, data)
+    .post(`${process.env.REACT_APP_STONKS_API_BASE_URL}${resource}`, data)
     .then(onSuccess)
     .catch(onError);
 };
