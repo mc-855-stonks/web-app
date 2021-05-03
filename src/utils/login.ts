@@ -1,7 +1,5 @@
-import Cookies from "js-cookie";
-import { doPublicPostRequest } from "../../../../utils/stonksApi";
-
-const SESSION_EXPIRATION_TIME_HOURS = 24;
+import { doPublicPostRequest } from "./stonksApi";
+import { saveUserSession } from "./userSession";
 
 interface LoginResponseData {
   status: string;
@@ -15,9 +13,7 @@ interface LoginResponse {
 
 const onSuccess = (response: LoginResponse) => {
   console.info(response.data);
-  Cookies.set("STONKS_SESSION", response.data.Authorization, {
-    expires: SESSION_EXPIRATION_TIME_HOURS / 24,
-  });
+  saveUserSession(response.data.Authorization);
   window.location.href = `${window.location.origin}/profile`;
 };
 

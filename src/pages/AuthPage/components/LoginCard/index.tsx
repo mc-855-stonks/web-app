@@ -18,7 +18,7 @@ import Card from "../Card";
 
 import styleLogin from "./style.module.css";
 import stylePage from "../../style.module.css";
-import login from "./login";
+import login from "../../../../utils/login";
 
 export default function LoginCard() {
   const email = useAppSelector(selectEmail);
