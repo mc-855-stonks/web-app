@@ -1,16 +1,12 @@
 import { doPublicPostRequest } from "../../../../utils/stonksApi";
 
-interface SavedUserData {
+interface SaveUserResponseData {
   status: number;
   message: string;
 }
 
 interface SaveUserResponse {
-  data: SavedUserData;
-}
-
-interface SaveUserError {
-  message: string;
+  data: SaveUserResponseData;
 }
 
 const onSuccess = (response: SaveUserResponse) => {
@@ -18,7 +14,7 @@ const onSuccess = (response: SaveUserResponse) => {
   window.location.href = `${window.location.origin}/login`;
 };
 
-const onError = (error: SaveUserError) => {
+const onError = (error: any) => {
   console.error(error.message);
 };
 

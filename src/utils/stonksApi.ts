@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from "js-cookie";
+import { getUserSessionId } from "./userSession";
 
 axios.interceptors.request.use((config) => {
   config.headers["Content-Type"] = "application/json";
@@ -7,7 +7,7 @@ axios.interceptors.request.use((config) => {
 });
 
 const getAuthorizationHeader = () => {
-  return { headers: { Authorization: Cookies.get("STONKS_SESSION") } };
+  return { headers: { Authorization: getUserSessionId() } };
 };
 
 const doPublicPostRequest = (
