@@ -18,7 +18,7 @@ export default function Modal({ onClose, children }: Props) {
             <img src={closeIcon} alt="close" className={style["close-icon"]} />
           </button>
         )}
-        {children}
+        <div className={style.content}>{children}</div>
       </div>
     </div>
   );
