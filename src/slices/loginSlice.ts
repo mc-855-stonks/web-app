@@ -1,17 +1,35 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
+import {
+  AsyncThunk,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
+
+import { login as loginService } from "services/auth";
+
+import type { RootState, AsyncThunkConfig } from "../store";
 
 interface LoginState {
   email: string;
   password: string;
-  errorMode: boolean;
+  status: string;
 }
 
 const initialState: LoginState = {
   email: "",
   password: "",
-  errorMode: false,
+  status: "",
 };
+
+export const login: AsyncThunk<void, void, AsyncThunkConfig> = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("login/login", async (_, { getState }) => {
+  const { email, password } = getState().login;
+  const response = await loginService(email, password);
+  console.info(response.data);
+});
 
 export const loginSlice = createSlice({
   name: "login",
@@ -23,20 +41,24 @@ export const loginSlice = createSlice({
     updatePassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
-    updateErrorMode: (state, action: PayloadAction<boolean>) => {
-      state.errorMode = action.payload;
+  },
+  extraReducers: {
+    [login.pending.type]: (state) => {
+      state.status = "loading";
+    },
+    [login.fulfilled.type]: (state) => {
+      state.status = "success";
+    },
+    [login.rejected.type]: (state) => {
+      state.status = "error";
     },
   },
 });
 
-export const {
-  updateEmail,
-  updatePassword,
-  updateErrorMode,
-} = loginSlice.actions;
+export const { updateEmail, updatePassword } = loginSlice.actions;
 
 export const selectEmail = (state: RootState) => state.login.email;
 export const selectPassword = (state: RootState) => state.login.password;
-export const selectErrorMode = (state: RootState) => state.login.errorMode;
+export const selectStatus = (state: RootState) => state.login.status;
 
 export default loginSlice.reducer;
