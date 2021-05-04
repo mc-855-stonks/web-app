@@ -8,6 +8,7 @@ import {
   updatePassword,
   selectEmail,
   selectPassword,
+  login,
 } from "slices/loginSlice";
 
 import Input from "components/Input";
@@ -18,7 +19,6 @@ import Card from "../Card";
 
 import styleLogin from "./style.module.css";
 import stylePage from "../../style.module.css";
-import login from "../../../../utils/login";
 
 export default function LoginCard() {
   const email = useAppSelector(selectEmail);
@@ -52,7 +52,7 @@ export default function LoginCard() {
         <Link to="/register" className={styleLogin["forgot-password-link"]}>
           Esqueceu sua senha?
         </Link>
-        <Button value="ENTRAR" onClick={() => login(email, password)} />
+        <Button value="ENTRAR" onClick={() => dispatch(login())} />
       </Card>
     </div>
   );

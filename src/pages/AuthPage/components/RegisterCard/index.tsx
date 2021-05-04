@@ -14,13 +14,14 @@ import {
   updateInvestorProfile,
   updateName,
   updatePasswordConfirmation,
+  register,
 } from "slices/registerSlice";
 
 import Card from "../Card";
 
 import styleRegister from "./style.module.css";
 import stylePage from "../../style.module.css";
-import saveNewUser from "./saveUser";
+// import saveNewUser from "./saveUser";
 
 export default function RegisterCard() {
   const {
@@ -81,10 +82,7 @@ export default function RegisterCard() {
           style={{ marginBottom: 40 }}
           label="Aceito os Termos de Serviço e Política de Privacidade"
         />
-        <Button
-          value="ENTRAR"
-          onClick={() => saveNewUser(email, investorProfile, name, password)}
-        />
+        <Button value="ENTRAR" onClick={() => dispatch(register())} />
       </Card>
     </div>
   );

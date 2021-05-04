@@ -1,15 +1,35 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
+import {
+  AsyncThunk,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
+
+import { login as loginService } from "services/auth";
+
+import type { RootState, AsyncThunkConfig } from "../store";
 
 interface LoginState {
   email: string;
   password: string;
+  loading: boolean;
 }
 
 const initialState: LoginState = {
   email: "",
   password: "",
+  loading: false,
 };
+
+export const login: AsyncThunk<void, void, AsyncThunkConfig> = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("login/login", async (_, { getState }) => {
+  const { email, password } = getState().login;
+  const response = await loginService(email, password);
+  console.info(response.data);
+});
 
 export const loginSlice = createSlice({
   name: "login",
@@ -20,6 +40,15 @@ export const loginSlice = createSlice({
     },
     updatePassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
+    },
+    [login.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [login.fulfilled.type]: (state) => {
+      state.loading = false;
+    },
+    [login.rejected.type]: (state) => {
+      state.loading = false;
     },
   },
 });
