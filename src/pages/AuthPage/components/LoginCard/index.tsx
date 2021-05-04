@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "hooks";
 
@@ -8,22 +8,27 @@ import {
   updatePassword,
   selectEmail,
   selectPassword,
+  selectStatus,
   login,
 } from "slices/loginSlice";
 
 import Input from "components/Input";
 import Button from "components/Button";
 import Title from "components/Title";
-
 import Card from "../Card";
-
 import styleLogin from "./style.module.css";
 import stylePage from "../../style.module.css";
 
 export default function LoginCard() {
   const email = useAppSelector(selectEmail);
   const password = useAppSelector(selectPassword);
+  const status = useAppSelector(selectStatus);
+  const errorMode = status === "error";
   const dispatch = useAppDispatch();
+
+  if (status === "success") {
+    return <Redirect to="/profile" />;
+  }
 
   return (
     <div className={styleLogin.container}>
@@ -41,6 +46,7 @@ export default function LoginCard() {
           label="Email"
           value={email}
           onChange={(e) => dispatch(updateEmail(e.target.value))}
+          errorMode={errorMode}
         />
         <Input
           style={{ marginBottom: 24 }}
@@ -48,6 +54,7 @@ export default function LoginCard() {
           type="password"
           label="Senha"
           onChange={(e) => dispatch(updatePassword(e.target.value))}
+          errorMode={errorMode}
         />
         <Link to="/register" className={styleLogin["forgot-password-link"]}>
           Esqueceu sua senha?

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import Input from "components/Input";
 import Button from "components/Button";
@@ -14,6 +14,7 @@ import {
   updateInvestorProfile,
   updateName,
   updatePasswordConfirmation,
+  selectStatus,
   register,
 } from "slices/registerSlice";
 
@@ -21,7 +22,6 @@ import Card from "../Card";
 
 import styleRegister from "./style.module.css";
 import stylePage from "../../style.module.css";
-// import saveNewUser from "./saveUser";
 
 export default function RegisterCard() {
   const {
@@ -31,7 +31,12 @@ export default function RegisterCard() {
     password,
     passwordConfirmation,
   } = useAppSelector(selectFormData);
+  const status = useAppSelector(selectStatus);
   const dispatch = useAppDispatch();
+
+  if (status === "success") {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <div className={styleRegister.container}>

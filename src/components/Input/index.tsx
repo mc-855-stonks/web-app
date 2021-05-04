@@ -8,6 +8,7 @@ interface Props {
   placeholder?: string;
   style?: React.CSSProperties;
   value?: string;
+  errorMode?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -18,6 +19,7 @@ export default function Input({
   value,
   onChange,
   style: propStyle,
+  errorMode,
 }: Props) {
   return (
     <div className={style.container} style={propStyle}>
@@ -27,6 +29,7 @@ export default function Input({
         value={value}
         onChange={onChange}
         type={type}
+        style={errorMode ? { border: `1px solid #C12B29` } : {}}
       />
     </div>
   );
@@ -35,6 +38,7 @@ export default function Input({
 Input.defaultProps = {
   placeholder: "",
   style: {},
+  errorMode: false,
   value: "",
   onChange: () => {},
 };
