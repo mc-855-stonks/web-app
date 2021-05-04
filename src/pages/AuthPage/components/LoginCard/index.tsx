@@ -6,8 +6,10 @@ import { useAppSelector, useAppDispatch } from "hooks";
 import {
   updateEmail,
   updatePassword,
+  updateErrorMode,
   selectEmail,
   selectPassword,
+  selectErrorMode,
 } from "slices/loginSlice";
 
 import Input from "components/Input";
@@ -18,12 +20,18 @@ import Card from "../Card";
 
 import styleLogin from "./style.module.css";
 import stylePage from "../../style.module.css";
-import login from "../../../../utils/login";
+import login from "./login";
 
 export default function LoginCard() {
   const email = useAppSelector(selectEmail);
   const password = useAppSelector(selectPassword);
+  const errorMode = useAppSelector(selectErrorMode);
   const dispatch = useAppDispatch();
+
+  const onErrorLogin = (error: any) => {
+    console.info(error);
+    dispatch(updateErrorMode(true));
+  };
 
   return (
     <div className={styleLogin.container}>
@@ -41,6 +49,7 @@ export default function LoginCard() {
           label="Email"
           value={email}
           onChange={(e) => dispatch(updateEmail(e.target.value))}
+          errorMode={errorMode}
         />
         <Input
           style={{ marginBottom: 24 }}
@@ -48,11 +57,15 @@ export default function LoginCard() {
           type="password"
           label="Senha"
           onChange={(e) => dispatch(updatePassword(e.target.value))}
+          errorMode={errorMode}
         />
         <Link to="/register" className={styleLogin["forgot-password-link"]}>
           Esqueceu sua senha?
         </Link>
-        <Button value="ENTRAR" onClick={() => login(email, password)} />
+        <Button
+          value="ENTRAR"
+          onClick={() => login(email, password, onErrorLogin)}
+        />
       </Card>
     </div>
   );

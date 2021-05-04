@@ -1,5 +1,5 @@
-import { doPublicPostRequest } from "./stonksApi";
-import { saveUserSession } from "./userSession";
+import { doPublicPostRequest } from "utils/stonksApi";
+import { saveUserSession } from "utils/userSession";
 
 interface LoginResponseData {
   status: string;
@@ -11,19 +11,24 @@ interface LoginResponse {
   data: LoginResponseData;
 }
 
-const onSuccess = (response: LoginResponse) => {
+const onSuccessLogin = (response: LoginResponse) => {
   console.info(response.data);
   saveUserSession(response.data.Authorization);
   window.location.href = `${window.location.origin}/profile`;
 };
 
-const onError = (error: any) => {
+const onErrorLogin = (error: any) => {
   console.error(error.message);
 };
 
-const login = (email: string, password: string) => {
+const login = (email: string, password: string, onError?: any) => {
   const credentialsData = { email, password };
-  doPublicPostRequest("auth/login", credentialsData, onSuccess, onError);
+  doPublicPostRequest(
+    "auth/login",
+    credentialsData,
+    onSuccessLogin,
+    onError || onErrorLogin
+  );
 };
 
 export default login;
