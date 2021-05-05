@@ -15,7 +15,7 @@ interface RegisterState {
   email: string;
   password: string;
   passwordConfirmation: string;
-  loading: boolean;
+  status: string;
 }
 
 const initialState: RegisterState = {
@@ -24,7 +24,7 @@ const initialState: RegisterState = {
   email: "",
   password: "",
   passwordConfirmation: "",
-  loading: false,
+  status: "",
 };
 
 export const register: AsyncThunk<
@@ -58,14 +58,16 @@ export const registerSlice = createSlice({
     updatePasswordConfirmation: (state, action: PayloadAction<string>) => {
       state.passwordConfirmation = action.payload;
     },
+  },
+  extraReducers: {
     [register.pending.type]: (state) => {
-      state.loading = true;
+      state.status = "loading";
     },
     [register.fulfilled.type]: (state) => {
-      state.loading = false;
+      state.status = "success";
     },
     [register.rejected.type]: (state) => {
-      state.loading = false;
+      state.status = "error";
     },
   },
 });
@@ -95,5 +97,7 @@ export const selectFormData = (state: RootState) => {
     name,
   };
 };
+
+export const selectStatus = (state: RootState) => state.register.status;
 
 export default registerSlice.reducer;

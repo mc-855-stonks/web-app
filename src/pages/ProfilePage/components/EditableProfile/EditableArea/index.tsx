@@ -24,7 +24,7 @@ export default function EditableArea() {
       <Input
         value={name}
         onChange={(e) => dispatch(updateName(e.target.value))}
-        style={{ marginBottom: 15, height: 64 }}
+        style={{ marginBottom: 15 }}
         type="text"
         label="Nome"
       />

@@ -12,13 +12,13 @@ import type { RootState, AsyncThunkConfig } from "../store";
 interface LoginState {
   email: string;
   password: string;
-  loading: boolean;
+  status: string;
 }
 
 const initialState: LoginState = {
   email: "",
   password: "",
-  loading: false,
+  status: "",
 };
 
 export const login: AsyncThunk<void, void, AsyncThunkConfig> = createAsyncThunk<
@@ -41,14 +41,16 @@ export const loginSlice = createSlice({
     updatePassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
+  },
+  extraReducers: {
     [login.pending.type]: (state) => {
-      state.loading = true;
+      state.status = "loading";
     },
     [login.fulfilled.type]: (state) => {
-      state.loading = false;
+      state.status = "success";
     },
     [login.rejected.type]: (state) => {
-      state.loading = false;
+      state.status = "error";
     },
   },
 });
@@ -57,5 +59,6 @@ export const { updateEmail, updatePassword } = loginSlice.actions;
 
 export const selectEmail = (state: RootState) => state.login.email;
 export const selectPassword = (state: RootState) => state.login.password;
+export const selectStatus = (state: RootState) => state.login.status;
 
 export default loginSlice.reducer;
