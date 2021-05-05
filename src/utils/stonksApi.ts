@@ -13,7 +13,7 @@ const getAuthorizationHeader = () => {
 export const doPublicRequest = <T, R = void>(
   method: Method,
   path: string,
-  data: R
+  data: R | void
 ) => {
   return axios.request<T>({
     url: `${process.env.REACT_APP_STONKS_API_BASE_URL}${path}`,
@@ -25,7 +25,7 @@ export const doPublicRequest = <T, R = void>(
 export const doAuthenticatedRequest = <T, R = void>(
   method: Method,
   path: string,
-  data: R
+  data: R | void
 ) => {
   return axios.request<T>({
     url: `${process.env.REACT_APP_STONKS_API_BASE_URL}${path}`,
