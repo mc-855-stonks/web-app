@@ -7,10 +7,9 @@ import AppPage from "components/AppPage";
 
 import { selectAddModalVisible, showAddModal } from "slices/walletSlice";
 
-// import ProfileContainer from "./components/ProfileContainer";
-
-import EmptyState from "./components/EmptyState";
+// import EmptyState from "./components/EmptyState";
 import AddModal from "./components/AddModal";
+import Wallet from "./components/Wallet";
 
 export default function ProfilePage() {
   const dispatch = useAppDispatch();
@@ -20,8 +19,8 @@ export default function ProfilePage() {
     <AppPage>
       <Header onClickAdd={() => dispatch(showAddModal())}>Carteira</Header>
       {addModalVisible && <AddModal />}
-      {/* <ProfileContainer /> */}
-      {!addModalVisible && <EmptyState />}
+      {/* {!addModalVisible && <EmptyState />} */}
+      <Wallet />
     </AppPage>
   );
 }

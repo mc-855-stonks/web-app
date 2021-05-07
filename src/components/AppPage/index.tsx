@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import SideMenu from "components/SideMenu";
 
 import { getUserSessionId } from "utils/userSession";
+
 import style from "./style.module.css";
 
 interface Props {

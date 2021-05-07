@@ -1,0 +1,39 @@
+.container {
+  box-sizing: border-box;
+  width: 193px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.ticker {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+.percentage-bar-background {
+  background-color: #d4dee3;
+  width: 100%;
+  border-radius: 20px;
+  height: 7px;
+  margin-top: auto;
+}
+
+.percentage-bar {
+  background-color: #e8c603;
+  border-radius: 20px;
+  height: 7px;
+}
+
+.wallet-percentage {
+  margin-top: 1px;
+  font-size: 8px;
+  margin-left: auto;
+}

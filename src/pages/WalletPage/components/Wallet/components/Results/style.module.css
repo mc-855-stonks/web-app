@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 12px;
+  margin-right: auto;
+  padding: 15px 58px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+}
+
+.block-title {
+  font-weight: lighter;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.amount {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.separator {
+  width: 1px;
+  height: 100px;
+  background-color: #c4c4c4;
+  margin-left: 52px;
+  margin-right: 52px;
+}
+
+.yield-container {
+  display: flex;
+  align-items: center;
+}
+
+.yield {
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.positive-yield {
+  color: #5fba34;
+}
+
+.negative-yield {
+  color: #c12b29;
+}
