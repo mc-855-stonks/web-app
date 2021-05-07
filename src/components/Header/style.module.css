@@ -18,14 +18,20 @@
 }
 
 .action-icon {
+  padding: 0;
   height: 29px;
   width: 29px;
   cursor: pointer;
   margin-left: auto;
   margin-right: 30px;
-  text-indent: -10000px; /* hides the text */
-  display: inline-block;
-  background-size: auto;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.icon {
+  height: 100%;
+  width: 100%;
 }
 
 .separator {

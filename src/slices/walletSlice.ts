@@ -1,19 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "store";
 
 interface WalletState {
-  wip: string;
+  addModalVisible: boolean;
 }
 
 const initialState: WalletState = {
-  wip: "",
+  addModalVisible: false,
 };
 
 export const walletSlice = createSlice({
   name: "wallet",
   initialState,
-  reducers: {},
+  reducers: {
+    showAddModal: (state) => {
+      state.addModalVisible = true;
+    },
+    hideAddModal: (state) => {
+      state.addModalVisible = false;
+    },
+  },
 });
 
-// export const {} = walletSlice.actions;
+export const { hideAddModal, showAddModal } = walletSlice.actions;
+
+export const selectAddModalVisible = (state: RootState) =>
+  state.wallet.addModalVisible;
 
 export default walletSlice.reducer;

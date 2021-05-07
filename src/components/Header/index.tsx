@@ -17,12 +17,13 @@ export default function Header({ children, className, onClickAdd }: Props) {
       <div className={style.content}>
         <Title className={className || style.title}>{children}</Title>
         {onClickAdd && (
-          <i
+          <button
+            onClick={onClickAdd}
+            type="button"
             className={style["action-icon"]}
-            style={{ backgroundImage: `url(${addIcon})` }}
           >
-            add
-          </i>
+            <img src={addIcon} alt="add" className={style.icon} />
+          </button>
         )}
       </div>
       <div className={style.separator} />
