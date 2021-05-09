@@ -6,12 +6,14 @@ import {
 } from "@reduxjs/toolkit";
 
 import { register as registerService } from "services/register";
+import { investorProfileMapping } from "types/InvestorProfile";
 
 import type { AsyncThunkConfig, RootState } from "../store";
 
 interface RegisterState {
   name: string;
-  investorProfile: string;
+  investorProfileDisplayText: string;
+  investorProfileValue: string;
   email: string;
   password: string;
   passwordConfirmation: string;
@@ -20,7 +22,8 @@ interface RegisterState {
 
 const initialState: RegisterState = {
   name: "",
-  investorProfile: "",
+  investorProfileDisplayText: "",
+  investorProfileValue: "",
   email: "",
   password: "",
   passwordConfirmation: "",
@@ -34,8 +37,8 @@ export const register: AsyncThunk<
 > = createAsyncThunk<void, void, AsyncThunkConfig>(
   "register/register",
   async (_, { getState }) => {
-    const { email, password, investorProfile, name } = getState().register;
-    await registerService(email, investorProfile, name, password);
+    const { email, password, investorProfileValue, name } = getState().register;
+    await registerService(email, investorProfileValue, name, password);
   }
 );
 
@@ -46,8 +49,20 @@ export const registerSlice = createSlice({
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
-    updateInvestorProfile: (state, action: PayloadAction<string>) => {
-      state.investorProfile = action.payload;
+    updateInvestorProfileDisplayText: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.investorProfileDisplayText = action.payload;
+    },
+    updateInvestorProfileValue: (state, action: PayloadAction<string>) => {
+      const filteredProfile = investorProfileMapping.filter(
+        (it) => it.value === action.payload
+      );
+      if (filteredProfile.length > 0) {
+        state.investorProfileDisplayText = filteredProfile[0].displayValue;
+        state.investorProfileValue = action.payload;
+      }
     },
     updateEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
@@ -75,7 +90,8 @@ export const registerSlice = createSlice({
 export const {
   updateEmail,
   updatePassword,
-  updateInvestorProfile,
+  updateInvestorProfileDisplayText,
+  updateInvestorProfileValue,
   updateName,
   updatePasswordConfirmation,
 } = registerSlice.actions;
@@ -85,7 +101,7 @@ export const selectFormData = (state: RootState) => {
     email,
     passwordConfirmation,
     password,
-    investorProfile,
+    investorProfileDisplayText,
     name,
   } = state.register;
 
@@ -93,7 +109,7 @@ export const selectFormData = (state: RootState) => {
     email,
     password,
     passwordConfirmation,
-    investorProfile,
+    investorProfileDisplayText,
     name,
   };
 };

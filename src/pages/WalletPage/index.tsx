@@ -9,6 +9,7 @@ import { selectAddModalVisible, showAddModal } from "slices/walletSlice";
 
 // import EmptyState from "./components/EmptyState";
 import AddModal from "./components/AddModal";
+// import EditModal from "./components/EditModal";
 import Wallet from "./components/Wallet";
 
 export default function ProfilePage() {
