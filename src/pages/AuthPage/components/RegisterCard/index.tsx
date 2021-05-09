@@ -1,17 +1,21 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 
+import { investorProfileMapping } from "types/InvestorProfile";
+
 import Input from "components/Input";
 import Button from "components/Button";
 import Title from "components/Title";
 import Checkbox from "components/Checkbox";
+import SelectInput from "components/SelectInput";
 
 import { useAppSelector, useAppDispatch } from "hooks";
 import {
   selectFormData,
   updatePassword,
   updateEmail,
-  updateInvestorProfile,
+  updateInvestorProfileDisplayText,
+  updateInvestorProfileValue,
   updateName,
   updatePasswordConfirmation,
   selectStatus,
@@ -26,7 +30,7 @@ import stylePage from "../../style.module.css";
 export default function RegisterCard() {
   const {
     email,
-    investorProfile,
+    investorProfileDisplayText,
     name,
     password,
     passwordConfirmation,
@@ -55,12 +59,15 @@ export default function RegisterCard() {
           type="text"
           label="Nome"
         />
-        <Input
-          onChange={(e) => dispatch(updateInvestorProfile(e.target.value))}
-          value={investorProfile}
-          style={{ marginBottom: 15 }}
-          type="text"
+        <SelectInput
           label="Perfil de Investidor"
+          value={investorProfileDisplayText}
+          onChange={(e) =>
+            dispatch(updateInvestorProfileDisplayText(e.target.value))
+          }
+          onOptionSelected={(v) => dispatch(updateInvestorProfileValue(v))}
+          options={investorProfileMapping}
+          style={{ marginBottom: 15 }}
         />
         <Input
           onChange={(e) => dispatch(updateEmail(e.target.value))}
