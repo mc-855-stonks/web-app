@@ -80,10 +80,14 @@ export const profileSlice = createSlice({
     [editProfile.rejected.type]: (state) => {
       state.status = "error";
     },
+    [getProfile.pending.type]: (state) => {
+      state.status = "loading";
+    },
     [getProfile.fulfilled.type]: (
       state,
       action: PayloadAction<GetProfileResponseData>
     ) => {
+      state.status = "success";
       state.name = action.payload.name;
       state.investorProfile = action.payload.investor_profile;
     },
