@@ -1,6 +1,8 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { selectStatus, getProfile } from "slices/profileSlice";
+import { getUserSessionId } from "utils/userSession";
 import Header from "components/Header";
 import AppPage from "components/AppPage";
 import Loading from "components/Loading";
@@ -21,7 +23,10 @@ export default function ProfilePage() {
         </AppPage>
       );
     default:
-      dispatch(getProfile());
-      return <div />;
+      if (getUserSessionId()) {
+        dispatch(getProfile());
+        return <div />;
+      }
+      return <Redirect to="/login" />;
   }
 }
