@@ -5,7 +5,7 @@ import { selectStatus, getProfile } from "slices/profileSlice";
 import { getUserSessionId } from "utils/userSession";
 import Header from "components/Header";
 import AppPage from "components/AppPage";
-import Loading from "components/Loading";
+import Loading from "components/LoadingOverlay";
 import ProfileContainer from "./components/ProfileContainer";
 
 export default function ProfilePage() {
