@@ -19,9 +19,42 @@ export default function Wallet() {
       >
         Ações
       </Subtitle>
-      <StockItem />
-      <StockItem />
-      <StockItem />
+      <StockItem
+        ticker="CSNA3"
+        name="CIA SIDERURGICA NACIONAL"
+        walletPercentage={15}
+        totalYield={4.18}
+        yieldPercentage={0.36}
+        lastPrice={30.55}
+        buyPosition={1156.72}
+        currentPosition={1160.9}
+        amount={38}
+        averagePrice={30.44}
+      />
+      <StockItem
+        ticker="CSNA3"
+        name="CIA SIDERURGICA NACIONAL"
+        walletPercentage={15}
+        totalYield={4.18}
+        yieldPercentage={0.36}
+        lastPrice={30.55}
+        buyPosition={1156.72}
+        currentPosition={1160.9}
+        amount={38}
+        averagePrice={30.44}
+      />{" "}
+      <StockItem
+        ticker="CSNA3"
+        name="CIA SIDERURGICA NACIONAL"
+        walletPercentage={15}
+        totalYield={4.18}
+        yieldPercentage={0.36}
+        lastPrice={30.55}
+        buyPosition={1156.72}
+        currentPosition={1160.9}
+        amount={38}
+        averagePrice={30.44}
+      />
     </div>
   );
 }
