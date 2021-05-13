@@ -55,6 +55,7 @@ export default function LoginCard() {
           label="Senha"
           onChange={(e) => dispatch(updatePassword(e.target.value))}
           errorMode={errorMode}
+          errorMessage="Email ou senha não correspondem a um usuário cadastrado"
         />
         <Link to="/register" className={styleLogin["forgot-password-link"]}>
           Esqueceu sua senha?
