@@ -19,6 +19,7 @@ import {
   updateName,
   updatePasswordConfirmation,
   selectStatus,
+  selectPasswordConfirmationEquals,
   register,
 } from "slices/registerSlice";
 
@@ -36,6 +37,7 @@ export default function RegisterCard() {
     passwordConfirmation,
   } = useAppSelector(selectFormData);
   const status = useAppSelector(selectStatus);
+  const passowordEquals = useAppSelector(selectPasswordConfirmationEquals);
   const dispatch = useAppDispatch();
 
   if (status === "success") {
@@ -82,6 +84,7 @@ export default function RegisterCard() {
           style={{ marginBottom: 15 }}
           type="password"
           label="Senha"
+          errorMode={!passowordEquals}
         />
         <Input
           onChange={(e) => dispatch(updatePasswordConfirmation(e.target.value))}
@@ -89,6 +92,8 @@ export default function RegisterCard() {
           style={{ marginBottom: 25 }}
           type="password"
           label="Confirmação de Senha"
+          errorMode={!passowordEquals}
+          errorMessage="A senha e confirmação devem ser iguais"
         />
         <Checkbox
           style={{ marginBottom: 40 }}
