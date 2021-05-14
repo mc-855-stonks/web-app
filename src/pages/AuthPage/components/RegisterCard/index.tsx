@@ -19,7 +19,8 @@ import {
   updateName,
   updatePasswordConfirmation,
   selectStatus,
-  selectPasswordConfirmationEquals,
+  selectPasswordConfirmationEqualsStatus,
+  selectInvalidFieldsStatus,
   register,
 } from "slices/registerSlice";
 
@@ -36,8 +37,19 @@ export default function RegisterCard() {
     password,
     passwordConfirmation,
   } = useAppSelector(selectFormData);
+
+  const {
+    invalidEmail,
+    invalidInvestorProfile,
+    invalidName,
+    invalidPassword,
+    invalidPasswordConfirmation,
+  } = useAppSelector(selectInvalidFieldsStatus);
+
   const status = useAppSelector(selectStatus);
-  const passowordEquals = useAppSelector(selectPasswordConfirmationEquals);
+  const passowordEquals = useAppSelector(
+    selectPasswordConfirmationEqualsStatus
+  );
   const dispatch = useAppDispatch();
 
   if (status === "success") {
@@ -60,6 +72,8 @@ export default function RegisterCard() {
           style={{ marginBottom: 15 }}
           type="text"
           label="Nome"
+          errorMode={invalidName}
+          errorMessage="Campo obrigatório"
         />
         <SelectInput
           label="Perfil de Investidor"
@@ -70,6 +84,8 @@ export default function RegisterCard() {
           onOptionSelected={(v) => dispatch(updateInvestorProfileValue(v))}
           options={investorProfileMapping}
           style={{ marginBottom: 15 }}
+          errorMode={invalidInvestorProfile}
+          errorMessage="Campo obrigatório"
         />
         <Input
           onChange={(e) => dispatch(updateEmail(e.target.value))}
@@ -77,6 +93,8 @@ export default function RegisterCard() {
           style={{ marginBottom: 15 }}
           type="email"
           label="Email"
+          errorMode={invalidEmail}
+          errorMessage="Campo obrigatório"
         />
         <Input
           onChange={(e) => dispatch(updatePassword(e.target.value))}
@@ -84,7 +102,10 @@ export default function RegisterCard() {
           style={{ marginBottom: 15 }}
           type="password"
           label="Senha"
-          errorMode={!passowordEquals}
+          errorMode={!passowordEquals || invalidPassword}
+          errorMessage={
+            invalidPassword && passowordEquals ? "Campo obrigatório" : undefined
+          }
         />
         <Input
           onChange={(e) => dispatch(updatePasswordConfirmation(e.target.value))}
@@ -92,8 +113,12 @@ export default function RegisterCard() {
           style={{ marginBottom: 25 }}
           type="password"
           label="Confirmação de Senha"
-          errorMode={!passowordEquals}
-          errorMessage="A senha e confirmação devem ser iguais"
+          errorMode={!passowordEquals || invalidPasswordConfirmation}
+          errorMessage={
+            !passowordEquals
+              ? "A senha e confirmação devem ser iguais"
+              : "Campo obrigatório"
+          }
         />
         <Checkbox
           style={{ marginBottom: 40 }}
