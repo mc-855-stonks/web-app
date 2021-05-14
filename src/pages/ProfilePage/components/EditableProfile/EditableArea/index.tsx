@@ -1,18 +1,21 @@
 import React from "react";
 import { useAppSelector, useAppDispatch } from "hooks";
+import { investorProfileMapping } from "types/InvestorProfile";
 import {
   selectFormData,
   updatePassword,
-  updateInvestorProfile,
+  updateInvestorProfileDisplayText,
+  updateInvestorProfileValue,
   updateName,
   updatePasswordConfirmation,
 } from "slices/profileSlice";
+import Input from "components/Input";
+import SelectInput from "components/SelectInput";
 import styles from "./style.module.css";
-import Input from "../../../../../components/Input";
 
 export default function EditableArea() {
   const {
-    investorProfile,
+    investorProfileDisplayText,
     name,
     password,
     passwordConfirmation,
@@ -28,12 +31,15 @@ export default function EditableArea() {
         type="text"
         label="Nome"
       />
-      <Input
-        value={investorProfile}
-        onChange={(e) => dispatch(updateInvestorProfile(e.target.value))}
+      <SelectInput
+        value={investorProfileDisplayText}
+        onChange={(e) =>
+          dispatch(updateInvestorProfileDisplayText(e.target.value))
+        }
+        onOptionSelected={(v) => dispatch(updateInvestorProfileValue(v))}
         style={{ marginBottom: 15 }}
-        type="text"
         label="Perfil de Investidor"
+        options={investorProfileMapping}
       />
       <Input
         value={password}

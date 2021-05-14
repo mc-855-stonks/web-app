@@ -11,11 +11,14 @@ import {
   GetProfileResponseData,
 } from "services/profile";
 
+import { investorProfileMapping } from "types/InvestorProfile";
+
 import type { RootState, AsyncThunkConfig } from "../store";
 
 interface ProfileState {
   name: string;
-  investorProfile: string;
+  investorProfileDisplayText: string;
+  investorProfileValue: string;
   password: string;
   passwordConfirmation: string;
   status: string;
@@ -23,7 +26,8 @@ interface ProfileState {
 
 const initialState: ProfileState = {
   name: "",
-  investorProfile: "",
+  investorProfileDisplayText: "",
+  investorProfileValue: "",
   password: "",
   passwordConfirmation: "",
   status: "",
@@ -36,8 +40,8 @@ export const editProfile: AsyncThunk<
 > = createAsyncThunk<void, void, AsyncThunkConfig>(
   "profile/editProfile",
   async (_, { getState }) => {
-    const { name, investorProfile, password } = getState().profile;
-    await editProfileService(name, investorProfile, password);
+    const { name, investorProfileValue, password } = getState().profile;
+    await editProfileService(name, investorProfileValue, password);
   }
 );
 
@@ -49,6 +53,9 @@ export const getProfile: AsyncThunk<
   "profile/getProfile",
   async () => {
     const profile = await getProfileService();
+    profile.investor_profile =
+      profile.investor_profile.charAt(0).toLowerCase() +
+      profile.investor_profile.slice(1);
     return profile;
   }
 );
@@ -60,8 +67,20 @@ export const profileSlice = createSlice({
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
-    updateInvestorProfile: (state, action: PayloadAction<string>) => {
-      state.investorProfile = action.payload;
+    updateInvestorProfileDisplayText: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.investorProfileDisplayText = action.payload;
+    },
+    updateInvestorProfileValue: (state, action: PayloadAction<string>) => {
+      const filteredProfile = investorProfileMapping.filter(
+        (it) => it.value === action.payload
+      );
+      if (filteredProfile.length > 0) {
+        state.investorProfileDisplayText = filteredProfile[0].displayValue;
+        state.investorProfileValue = action.payload;
+      }
     },
     updatePassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
@@ -89,14 +108,22 @@ export const profileSlice = createSlice({
     ) => {
       state.status = "success";
       state.name = action.payload.name;
-      state.investorProfile = action.payload.investor_profile;
+      state.investorProfileValue = action.payload.investor_profile;
+
+      const filteredProfile = investorProfileMapping.filter(
+        (it) => it.value === state.investorProfileValue
+      );
+      if (filteredProfile.length > 0) {
+        state.investorProfileDisplayText = filteredProfile[0].displayValue;
+      }
     },
   },
 });
 
 export const {
   updatePassword,
-  updateInvestorProfile,
+  updateInvestorProfileValue,
+  updateInvestorProfileDisplayText,
   updateName,
   updatePasswordConfirmation,
 } = profileSlice.actions;
@@ -105,21 +132,21 @@ export const selectFormData = (state: RootState) => {
   const {
     passwordConfirmation,
     password,
-    investorProfile,
+    investorProfileDisplayText,
+    investorProfileValue,
     name,
   } = state.profile;
 
   return {
     password,
     passwordConfirmation,
-    investorProfile,
+    investorProfileDisplayText,
+    investorProfileValue,
     name,
   };
 };
 
 export const selectName = (state: RootState) => state.profile.name;
-export const selectInvestorProfile = (state: RootState) =>
-  state.profile.investorProfile;
 export const selectPassword = (state: RootState) => state.profile.password;
 export const selectStatus = (state: RootState) => state.profile.status;
 
