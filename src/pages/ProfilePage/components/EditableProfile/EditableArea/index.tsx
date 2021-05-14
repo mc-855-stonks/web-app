@@ -11,7 +11,12 @@ import styles from "./style.module.css";
 import Input from "../../../../../components/Input";
 
 export default function EditableArea() {
-  const { investorProfile, name, password } = useAppSelector(selectFormData);
+  const {
+    investorProfile,
+    name,
+    password,
+    passwordConfirmation,
+  } = useAppSelector(selectFormData);
   const dispatch = useAppDispatch();
 
   return (
@@ -38,7 +43,7 @@ export default function EditableArea() {
         label="Senha"
       />
       <Input
-        value=""
+        value={passwordConfirmation}
         onChange={(e) => dispatch(updatePasswordConfirmation(e.target.value))}
         style={{ marginBottom: 15 }}
         type="password"
