@@ -56,23 +56,13 @@ export const register: AsyncThunk<
       name,
       passwordConfirmation,
       passwordConfirmationEquals,
-      invalidEmail,
-      invalidName,
-      invalidInvestorProfile,
-      invalidPassword,
-      invalidPasswordConfirmation,
     } = getState().register;
 
     if (
-      !invalidEmail &&
       email.trim() !== "" &&
-      !invalidInvestorProfile &&
       investorProfileValue.trim() !== "" &&
-      !invalidName &&
       name.trim() !== "" &&
-      !invalidPassword &&
       password.trim() !== "" &&
-      !invalidPasswordConfirmation &&
       passwordConfirmation.trim() !== "" &&
       passwordConfirmationEquals
     ) {
@@ -88,7 +78,6 @@ export const registerSlice = createSlice({
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
       state.invalidName = state.name.trim() === "";
-      state.status = "";
     },
     updateInvestorProfileDisplayText: (
       state,
@@ -104,18 +93,15 @@ export const registerSlice = createSlice({
         state.investorProfileDisplayText = filteredProfile[0].displayValue;
         state.investorProfileValue = action.payload;
         state.invalidInvestorProfile = state.investorProfileValue.trim() === "";
-        state.status = "";
       }
     },
     updateEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
       state.invalidEmail = state.email.trim() === "";
-      state.status = "";
     },
     updatePassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
       state.invalidPassword = state.password.trim() === "";
-      state.status = "";
     },
     updatePasswordConfirmation: (state, action: PayloadAction<string>) => {
       state.passwordConfirmation = action.payload;
@@ -123,7 +109,6 @@ export const registerSlice = createSlice({
         state.password === state.passwordConfirmation;
       state.invalidPasswordConfirmation =
         state.passwordConfirmation.trim() === "";
-      state.status = "";
     },
   },
   extraReducers: {
@@ -132,15 +117,10 @@ export const registerSlice = createSlice({
     },
     [register.fulfilled.type]: (state) => {
       const invalidFields =
-        state.invalidEmail ||
         state.email.trim() === "" ||
-        state.invalidInvestorProfile ||
         state.investorProfileValue.trim() === "" ||
-        state.invalidName ||
         state.name.trim() === "" ||
-        state.invalidPassword ||
         state.password.trim() === "" ||
-        state.invalidPasswordConfirmation ||
         state.passwordConfirmation.trim() === "";
       state.status = invalidFields ? "invalid-fields" : "success";
       state.invalidEmail = state.email.trim() === "";

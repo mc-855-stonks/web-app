@@ -15,18 +15,18 @@ export default function ProfilePage() {
   switch (status) {
     case "loading":
       return <Loading />;
-    case "success":
+    case "":
+      if (getUserSessionId()) {
+        dispatch(getProfile());
+        return <div />;
+      }
+      return <Redirect to="/login" />;
+    default:
       return (
         <AppPage>
           <Header>Configurações</Header>
           <ProfileContainer />
         </AppPage>
       );
-    default:
-      if (getUserSessionId()) {
-        dispatch(getProfile());
-        return <div />;
-      }
-      return <Redirect to="/login" />;
   }
 }

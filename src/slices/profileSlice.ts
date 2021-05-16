@@ -22,6 +22,11 @@ interface ProfileState {
   password: string;
   passwordConfirmation: string;
   status: string;
+  passwordConfirmationEquals: boolean;
+  invalidName: boolean;
+  invalidInvestorProfile: boolean;
+  invalidPassword: boolean;
+  invalidPasswordConfirmation: boolean;
 }
 
 const initialState: ProfileState = {
@@ -31,6 +36,11 @@ const initialState: ProfileState = {
   password: "",
   passwordConfirmation: "",
   status: "",
+  passwordConfirmationEquals: true,
+  invalidName: false,
+  invalidInvestorProfile: false,
+  invalidPassword: false,
+  invalidPasswordConfirmation: false,
 };
 
 export const editProfile: AsyncThunk<
@@ -40,8 +50,23 @@ export const editProfile: AsyncThunk<
 > = createAsyncThunk<void, void, AsyncThunkConfig>(
   "profile/editProfile",
   async (_, { getState }) => {
-    const { name, investorProfileValue, password } = getState().profile;
-    await editProfileService(name, investorProfileValue, password);
+    const {
+      name,
+      investorProfileValue,
+      password,
+      passwordConfirmation,
+      passwordConfirmationEquals,
+    } = getState().profile;
+
+    if (
+      name.trim() !== "" &&
+      investorProfileValue.trim() !== "" &&
+      password.trim() !== "" &&
+      passwordConfirmation.trim() !== "" &&
+      passwordConfirmationEquals
+    ) {
+      await editProfileService(name, investorProfileValue, password);
+    }
   }
 );
 
@@ -66,6 +91,7 @@ export const profileSlice = createSlice({
   reducers: {
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
+      state.invalidName = state.name.trim() === "";
     },
     updateInvestorProfileDisplayText: (
       state,
@@ -80,13 +106,19 @@ export const profileSlice = createSlice({
       if (filteredProfile.length > 0) {
         state.investorProfileDisplayText = filteredProfile[0].displayValue;
         state.investorProfileValue = action.payload;
+        state.invalidInvestorProfile = state.investorProfileValue.trim() === "";
       }
     },
     updatePassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
+      state.invalidPassword = state.password.trim() === "";
     },
     updatePasswordConfirmation: (state, action: PayloadAction<string>) => {
       state.passwordConfirmation = action.payload;
+      state.invalidPasswordConfirmation =
+        state.passwordConfirmation.trim() === "";
+      state.passwordConfirmationEquals =
+        state.password === state.passwordConfirmation;
     },
   },
   extraReducers: {
@@ -94,7 +126,18 @@ export const profileSlice = createSlice({
       state.status = "loading";
     },
     [editProfile.fulfilled.type]: (state) => {
-      state.status = "success";
+      const validFields =
+        state.name.trim() !== "" &&
+        state.investorProfileValue.trim() !== "" &&
+        state.password.trim() !== "" &&
+        state.passwordConfirmation.trim() !== "" &&
+        state.passwordConfirmationEquals;
+      state.status = validFields ? "success" : "invalid-fields";
+      state.invalidName = state.name.trim() === "";
+      state.invalidInvestorProfile = state.investorProfileValue.trim() === "";
+      state.invalidPassword = state.password.trim() === "";
+      state.invalidPasswordConfirmation =
+        state.passwordConfirmation.trim() === "";
     },
     [editProfile.rejected.type]: (state) => {
       state.status = "error";
@@ -149,5 +192,23 @@ export const selectFormData = (state: RootState) => {
 export const selectName = (state: RootState) => state.profile.name;
 export const selectPassword = (state: RootState) => state.profile.password;
 export const selectStatus = (state: RootState) => state.profile.status;
+export const selectPasswordConfirmationEqualsStatus = (state: RootState) =>
+  state.profile.passwordConfirmationEquals;
+
+export const selectInvalidFieldsStatus = (state: RootState) => {
+  const {
+    invalidInvestorProfile,
+    invalidName,
+    invalidPassword,
+    invalidPasswordConfirmation,
+  } = state.profile;
+
+  return {
+    invalidInvestorProfile,
+    invalidName,
+    invalidPassword,
+    invalidPasswordConfirmation,
+  };
+};
 
 export default profileSlice.reducer;
