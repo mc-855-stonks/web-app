@@ -1,17 +1,36 @@
 import React from "react";
 import { useAppSelector, useAppDispatch } from "hooks";
+import { investorProfileMapping } from "types/InvestorProfile";
 import {
   selectFormData,
+  selectPasswordConfirmationEqualsStatus,
+  selectInvalidFieldsStatus,
   updatePassword,
-  updateInvestorProfile,
+  updateInvestorProfileDisplayText,
+  updateInvestorProfileValue,
   updateName,
   updatePasswordConfirmation,
 } from "slices/profileSlice";
+import Input from "components/Input";
+import SelectInput from "components/SelectInput";
 import styles from "./style.module.css";
-import Input from "../../../../../components/Input";
 
 export default function EditableArea() {
-  const { investorProfile, name, password } = useAppSelector(selectFormData);
+  const {
+    investorProfileDisplayText,
+    name,
+    password,
+    passwordConfirmation,
+  } = useAppSelector(selectFormData);
+
+  const {
+    invalidInvestorProfile,
+    invalidName,
+    invalidPassword,
+    invalidPasswordConfirmation,
+  } = useAppSelector(selectInvalidFieldsStatus);
+
+  const passwordEquals = useAppSelector(selectPasswordConfirmationEqualsStatus);
   const dispatch = useAppDispatch();
 
   return (
@@ -22,13 +41,20 @@ export default function EditableArea() {
         style={{ marginBottom: 15 }}
         type="text"
         label="Nome"
+        errorMode={invalidName}
+        errorMessage="Campo obrigatório"
       />
-      <Input
-        value={investorProfile}
-        onChange={(e) => dispatch(updateInvestorProfile(e.target.value))}
+      <SelectInput
+        value={investorProfileDisplayText}
+        onChange={(e) =>
+          dispatch(updateInvestorProfileDisplayText(e.target.value))
+        }
+        onOptionSelected={(v) => dispatch(updateInvestorProfileValue(v))}
         style={{ marginBottom: 15 }}
-        type="text"
         label="Perfil de Investidor"
+        options={investorProfileMapping}
+        errorMode={invalidInvestorProfile}
+        errorMessage="Campo obrigatório"
       />
       <Input
         value={password}
@@ -36,13 +62,23 @@ export default function EditableArea() {
         style={{ marginBottom: 15 }}
         type="password"
         label="Senha"
+        errorMode={!passwordEquals || invalidPassword}
+        errorMessage={
+          invalidPassword && passwordEquals ? "Campo obrigatório" : undefined
+        }
       />
       <Input
-        value=""
+        value={passwordConfirmation}
         onChange={(e) => dispatch(updatePasswordConfirmation(e.target.value))}
         style={{ marginBottom: 15 }}
         type="password"
         label="Confirmar Senha"
+        errorMode={!passwordEquals || invalidPasswordConfirmation}
+        errorMessage={
+          !passwordEquals
+            ? "A senha e confirmação devem ser iguais"
+            : "Campo obrigatório"
+        }
       />
     </div>
   );

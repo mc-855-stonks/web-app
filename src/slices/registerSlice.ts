@@ -18,6 +18,12 @@ interface RegisterState {
   password: string;
   passwordConfirmation: string;
   status: string;
+  passwordConfirmationEquals: boolean;
+  invalidName: boolean;
+  invalidInvestorProfile: boolean;
+  invalidEmail: boolean;
+  invalidPassword: boolean;
+  invalidPasswordConfirmation: boolean;
 }
 
 const initialState: RegisterState = {
@@ -28,6 +34,12 @@ const initialState: RegisterState = {
   password: "",
   passwordConfirmation: "",
   status: "",
+  passwordConfirmationEquals: true,
+  invalidName: false,
+  invalidInvestorProfile: false,
+  invalidEmail: false,
+  invalidPassword: false,
+  invalidPasswordConfirmation: false,
 };
 
 export const register: AsyncThunk<
@@ -37,8 +49,25 @@ export const register: AsyncThunk<
 > = createAsyncThunk<void, void, AsyncThunkConfig>(
   "register/register",
   async (_, { getState }) => {
-    const { email, password, investorProfileValue, name } = getState().register;
-    await registerService(email, investorProfileValue, name, password);
+    const {
+      email,
+      password,
+      investorProfileValue,
+      name,
+      passwordConfirmation,
+      passwordConfirmationEquals,
+    } = getState().register;
+
+    if (
+      email.trim() !== "" &&
+      investorProfileValue.trim() !== "" &&
+      name.trim() !== "" &&
+      password.trim() !== "" &&
+      passwordConfirmation.trim() !== "" &&
+      passwordConfirmationEquals
+    ) {
+      await registerService(email, investorProfileValue, name, password);
+    }
   }
 );
 
@@ -48,6 +77,7 @@ export const registerSlice = createSlice({
   reducers: {
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
+      state.invalidName = state.name.trim() === "";
     },
     updateInvestorProfileDisplayText: (
       state,
@@ -62,16 +92,23 @@ export const registerSlice = createSlice({
       if (filteredProfile.length > 0) {
         state.investorProfileDisplayText = filteredProfile[0].displayValue;
         state.investorProfileValue = action.payload;
+        state.invalidInvestorProfile = state.investorProfileValue.trim() === "";
       }
     },
     updateEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
+      state.invalidEmail = state.email.trim() === "";
     },
     updatePassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
+      state.invalidPassword = state.password.trim() === "";
     },
     updatePasswordConfirmation: (state, action: PayloadAction<string>) => {
       state.passwordConfirmation = action.payload;
+      state.passwordConfirmationEquals =
+        state.password === state.passwordConfirmation;
+      state.invalidPasswordConfirmation =
+        state.passwordConfirmation.trim() === "";
     },
   },
   extraReducers: {
@@ -79,7 +116,19 @@ export const registerSlice = createSlice({
       state.status = "loading";
     },
     [register.fulfilled.type]: (state) => {
-      state.status = "success";
+      const invalidFields =
+        state.email.trim() === "" ||
+        state.investorProfileValue.trim() === "" ||
+        state.name.trim() === "" ||
+        state.password.trim() === "" ||
+        state.passwordConfirmation.trim() === "";
+      state.status = invalidFields ? "invalid-fields" : "success";
+      state.invalidEmail = state.email.trim() === "";
+      state.invalidInvestorProfile = state.investorProfileValue.trim() === "";
+      state.invalidName = state.name.trim() === "";
+      state.invalidPassword = state.password.trim() === "";
+      state.invalidPasswordConfirmation =
+        state.passwordConfirmation.trim() === "";
     },
     [register.rejected.type]: (state) => {
       state.status = "error";
@@ -115,5 +164,25 @@ export const selectFormData = (state: RootState) => {
 };
 
 export const selectStatus = (state: RootState) => state.register.status;
+export const selectPasswordConfirmationEqualsStatus = (state: RootState) =>
+  state.register.passwordConfirmationEquals;
+
+export const selectInvalidFieldsStatus = (state: RootState) => {
+  const {
+    invalidEmail,
+    invalidInvestorProfile,
+    invalidName,
+    invalidPassword,
+    invalidPasswordConfirmation,
+  } = state.register;
+
+  return {
+    invalidEmail,
+    invalidInvestorProfile,
+    invalidName,
+    invalidPassword,
+    invalidPasswordConfirmation,
+  };
+};
 
 export default registerSlice.reducer;

@@ -9,6 +9,12 @@
   font-size: 18px;
 }
 
+.errorMessage {
+  color: var(--color-red);
+  font-size: 16px;
+  margin-top: 10px;
+}
+
 .drop-icon {
   margin-left: auto;
   height: 6px;

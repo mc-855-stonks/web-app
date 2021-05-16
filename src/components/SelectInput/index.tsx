@@ -19,6 +19,7 @@ export interface OptionProp<T extends DisplayValue> {
 
 interface Props<T extends DisplayValue> {
   errorMode?: boolean;
+  errorMessage?: string;
   label?: string;
   style?: React.CSSProperties;
   value?: string;
@@ -29,6 +30,7 @@ interface Props<T extends DisplayValue> {
 
 export default function SelectInput<T extends DisplayValue>({
   errorMode,
+  errorMessage,
   label,
   style: propStyle,
   value,
@@ -116,12 +118,16 @@ export default function SelectInput<T extends DisplayValue>({
           </div>
         )}
       </div>
+      {errorMessage && errorMode && (
+        <div className={style.errorMessage}>{errorMessage}</div>
+      )}
     </div>
   );
 }
 
 SelectInput.defaultProps = {
   errorMode: false,
+  errorMessage: "",
   label: "",
   style: {},
   value: "",
