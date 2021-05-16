@@ -132,7 +132,7 @@ export const profileSlice = createSlice({
         state.password.trim() !== "" &&
         state.passwordConfirmation.trim() !== "" &&
         state.passwordConfirmationEquals;
-      state.status = validFields ? "success" : "invalid-fields";
+      state.status = validFields ? "edit-profile-success" : "invalid-fields";
       state.invalidName = state.name.trim() === "";
       state.invalidInvestorProfile = state.investorProfileValue.trim() === "";
       state.invalidPassword = state.password.trim() === "";
@@ -149,7 +149,7 @@ export const profileSlice = createSlice({
       state,
       action: PayloadAction<GetProfileResponseData>
     ) => {
-      state.status = "success";
+      state.status = "get-profile-success";
       state.name = action.payload.name;
       state.investorProfileValue = action.payload.investor_profile;
 

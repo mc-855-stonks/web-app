@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { selectStatus, getProfile } from "slices/profileSlice";
 import { getUserSessionId } from "utils/userSession";
+import Notification from "components/Notification";
 import Header from "components/Header";
 import AppPage from "components/AppPage";
 import Loading from "components/LoadingOverlay";
@@ -24,6 +25,12 @@ export default function ProfilePage() {
     default:
       return (
         <AppPage>
+          {status === "edit-profile-success" && (
+            <Notification
+              type="success"
+              message="Seu perfil foi alterado com sucesso"
+            />
+          )}
           <Header>Configurações</Header>
           <ProfileContainer />
         </AppPage>
