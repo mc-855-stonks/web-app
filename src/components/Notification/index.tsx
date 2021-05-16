@@ -20,7 +20,6 @@ const waitNotificationExhibition = async () => {
 
 export default function Notification({ message, type }: Props) {
   waitNotificationExhibition();
-
   return (
     <div
       id="notification"
@@ -31,8 +30,11 @@ export default function Notification({ message, type }: Props) {
           : { backgroundColor: "#E7423C" }
       }
     >
-      <div className={style.messageGroup}>
-        <label className={style.message}>{message}</label>
+      <div className={style.messageContainer}>
+        <div className={style.messageGroup}>
+          {type === "error" && <div className={style.errorIcon}>!</div>}
+          <label className={style.message}>{message}</label>
+        </div>
       </div>
       <img
         className={style.closeIcon}

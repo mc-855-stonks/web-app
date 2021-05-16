@@ -10,13 +10,19 @@
     font-size: 18px;
     line-height: 21px;
     color: white;
-    margin-left: auto;
-    margin-right: auto;
+    height: 21px;
+}
+
+.messageContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .messageGroup {
-    width: 100%;
     display: flex;
+    margin-left: auto;
+    margin-right: auto;
     align-items: center;
 }
 
@@ -27,4 +33,11 @@
     margin-right: 35px;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.errorIcon {
+    font-size: 25px;
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
 }
