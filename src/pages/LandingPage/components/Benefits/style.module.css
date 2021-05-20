@@ -1,0 +1,13 @@
+.container {
+    width: 100%;
+    display: flex;
+}
+
+.firstBenefit {
+    padding-bottom: 360px;
+}
+
+.secondBenefit {
+    align-items:flex-end;
+    padding-top: 560px;
+}
