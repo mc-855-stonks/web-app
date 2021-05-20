@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.ilustration-image {
+    align-items:flex-end;
+}
+
+.item {
+    padding-top: 140px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 48px;
+    padding-left: 150px;
+}
+
+.description {
+    font-weight: normal;
+    font-size: 24px;
+    padding-left: 150px;
+    padding-top: 30px;
+}
