@@ -43,6 +43,14 @@ export default function Portfolio() {
   const chartColors = legendData.map((x) => x.color);
   const typeStockClassname = displayType === "stock" ? "Enabled" : "Disabled";
   const typeSectorClassname = displayType === "sector" ? "Enabled" : "Disabled";
+  const titleStockClassname =
+    portfolioStyle[`displayTypeTitle${typeStockClassname}`];
+  const separatorStockClassname =
+    portfolioStyle[`displayTypeSeparator${typeStockClassname}`];
+  const titleSectorClassname =
+    portfolioStyle[`displayTypeTitle${typeSectorClassname}`];
+  const separatorSectorClassname =
+    portfolioStyle[`displayTypeSeparator${typeSectorClassname}`];
 
   return (
     <div className={portfolioStyle.container}>
@@ -53,35 +61,15 @@ export default function Portfolio() {
             className={portfolioStyle.displayType}
             onClick={() => dispatch(updateDisplayType("stock"))}
           >
-            <div
-              className={
-                portfolioStyle[`displayTypeTitle${typeStockClassname}`]
-              }
-            >
-              Ação
-            </div>
-            <div
-              className={
-                portfolioStyle[`displayTypeSeparator${typeStockClassname}`]
-              }
-            />
+            <div className={titleStockClassname}>Ação</div>
+            <div className={separatorStockClassname} />
           </div>
           <div
             className={portfolioStyle.displayType}
             onClick={() => dispatch(updateDisplayType("sector"))}
           >
-            <div
-              className={
-                portfolioStyle[`displayTypeTitle${typeSectorClassname}`]
-              }
-            >
-              Setor
-            </div>
-            <div
-              className={
-                portfolioStyle[`displayTypeSeparator${typeSectorClassname}`]
-              }
-            />
+            <div className={titleSectorClassname}>Setor</div>
+            <div className={separatorSectorClassname} />
           </div>
         </div>
         <div className={portfolioStyle.chartInfoGroup}>
