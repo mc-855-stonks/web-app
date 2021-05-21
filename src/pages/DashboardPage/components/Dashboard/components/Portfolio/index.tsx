@@ -3,6 +3,12 @@ import dashboardStyle from "pages/DashboardPage/components/Dashboard/style.modul
 import DoughnutChart, {
   DoughnutDatasetPointType,
 } from "components/Charts/DoughnutChart";
+import {
+  selectDisplayType,
+  selectData,
+  updateDisplayType,
+} from "slices/portfolioSlice";
+import { useAppDispatch, useAppSelector } from "hooks";
 import Legend from "./components/Legend";
 import portfolioStyle from "./style.module.css";
 
@@ -30,26 +36,42 @@ const getChartLegendData = (dataset: Array<DoughnutDatasetPointType>) => {
 };
 
 export default function Portfolio() {
-  const data = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-    { name: "Group D", value: 200 },
-  ];
+  const data = useAppSelector(selectData);
+  const displayType = useAppSelector(selectDisplayType);
+  const dispatch = useAppDispatch();
   const legendData = getChartLegendData(data);
   const chartColors = legendData.map((x) => x.color);
+
+  let titleStockClassname = portfolioStyle.displayTypeTitleEnabled;
+  let separatorStockClassname = portfolioStyle.displayTypeSeparatorEnabled;
+  let titleSectorClassname = portfolioStyle.displayTypeTitleDisabled;
+  let separatorSectorClassname = portfolioStyle.displayTypeSeparatorDisabled;
+
+  if (displayType === "sector") {
+    titleStockClassname = portfolioStyle.displayTypeTitleDisabled;
+    separatorStockClassname = portfolioStyle.displayTypeSeparatorDisabled;
+    titleSectorClassname = portfolioStyle.displayTypeTitleEnabled;
+    separatorSectorClassname = portfolioStyle.displayTypeSeparatorEnabled;
+  }
+
   return (
     <div className={portfolioStyle.container}>
       <h2 className={dashboardStyle.sectionTitle}>Portfólio</h2>
       <div className={dashboardStyle.card}>
         <div className={portfolioStyle.displayTypeGroup}>
-          <div className={portfolioStyle.displayType}>
-            <div className={portfolioStyle.displayTypeTitleEnabled}>Ação</div>
-            <div className={portfolioStyle.displayTypeSeparatorEnabled} />
+          <div
+            className={portfolioStyle.displayType}
+            onClick={() => dispatch(updateDisplayType("stock"))}
+          >
+            <div className={titleStockClassname}>Ação</div>
+            <div className={separatorStockClassname} />
           </div>
-          <div className={portfolioStyle.displayType}>
-            <div className={portfolioStyle.displayTypeTitleDisabled}>Setor</div>
-            <div className={portfolioStyle.displayTypeSeparatorDisabled} />
+          <div
+            className={portfolioStyle.displayType}
+            onClick={() => dispatch(updateDisplayType("sector"))}
+          >
+            <div className={titleSectorClassname}>Setor</div>
+            <div className={separatorSectorClassname} />
           </div>
         </div>
         <div className={portfolioStyle.chartInfoGroup}>
