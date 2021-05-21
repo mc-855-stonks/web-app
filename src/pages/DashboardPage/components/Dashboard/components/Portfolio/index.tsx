@@ -41,18 +41,8 @@ export default function Portfolio() {
   const dispatch = useAppDispatch();
   const legendData = getChartLegendData(data);
   const chartColors = legendData.map((x) => x.color);
-
-  let titleStockClassname = portfolioStyle.displayTypeTitleEnabled;
-  let separatorStockClassname = portfolioStyle.displayTypeSeparatorEnabled;
-  let titleSectorClassname = portfolioStyle.displayTypeTitleDisabled;
-  let separatorSectorClassname = portfolioStyle.displayTypeSeparatorDisabled;
-
-  if (displayType === "sector") {
-    titleStockClassname = portfolioStyle.displayTypeTitleDisabled;
-    separatorStockClassname = portfolioStyle.displayTypeSeparatorDisabled;
-    titleSectorClassname = portfolioStyle.displayTypeTitleEnabled;
-    separatorSectorClassname = portfolioStyle.displayTypeSeparatorEnabled;
-  }
+  const typeStockClassname = displayType === "stock" ? "Enabled" : "Disabled";
+  const typeSectorClassname = displayType === "sector" ? "Enabled" : "Disabled";
 
   return (
     <div className={portfolioStyle.container}>
@@ -63,15 +53,35 @@ export default function Portfolio() {
             className={portfolioStyle.displayType}
             onClick={() => dispatch(updateDisplayType("stock"))}
           >
-            <div className={titleStockClassname}>Ação</div>
-            <div className={separatorStockClassname} />
+            <div
+              className={
+                portfolioStyle[`displayTypeTitle${typeStockClassname}`]
+              }
+            >
+              Ação
+            </div>
+            <div
+              className={
+                portfolioStyle[`displayTypeSeparator${typeStockClassname}`]
+              }
+            />
           </div>
           <div
             className={portfolioStyle.displayType}
             onClick={() => dispatch(updateDisplayType("sector"))}
           >
-            <div className={titleSectorClassname}>Setor</div>
-            <div className={separatorSectorClassname} />
+            <div
+              className={
+                portfolioStyle[`displayTypeTitle${typeSectorClassname}`]
+              }
+            >
+              Setor
+            </div>
+            <div
+              className={
+                portfolioStyle[`displayTypeSeparator${typeSectorClassname}`]
+              }
+            />
           </div>
         </div>
         <div className={portfolioStyle.chartInfoGroup}>
