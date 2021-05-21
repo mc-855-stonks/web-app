@@ -16,6 +16,7 @@
     display: flex;
     flex-direction: column;
     width: 240px;
+    cursor: pointer;
 }
 
 .displayTypeTitleEnabled {
@@ -50,4 +51,11 @@
     width: 100%;
     background-color: #787878;
     margin-top: 6px;
+}
+
+.chartInfoGroup {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }

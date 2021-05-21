@@ -1,18 +1,24 @@
 import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
 
+export interface DoughnutDatasetPointType {
+  name: string;
+  value: number;
+}
+
 interface Props {
-  dataset: Array<any>;
+  dataset: Array<DoughnutDatasetPointType>;
+  colors: Array<string>;
   width: number;
   height: number;
 }
 
-const getRandomHexadecimalColor = () => {
-  const n = (Math.random() * 0xfffff * 1000000).toString(16).toUpperCase();
-  return `#${n.slice(0, 6)}`;
-};
-
-export default function DoughnutChart({ dataset, width, height }: Props) {
+export default function DoughnutChart({
+  dataset,
+  colors,
+  width,
+  height,
+}: Props) {
   return (
     <PieChart width={width} height={height}>
       <Pie
@@ -23,8 +29,8 @@ export default function DoughnutChart({ dataset, width, height }: Props) {
         outerRadius={100}
         dataKey="value"
       >
-        {dataset.map(() => (
-          <Cell fill={getRandomHexadecimalColor()} />
+        {dataset.map((entry, index) => (
+          <Cell fill={colors[index % colors.length]} />
         ))}
       </Pie>
     </PieChart>
