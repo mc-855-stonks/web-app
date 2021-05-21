@@ -3,6 +3,7 @@ import dashboardStyle from "pages/DashboardPage/components/Dashboard/style.modul
 import DoughnutChart, {
   DoughnutDatasetPointType,
 } from "components/Charts/DoughnutChart";
+import Legend from "./components/Legend";
 import portfolioStyle from "./style.module.css";
 
 const getRandomHexadecimalColor = () => {
@@ -52,12 +53,15 @@ export default function Portfolio() {
           </div>
         </div>
         <div className={portfolioStyle.chartInfoGroup}>
-          <DoughnutChart
-            width={208}
-            height={208}
-            dataset={data}
-            colors={chartColors}
-          />
+          <div className={portfolioStyle.doughnutContainer}>
+            <DoughnutChart
+              width={208}
+              height={208}
+              dataset={data}
+              colors={chartColors}
+            />
+          </div>
+          <Legend data={legendData} />
         </div>
       </div>
     </div>

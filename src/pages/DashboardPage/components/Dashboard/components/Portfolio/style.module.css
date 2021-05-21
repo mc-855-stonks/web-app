@@ -55,7 +55,16 @@
 
 .chartInfoGroup {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
     margin-top: 25px;
     margin-bottom: 25px;
+    align-items: center;
+}
+
+.doughnutContainer {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }

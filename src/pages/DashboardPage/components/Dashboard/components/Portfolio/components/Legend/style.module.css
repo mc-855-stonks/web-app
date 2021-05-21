@@ -1,0 +1,33 @@
+.legendGroup {
+    display: grid;
+    grid-row-gap: 12px;
+}
+
+.legendRow {
+    display: grid;
+    grid-template-columns: 22px auto 80px auto;
+    align-items: center;
+}
+
+.legendBullet {
+    width: 12px;
+    height: 12px;
+    border-radius: 100px;
+}
+
+.legendName {
+    font-family: var(--font-family-default);
+    font-size: 20px;
+    line-height: 23px;
+    font-weight: bold;
+    text-align: left;
+    vertical-align: top;
+}
+
+.legendText {
+    font-family: var(--font-family-default);
+    font-size: 20px;
+    line-height: 23px;
+    text-align: left;
+    vertical-align: top;
+}
