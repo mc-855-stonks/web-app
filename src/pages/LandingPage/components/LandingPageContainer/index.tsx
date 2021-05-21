@@ -3,6 +3,7 @@ import style from "./style.module.css";
 import Presentation from "../Presentation";
 import Benefits from "../Benefits";
 import Statistics from "../Statistics";
+import Reports from "../Reports";
 
 export default function LandingPageContainer() {
   return (
@@ -10,6 +11,7 @@ export default function LandingPageContainer() {
       <Presentation />
       <Benefits />
       <Statistics />
+      <Reports />
     </div>
   );
 }
