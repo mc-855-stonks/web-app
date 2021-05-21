@@ -30,12 +30,8 @@ export const walletSlice = createSlice({
   },
 });
 
-export const {
-  hideAddModal,
-  showAddModal,
-  hideEditModal,
-  showEditModal,
-} = walletSlice.actions;
+export const { hideAddModal, showAddModal, hideEditModal, showEditModal } =
+  walletSlice.actions;
 
 export const selectAddModalVisible = (state: RootState) =>
   state.wallet.addModalVisible;

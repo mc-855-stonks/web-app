@@ -1,6 +1,6 @@
 import React from "react";
 import WalletSummary from "./components/WalletSummary";
-
+import Portfolio from "./components/Portfolio";
 import style from "./style.module.css";
 
 export default function Dashboard() {
@@ -14,6 +14,7 @@ export default function Dashboard() {
         alfa={0.98}
         beta={1.2}
       />
+      <Portfolio />
     </div>
   );
 }

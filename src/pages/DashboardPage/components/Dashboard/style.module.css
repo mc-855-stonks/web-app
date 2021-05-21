@@ -2,3 +2,22 @@
   display: flex;
   flex-direction: column;
 }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 12px;
+  padding: 13px 41px;
+}
+
+.sectionTitle {
+  font-family: var(--font-family-default);
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 28px;
+  text-align: left;
+  vertical-align: top;
+  margin-bottom: 15px;
+  height: 28px;
+}
