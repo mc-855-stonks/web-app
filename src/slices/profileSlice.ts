@@ -89,6 +89,9 @@ export const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
+    clearStatus: (state) => {
+      state.status = "";
+    },
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
       state.invalidName = state.name.trim() === "";
@@ -169,6 +172,7 @@ export const {
   updateInvestorProfileDisplayText,
   updateName,
   updatePasswordConfirmation,
+  clearStatus,
 } = profileSlice.actions;
 
 export const selectFormData = (state: RootState) => {

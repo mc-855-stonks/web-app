@@ -14,6 +14,8 @@ import {
   selectStatus as selectWalletStatus,
   fetchWalletSummary,
   selectStocks,
+  selectNotificationMessage,
+  clearStatus,
 } from "slices/walletSlice";
 import {
   fetchStocks,
@@ -34,7 +36,8 @@ export default function ProfilePage() {
   const stockStatus = useAppSelector(selectStockStatus);
   const loading = walletStatus === "loading" || stockStatus === "loading";
   const error = walletStatus === "error" || stockStatus === "error";
-  const errorMessage = "Houve um problema ao recuperar sua carteira";
+  const success = walletStatus === "success";
+  const notificationMessage = useAppSelector(selectNotificationMessage);
 
   useEffect(() => {
     dispatch(fetchWalletSummary());
@@ -45,7 +48,20 @@ export default function ProfilePage() {
     <AppPage>
       <Header onClickAdd={() => dispatch(showAddModal())}>Carteira</Header>
       {loading && <LoadingOverlay />}
-      {error && <Notification type="error" message={errorMessage} />}
+      {error && (
+        <Notification
+          type="error"
+          message={notificationMessage}
+          onDismiss={() => dispatch(clearStatus())}
+        />
+      )}
+      {success && (
+        <Notification
+          type="success"
+          message={notificationMessage}
+          onDismiss={() => dispatch(clearStatus())}
+        />
+      )}
       {addModalVisible && <AddModal />}
       {editModalVisible && <EditModal />}
       {stocks && stocks.length === 0 && !addModalVisible && !loading && (

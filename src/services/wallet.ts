@@ -10,6 +10,7 @@ export interface StockInfo {
   curr_return: number;
   curr_return_percent: number;
   amount: number;
+  proportion: number;
 }
 
 export interface WalletResponse {

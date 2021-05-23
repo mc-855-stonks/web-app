@@ -41,6 +41,9 @@ export const loginSlice = createSlice({
     updatePassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
+    clearStatus: (state) => {
+      state.status = "";
+    },
   },
   extraReducers: {
     [login.pending.type]: (state) => {
@@ -55,7 +58,7 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { updateEmail, updatePassword } = loginSlice.actions;
+export const { updateEmail, updatePassword, clearStatus } = loginSlice.actions;
 
 export const selectEmail = (state: RootState) => state.login.email;
 export const selectPassword = (state: RootState) => state.login.password;

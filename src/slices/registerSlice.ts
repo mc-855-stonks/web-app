@@ -74,6 +74,9 @@ export const registerSlice = createSlice({
   name: "register",
   initialState,
   reducers: {
+    clearStatus: (state) => {
+      state.status = "";
+    },
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
       state.invalidName = state.name.trim() === "";
@@ -136,6 +139,7 @@ export const {
   updateInvestorProfileValue,
   updateName,
   updatePasswordConfirmation,
+  clearStatus,
 } = registerSlice.actions;
 
 export const selectFormData = (state: RootState) => {

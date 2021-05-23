@@ -10,12 +10,13 @@ import SelectInput from "components/SelectInput";
 
 import {
   addFormSelectSide,
+  createNewOperation,
   hideAddModal,
   selectAddForm,
+  selectValidAddForm,
   updateAddFormAmount,
   updateAddFormOperationDate,
   updateAddFormPrice,
-  updateAddFormSelectedStock,
   updateAddFormTicker,
 } from "slices/walletSlice";
 import { selectStocks } from "slices/stockSlice";
@@ -24,21 +25,32 @@ import style from "./style.module.css";
 
 export default function AddModal() {
   const dispatch = useAppDispatch();
-  const { amount, operationDate, price, stockTicker, side } = useAppSelector(
-    selectAddForm
-  );
+  const {
+    amount,
+    operationDate,
+    price,
+    stockTicker,
+    side,
+    showAddFormErrors,
+  } = useAppSelector(selectAddForm);
+  const {
+    validAmount,
+    validStockTicker,
+    validSide,
+    validPrice,
+    validOperationDate,
+  } = useAppSelector(selectValidAddForm);
   const stocks = useAppSelector(selectStocks);
   const stockOptions = stocks.map((it) => {
     return {
-      value: it.id.toString(),
+      value: it.ticker,
       displayValue: it.ticker,
     };
   });
   const buyChecked = side === "buy";
   const sellChecked = side === "sell";
-  const onStockOptionSelected = (value: string, displayValue: string) => {
-    dispatch(updateAddFormTicker(displayValue));
-    dispatch(updateAddFormSelectedStock(parseInt(value, 10)));
+  const onStockOptionSelected = (value: string) => {
+    dispatch(updateAddFormTicker(value));
   };
 
   return (
@@ -53,7 +65,7 @@ export default function AddModal() {
         style={{ marginBottom: 15 }}
         label="Código da ação"
         options={stockOptions}
-        errorMode={false}
+        errorMode={showAddFormErrors && !validStockTicker}
         errorMessage="Campo obrigatório"
       />
       <div className={style["operation-type-fields"]}>
@@ -71,12 +83,19 @@ export default function AddModal() {
           onChange={() => dispatch(addFormSelectSide("sell"))}
         />
       </div>
+      {showAddFormErrors && !validSide && (
+        <div className={style["operation-type-fields-error"]}>
+          Campo obrigatório
+        </div>
+      )}
       <Input
-        style={{ marginBottom: 16 }}
+        style={{ marginBottom: 16, marginTop: 16 }}
         type="text"
         label="Data de compra"
         value={operationDate}
         placeholder="__ / __ / ____"
+        errorMessage="Campo obrigatório"
+        errorMode={showAddFormErrors && !validOperationDate}
         onChange={(e) => dispatch(updateAddFormOperationDate(e.target.value))}
       />
       <div className={style["stock-info-fields"]}>
@@ -85,6 +104,8 @@ export default function AddModal() {
           type="text"
           label="Quantidade"
           value={amount}
+          errorMessage="Campo obrigatório"
+          errorMode={showAddFormErrors && !validAmount}
           onChange={(e) => dispatch(updateAddFormAmount(e.target.value))}
         />
         <Input
@@ -92,11 +113,17 @@ export default function AddModal() {
           type="text"
           label="Preço de compra"
           value={price}
+          errorMessage="Campo obrigatório"
+          errorMode={showAddFormErrors && !validPrice}
           onChange={(e) => dispatch(updateAddFormPrice(e.target.value))}
           placeholder="R$"
         />
       </div>
-      <Button style={{ marginTop: 40 }} value="ADICIONAR A AÇÃO" />
+      <Button
+        style={{ marginTop: 40 }}
+        value="ADICIONAR A OPERAÇÃO"
+        onClick={() => dispatch(createNewOperation())}
+      />
     </Modal>
   );
 }
