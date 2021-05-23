@@ -12,20 +12,30 @@ import { useAppDispatch, useAppSelector } from "hooks";
 import Legend from "./components/Legend";
 import portfolioStyle from "./style.module.css";
 
-const getRandomHexadecimalColor = () => {
+const generateRandomHexadecimalColor = () => {
   const n = (Math.random() * 0xfffff * 1000000).toString(16).toUpperCase();
   return `#${n.slice(0, 6)}`;
 };
 
+const getRandomHexadecimalColor = (lastColors: Array<string>) => {
+  let color = generateRandomHexadecimalColor();
+  while (lastColors.includes(color)) {
+    color = generateRandomHexadecimalColor();
+  }
+  lastColors.push(color);
+  return color;
+};
+
 const getLegendPointData = (
   datasetPoint: DoughnutDatasetPointType,
-  valueSum: number
+  valueSum: number,
+  lastColors: Array<string>
 ) => {
   return {
     name: datasetPoint.name,
     value: datasetPoint.value,
     percentage: (datasetPoint.value / valueSum) * 100,
-    color: getRandomHexadecimalColor(),
+    color: getRandomHexadecimalColor(lastColors),
   };
 };
 
@@ -35,7 +45,8 @@ const getChartLegendData = (dataset: Array<DoughnutDatasetPointType>) => {
   }
   const chartValues = dataset.map((x) => x.value);
   const valueSum = chartValues.reduce((accum, curr) => accum + curr);
-  return dataset.map((x) => getLegendPointData(x, valueSum));
+  const colors: Array<string> = [];
+  return dataset.map((x) => getLegendPointData(x, valueSum, colors));
 };
 
 export default function Portfolio() {

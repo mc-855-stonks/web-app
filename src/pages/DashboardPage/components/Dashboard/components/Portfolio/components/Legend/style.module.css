@@ -5,7 +5,7 @@
 
 .legendRow {
     display: grid;
-    grid-template-columns: 22px auto 80px auto;
+    grid-template-columns: 22px 150px 80px auto;
     align-items: center;
 }
 
