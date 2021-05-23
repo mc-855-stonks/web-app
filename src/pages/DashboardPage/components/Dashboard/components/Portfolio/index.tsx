@@ -30,6 +30,9 @@ const getLegendPointData = (
 };
 
 const getChartLegendData = (dataset: Array<DoughnutDatasetPointType>) => {
+  if (dataset.length === 0) {
+    return [];
+  }
   const chartValues = dataset.map((x) => x.value);
   const valueSum = chartValues.reduce((accum, curr) => accum + curr);
   return dataset.map((x) => getLegendPointData(x, valueSum));

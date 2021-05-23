@@ -1,19 +1,54 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "store";
+import {
+  createSlice,
+  PayloadAction,
+  AsyncThunk,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
+import {
+  PortfolioResponse,
+  SectorData,
+  TickerData,
+  getPortfolio as getPortfolioService,
+} from "services/portfolio";
+import type { RootState, AsyncThunkConfig } from "store";
+
+interface ChartPointData {
+  name: string;
+  value: number;
+}
 
 interface PortfolioState {
   displayType: string;
-  data: Array<any>;
+  stocksData: Array<ChartPointData>;
+  sectorsData: Array<ChartPointData>;
+  status: string;
 }
 
 const initialState: PortfolioState = {
   displayType: "stock",
-  data: [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-    { name: "Group D", value: 200 },
-  ],
+  stocksData: [],
+  sectorsData: [],
+  status: "",
+};
+
+export const getPortfolio: AsyncThunk<
+  PortfolioResponse,
+  void,
+  AsyncThunkConfig
+> = createAsyncThunk<PortfolioResponse, void, AsyncThunkConfig>(
+  "portfolio/getPortfolio",
+  async () => {
+    const portfolio = await getPortfolioService();
+    return portfolio;
+  }
+);
+
+const getChartPointDataFromStock = (stockData: TickerData) => {
+  return { name: stockData.ticker, value: stockData.current_total };
+};
+
+const getChartPointDataFromSector = (sectorData: SectorData) => {
+  return { name: sectorData.sector, value: sectorData.current_total };
 };
 
 export const portfolioSlice = createSlice({
@@ -24,11 +59,36 @@ export const portfolioSlice = createSlice({
       state.displayType = action.payload;
     },
   },
+  extraReducers: {
+    [getPortfolio.pending.type]: (state) => {
+      state.status = "loading";
+    },
+    [getPortfolio.rejected.type]: (state) => {
+      state.status = "error";
+    },
+    [getPortfolio.fulfilled.type]: (
+      state,
+      action: PayloadAction<PortfolioResponse>
+    ) => {
+      state.stocksData = action.payload.stocks.map((stock) =>
+        getChartPointDataFromStock(stock)
+      );
+      state.sectorsData = action.payload.sectors.map((sector) =>
+        getChartPointDataFromSector(sector)
+      );
+      state.status = "success";
+    },
+  },
 });
 
 export const { updateDisplayType } = portfolioSlice.actions;
 export const selectDisplayType = (state: RootState) =>
   state.portfolio.displayType;
-export const selectData = (state: RootState) => state.portfolio.data;
+export const selectStatus = (state: RootState) => state.portfolio.status;
+export const selectData = (state: RootState) => {
+  return state.portfolio.displayType === "stock"
+    ? state.portfolio.stocksData
+    : state.portfolio.sectorsData;
+};
 
 export default portfolioSlice.reducer;
