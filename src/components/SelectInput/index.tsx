@@ -24,7 +24,7 @@ interface Props<T extends DisplayValue> {
   style?: React.CSSProperties;
   value?: string;
   options?: Array<OptionProp<T>>;
-  onOptionSelected?: (v: string) => void;
+  onOptionSelected?: (value: string, displayValue: string) => void;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -55,7 +55,10 @@ export default function SelectInput<T extends DisplayValue>({
       const filteredOption =
         options?.filter((it) => it.displayValue.toString() === value) || [];
       if (onOptionSelected && filteredOption.length > 0) {
-        onOptionSelected(filteredOption[0].value);
+        onOptionSelected(
+          filteredOption[0].value,
+          filteredOption[0].displayValue.toString()
+        );
       }
     }
     valueRef.current = value || "";
@@ -65,9 +68,9 @@ export default function SelectInput<T extends DisplayValue>({
     setVisibleOptions(true);
   }
 
-  function onOptionSelectedHandler(v: string) {
+  function onOptionSelectedHandler(v: string, displayValue: string) {
     if (onOptionSelected) {
-      onOptionSelected(v);
+      onOptionSelected(v, displayValue);
     }
     setVisibleOptions(false);
   }

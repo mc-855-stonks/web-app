@@ -1,3 +1,9 @@
 .stock-info-fields {
   display: flex;
 }
+
+.operation-type-fields {
+  display: flex;
+  font-size: 18px;
+  margin-bottom: 26px;
+}

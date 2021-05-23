@@ -6,6 +6,7 @@ import loginReducer from "./slices/loginSlice";
 import registerReducer from "./slices/registerSlice";
 import profileReducer from "./slices/profileSlice";
 import walletReducer from "./slices/walletSlice";
+import stockReducer from "./slices/stockSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     register: registerReducer,
     profile: profileReducer,
     wallet: walletReducer,
+    stock: stockReducer,
   },
 });
 
