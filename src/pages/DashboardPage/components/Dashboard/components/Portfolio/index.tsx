@@ -55,7 +55,7 @@ export default function Portfolio() {
   const dispatch = useAppDispatch();
   const legendData = getChartLegendData(data);
   const chartColors = legendData.map((x) => x.color);
-  const typeStockClassname = displayType === "stock" ? "Enabled" : "Disabled";
+  const typeStockClassname = displayType === "ticker" ? "Enabled" : "Disabled";
   const typeSectorClassname = displayType === "sector" ? "Enabled" : "Disabled";
   const titleStockClassname =
     portfolioStyle[`displayTypeTitle${typeStockClassname}`];
@@ -73,7 +73,7 @@ export default function Portfolio() {
         <div className={portfolioStyle.displayTypeGroup}>
           <div
             className={portfolioStyle.displayType}
-            onClick={() => dispatch(updateDisplayType("stock"))}
+            onClick={() => dispatch(updateDisplayType("ticker"))}
           >
             <div className={titleStockClassname}>Ação</div>
             <div className={separatorStockClassname} />

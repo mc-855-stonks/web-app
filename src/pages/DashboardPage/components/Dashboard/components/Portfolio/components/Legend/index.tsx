@@ -25,7 +25,9 @@ export default function Legend({ data }: Props) {
           <div className={style.legendText}>
             {`${Math.round(legendPoint.percentage)}%`}
           </div>
-          <div className={style.legendText}>{`R$ ${legendPoint.value}`}</div>
+          <div className={style.legendText}>
+            {`R$ ${legendPoint.value.toFixed(2)}`}
+          </div>
         </div>
       ))}
     </div>

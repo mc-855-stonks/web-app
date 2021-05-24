@@ -17,25 +17,10 @@ export interface PortfolioResponse {
   stocks: Array<TickerData>;
 }
 
-export const getPortfolio = async () => {
-  /*
+export const getPortfolio = async (displayType: string) => {
   const response = await doAuthenticatedRequest<PortfolioResponse>(
     "GET",
-    "portfolio/"
+    `portfolio/?groupby=${displayType}`
   );
-  return response.data; */
-  return {
-    stocks: [
-      { ticker: "PETR4", current_total: 400, proportion: 0 },
-      { ticker: "ITU4", current_total: 1000, proportion: 0 },
-      { ticker: "VVAR", current_total: 900, proportion: 0 },
-      { ticker: "BBDC3", current_total: 700, proportion: 0 },
-      { ticker: "SANB4", current_total: 2000, proportion: 0 },
-    ],
-    sectors: [
-      { sector: "Petróleo", current_total: 400, proportion: 0 },
-      { sector: "Banco", current_total: 3700, proportion: 0 },
-      { sector: "Varejo", current_total: 900, proportion: 0 },
-    ],
-  };
+  return response.data;
 };

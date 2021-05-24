@@ -25,7 +25,7 @@ interface PortfolioState {
 }
 
 const initialState: PortfolioState = {
-  displayType: "stock",
+  displayType: "ticker",
   stocksData: [],
   sectorsData: [],
   status: "",
@@ -38,8 +38,13 @@ export const getPortfolio: AsyncThunk<
 > = createAsyncThunk<PortfolioResponse, void, AsyncThunkConfig>(
   "portfolio/getPortfolio",
   async () => {
-    const portfolio = await getPortfolioService();
-    return portfolio;
+    const stocksData = await getPortfolioService("ticker");
+    const sectorsData = await getPortfolioService("sector");
+
+    return {
+      stocks: stocksData.stocks,
+      sectors: sectorsData.sectors,
+    };
   }
 );
 
@@ -86,7 +91,7 @@ export const selectDisplayType = (state: RootState) =>
   state.portfolio.displayType;
 export const selectStatus = (state: RootState) => state.portfolio.status;
 export const selectData = (state: RootState) => {
-  return state.portfolio.displayType === "stock"
+  return state.portfolio.displayType === "ticker"
     ? state.portfolio.stocksData
     : state.portfolio.sectorsData;
 };
