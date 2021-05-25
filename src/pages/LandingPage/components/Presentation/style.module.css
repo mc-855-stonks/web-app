@@ -14,13 +14,13 @@
 .title {
     font-weight: bold;
     font-size: 48px;
-    padding-left: 150px;
+    padding-left: 130px;
 }
 
 .description {
     font-weight: normal;
     font-size: 24px;
-    padding-left: 150px;
+    padding-left: 130px;
     padding-top: 30px;
-    width: 540px;
+    padding-right: 10px;
 }

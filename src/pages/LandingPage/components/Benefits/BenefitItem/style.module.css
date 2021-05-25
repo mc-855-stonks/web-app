@@ -1,11 +1,10 @@
 .container {
     display: flex;
-    width: 700px;
+    width: 580px;
 }
 
 .item {
     padding-top: 140px;
-    padding-left: 150px;
 }
 
 .ilustration-image {

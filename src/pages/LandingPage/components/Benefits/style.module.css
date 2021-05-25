@@ -6,9 +6,13 @@
 
 .firstBenefit {
     padding-bottom: 360px;
+    padding-left: 150px;
 }
 
 .secondBenefit {
-    align-items:flex-end;
     padding-top: 560px;
+}
+
+.tirdBenefit {
+    padding-left: 150px;
 }
