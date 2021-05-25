@@ -4,6 +4,7 @@ import Presentation from "../Presentation";
 import Benefits from "../Benefits";
 import Statistics from "../Statistics";
 import Reports from "../Reports";
+import Footer from "../Footer";
 
 export default function LandingPageContainer() {
   return (
@@ -12,6 +13,7 @@ export default function LandingPageContainer() {
       <Benefits />
       <Statistics />
       <Reports />
+      <Footer />
     </div>
   );
 }
