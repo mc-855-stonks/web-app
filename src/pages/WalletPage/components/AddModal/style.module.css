@@ -1,3 +1,14 @@
 .stock-info-fields {
   display: flex;
 }
+
+.operation-type-fields {
+  display: flex;
+  font-size: 18px;
+}
+
+.operation-type-fields-error {
+  margin-top: 6px;
+  font-size: 16px;
+  color: var(--color-red);
+}

@@ -1,9 +1,15 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 
-import { selectStatus as selectStatusLogin } from "slices/loginSlice";
-import { selectStatus as selectStatusRegister } from "slices/registerSlice";
+import {
+  selectStatus as selectStatusLogin,
+  clearStatus as clearStatusLogin,
+} from "slices/loginSlice";
+import {
+  selectStatus as selectStatusRegister,
+  clearStatus as clearStatusRegister,
+} from "slices/registerSlice";
 
 import LoadingOverlay from "components/LoadingOverlay";
 import Notification from "components/Notification";
@@ -14,6 +20,7 @@ import RegisterCard from "./components/RegisterCard";
 import styles from "./style.module.css";
 
 export default function AuthPage() {
+  const dispatch = useAppDispatch();
   const statusLogin = useAppSelector(selectStatusLogin);
   const statusRegister = useAppSelector(selectStatusRegister);
   const loadingLogin = statusLogin === "loading";
@@ -24,11 +31,20 @@ export default function AuthPage() {
     ? "Houve um problema ao tentar realizar o login"
     : "Houve um problema ao tentar realizar o cadastro";
 
+  const dismissNotification = () => {
+    dispatch(clearStatusLogin());
+    dispatch(clearStatusRegister());
+  };
+
   return (
     <div className={styles.container}>
       {(loadingLogin || loadingRegister) && <LoadingOverlay />}
       {(errorLogin || errorRegister) && (
-        <Notification type="error" message={errorMessage} />
+        <Notification
+          type="error"
+          message={errorMessage}
+          onDismiss={dismissNotification}
+        />
       )}
       <Switch>
         <Route path="/login" component={LoginCard} />

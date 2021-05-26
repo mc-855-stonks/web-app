@@ -52,6 +52,11 @@ export default function RegisterCard() {
   );
   const dispatch = useAppDispatch();
 
+  const onProfileSelected = (value: string, displayValue: string) => {
+    dispatch(updateInvestorProfileDisplayText(displayValue));
+    dispatch(updateInvestorProfileValue(value));
+  };
+
   if (status === "success") {
     return <Redirect to="/login" />;
   }
@@ -81,7 +86,7 @@ export default function RegisterCard() {
           onChange={(e) =>
             dispatch(updateInvestorProfileDisplayText(e.target.value))
           }
-          onOptionSelected={(v) => dispatch(updateInvestorProfileValue(v))}
+          onOptionSelected={onProfileSelected}
           options={investorProfileMapping}
           style={{ marginBottom: 15 }}
           errorMode={invalidInvestorProfile}
