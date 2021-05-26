@@ -16,12 +16,8 @@ import SelectInput from "components/SelectInput";
 import styles from "./style.module.css";
 
 export default function EditableArea() {
-  const {
-    investorProfileDisplayText,
-    name,
-    password,
-    passwordConfirmation,
-  } = useAppSelector(selectFormData);
+  const { investorProfileDisplayText, name, password, passwordConfirmation } =
+    useAppSelector(selectFormData);
 
   const {
     invalidInvestorProfile,

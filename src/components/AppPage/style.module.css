@@ -6,6 +6,7 @@
 
 .content {
   padding-left: 47px;
+  padding-right: 47px;
   flex: 1;
   overflow: auto;
   background-color: var(--color-gray-background);

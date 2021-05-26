@@ -27,7 +27,7 @@ export default function LoginCard() {
   const dispatch = useAppDispatch();
 
   if (status === "success") {
-    return <Redirect to="/profile" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (
