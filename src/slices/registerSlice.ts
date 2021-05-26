@@ -41,34 +41,31 @@ const initialState: RegisterState = {
   invalidPasswordConfirmation: false,
 };
 
-export const register: AsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
-> = createAsyncThunk<void, void, AsyncThunkConfig>(
-  "register/register",
-  async (_, { getState }) => {
-    const {
-      email,
-      password,
-      investorProfileValue,
-      name,
-      passwordConfirmation,
-      passwordConfirmationEquals,
-    } = getState().register;
+export const register: AsyncThunk<void, void, AsyncThunkConfig> =
+  createAsyncThunk<void, void, AsyncThunkConfig>(
+    "register/register",
+    async (_, { getState }) => {
+      const {
+        email,
+        password,
+        investorProfileValue,
+        name,
+        passwordConfirmation,
+        passwordConfirmationEquals,
+      } = getState().register;
 
-    if (
-      email.trim() !== "" &&
-      investorProfileValue.trim() !== "" &&
-      name.trim() !== "" &&
-      password.trim() !== "" &&
-      passwordConfirmation.trim() !== "" &&
-      passwordConfirmationEquals
-    ) {
-      await registerService(email, investorProfileValue, name, password);
+      if (
+        email.trim() !== "" &&
+        investorProfileValue.trim() !== "" &&
+        name.trim() !== "" &&
+        password.trim() !== "" &&
+        passwordConfirmation.trim() !== "" &&
+        passwordConfirmationEquals
+      ) {
+        await registerService(email, investorProfileValue, name, password);
+      }
     }
-  }
-);
+  );
 
 export const registerSlice = createSlice({
   name: "register",

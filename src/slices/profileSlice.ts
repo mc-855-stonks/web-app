@@ -43,32 +43,29 @@ const initialState: ProfileState = {
   invalidPasswordConfirmation: false,
 };
 
-export const editProfile: AsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
-> = createAsyncThunk<void, void, AsyncThunkConfig>(
-  "profile/editProfile",
-  async (_, { getState }) => {
-    const {
-      name,
-      investorProfileValue,
-      password,
-      passwordConfirmation,
-      passwordConfirmationEquals,
-    } = getState().profile;
+export const editProfile: AsyncThunk<void, void, AsyncThunkConfig> =
+  createAsyncThunk<void, void, AsyncThunkConfig>(
+    "profile/editProfile",
+    async (_, { getState }) => {
+      const {
+        name,
+        investorProfileValue,
+        password,
+        passwordConfirmation,
+        passwordConfirmationEquals,
+      } = getState().profile;
 
-    if (
-      name.trim() !== "" &&
-      investorProfileValue.trim() !== "" &&
-      password.trim() !== "" &&
-      passwordConfirmation.trim() !== "" &&
-      passwordConfirmationEquals
-    ) {
-      await editProfileService(name, investorProfileValue, password);
+      if (
+        name.trim() !== "" &&
+        investorProfileValue.trim() !== "" &&
+        password.trim() !== "" &&
+        passwordConfirmation.trim() !== "" &&
+        passwordConfirmationEquals
+      ) {
+        await editProfileService(name, investorProfileValue, password);
+      }
     }
-  }
-);
+  );
 
 export const getProfile: AsyncThunk<
   GetProfileResponseData,

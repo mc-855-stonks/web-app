@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    width: 100%;
+    height: 150px;
+    background-color: #002642;
+}
+
+.space {
+    padding-left: 260px;
+}
+
+.link {
+    font-weight: bolder;
+    font-size: 16px;
+    text-align: right;
+    color:white;
+    padding-top: 66px;
+    padding-left: 56px;
+}
+
+.contact {
+    padding-left: 400px;
+}

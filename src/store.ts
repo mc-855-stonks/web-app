@@ -7,6 +7,7 @@ import registerReducer from "./slices/registerSlice";
 import profileReducer from "./slices/profileSlice";
 import walletReducer from "./slices/walletSlice";
 import stockReducer from "./slices/stockSlice";
+import portfolioReducer from "./slices/portfolioSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     profile: profileReducer,
     wallet: walletReducer,
     stock: stockReducer,
+    portfolio: portfolioReducer,
   },
 });
 
