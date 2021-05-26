@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    width: 580px;
+}
+
+.item {
+    padding-top: 140px;
+}
+
+.ilustration-image {
+    width: 400px;
+    align-items: center;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.description {
+    font-weight: normal;
+    font-size: 22px;
+    padding-top: 24px;
+    color: #505050;
+}
+
+.line {
+    color: black;
+    background-color: black;
+    height: 3px;
+    width: 400px;
+    margin-top: 5px;
+}

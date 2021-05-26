@@ -1,0 +1,22 @@
+.container {
+    padding-top: 120px;
+    padding-bottom: 140px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 72px;
+    margin-left: 100px;
+    margin-right: 20px;
+    color: white;
+}
+
+.description {
+    font-weight: normal;
+    font-size: 14px;
+    margin-left: 100px;
+    margin-right: 25px;
+    width: 340px;
+    color: white;
+}
+
