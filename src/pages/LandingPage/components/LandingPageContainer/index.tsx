@@ -10,7 +10,9 @@ import Footer from "../Footer";
 export default function LandingPageContainer() {
   return (
     <div className={style.container}>
-      <Header />
+      <div className={style.stick}>
+        <Header />
+      </div>
       <Presentation />
       <Benefits />
       <Statistics />
