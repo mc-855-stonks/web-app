@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
 import WalletPage from "./pages/WalletPage";
 import ProfilePage from "./pages/ProfilePage";
+import LandingPage from "pages/LandingPage";
 
 export default function AppRouter() {
   return (
@@ -22,7 +22,7 @@ export default function AppRouter() {
           <WalletPage />
         </Route>
         <Route path="/">
-          <HomePage />
+          <LandingPage />
         </Route>
       </Switch>
     </Router>
