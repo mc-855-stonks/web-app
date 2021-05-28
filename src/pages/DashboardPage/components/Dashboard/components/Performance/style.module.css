@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.chartGroup {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 15px;
+}
+
+.chartTitle {
+    font-family: var(--font-family-default);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: left;
+    vertical-align: top;
+    margin-top: 25px;
+}

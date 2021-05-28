@@ -1,0 +1,43 @@
+.container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-column-gap: 15px;
+    margin-top: 20px;
+}
+
+.timeSelectorMonthGroup {
+    display: flex;
+    flex-direction: column;
+    width: 93px;
+    cursor: pointer;
+}
+
+.timeSelectorText {
+    font-family: var(--font-family-default);
+    font-weight: 400;
+    color: #787878;
+    font-size: 18px;
+    line-height: 21.09px;
+}
+
+.timeSelectorTextEnabled {
+    font-family: var(--font-family-default);
+    font-weight: 700;
+    color: #004275;
+    font-size: 18px;
+    line-height: 21.09px;
+}
+
+.timeSelectorSeparator {
+    height: 2px;
+    width: 100%;
+    background-color: #787878;
+    margin-top: 6px;
+}
+
+.timeSelectorSeparatorEnabled {
+    height: 2px;
+    width: 100%;
+    background-color: #004275;
+    margin-top: 6px;
+}
