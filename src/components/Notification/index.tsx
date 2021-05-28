@@ -4,21 +4,15 @@ import closeIcon from "./imgs/close.svg";
 
 interface Props {
   message: string;
-  type: string;
+  type: "error" | "success";
+  onDismiss: VoidFunction;
 }
 
-const closeNotification = () => {
-  const notificationElement = document.getElementById("notification");
-  if (notificationElement) {
-    notificationElement.remove();
-  }
-};
+export default function Notification({ message, type, onDismiss }: Props) {
+  const waitNotificationExhibition = async () => {
+    setTimeout(onDismiss, 7 * 1000);
+  };
 
-const waitNotificationExhibition = async () => {
-  setTimeout(closeNotification, 7 * 1000);
-};
-
-export default function Notification({ message, type }: Props) {
   waitNotificationExhibition();
   return (
     <div
@@ -40,7 +34,7 @@ export default function Notification({ message, type }: Props) {
         className={style.closeIcon}
         src={closeIcon}
         alt="close"
-        onClick={closeNotification}
+        onClick={onDismiss}
       />
     </div>
   );

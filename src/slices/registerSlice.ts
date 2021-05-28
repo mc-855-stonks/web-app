@@ -6,7 +6,6 @@ import {
 } from "@reduxjs/toolkit";
 
 import { register as registerService } from "services/register";
-import { investorProfileMapping } from "types/InvestorProfile";
 
 import type { AsyncThunkConfig, RootState } from "../store";
 
@@ -72,6 +71,9 @@ export const registerSlice = createSlice({
   name: "register",
   initialState,
   reducers: {
+    clearStatus: (state) => {
+      state.status = "";
+    },
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
       state.invalidName = state.name.trim() === "";
@@ -83,14 +85,8 @@ export const registerSlice = createSlice({
       state.investorProfileDisplayText = action.payload;
     },
     updateInvestorProfileValue: (state, action: PayloadAction<string>) => {
-      const filteredProfile = investorProfileMapping.filter(
-        (it) => it.value === action.payload
-      );
-      if (filteredProfile.length > 0) {
-        state.investorProfileDisplayText = filteredProfile[0].displayValue;
-        state.investorProfileValue = action.payload;
-        state.invalidInvestorProfile = state.investorProfileValue.trim() === "";
-      }
+      state.investorProfileValue = action.payload;
+      state.invalidInvestorProfile = state.investorProfileValue.trim() === "";
     },
     updateEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
@@ -140,6 +136,7 @@ export const {
   updateInvestorProfileValue,
   updateName,
   updatePasswordConfirmation,
+  clearStatus,
 } = registerSlice.actions;
 
 export const selectFormData = (state: RootState) => {

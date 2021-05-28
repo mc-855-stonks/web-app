@@ -1,34 +1,29 @@
 import React from "react";
-import classnames from "classnames";
+
+import { NavLink } from "react-router-dom";
 
 import style from "./style.module.css";
 
 interface Props {
   value: string;
   icon: string;
-  active?: boolean;
+  to: string;
 }
 
-export default function MenuItem({ value, icon, active }: Props) {
-  const containerClasses = classnames(style.container, {
-    [style.active]: active,
-  });
-
-  const separatorClasses = classnames(style.separator, {
-    [style.active]: active,
-  });
-
+export default function MenuItem({ value, icon, to }: Props) {
   return (
-    <div className={containerClasses}>
-      <div className={style.content}>
-        <img src={icon} alt="" className={style.icon} />
-        {value}
+    <NavLink
+      to={to}
+      style={{ textDecoration: "none", color: "white" }}
+      activeClassName={style.active}
+    >
+      <div className={style.container}>
+        <div className={style.content}>
+          <img src={icon} alt="" className={style.icon} />
+          {value}
+        </div>
+        <div className={style.separator} />
       </div>
-      <div className={separatorClasses} />
-    </div>
+    </NavLink>
   );
 }
-
-MenuItem.defaultProps = {
-  active: false,
-};

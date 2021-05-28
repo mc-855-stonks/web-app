@@ -12,9 +12,9 @@ import style from "./style.module.css";
 export default function SideMenu() {
   return (
     <div className={style.container}>
-      <MenuItem value="Dashboard" icon={homeIcon} active />
-      <MenuItem value="Carteira" icon={walletIcon} />
-      <MenuItem value="Configurações" icon={profileIcon} />
+      <MenuItem to="/dashboard" value="Dashboard" icon={homeIcon} />
+      <MenuItem to="/wallet" value="Carteira" icon={walletIcon} />
+      <MenuItem to="/profile" value="Configurações" icon={profileIcon} />
       <Footer />
     </div>
   );

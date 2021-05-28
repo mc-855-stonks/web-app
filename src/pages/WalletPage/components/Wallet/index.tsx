@@ -1,6 +1,8 @@
 import React from "react";
+import { useAppSelector } from "hooks";
 
 import Subtitle from "components/Subtitle";
+import { selectWallet } from "slices/walletSlice";
 
 import Results from "./components/Results";
 import StockItem from "./components/StockItem";
@@ -8,10 +10,18 @@ import StockItem from "./components/StockItem";
 import style from "./style.module.css";
 
 export default function Wallet() {
+  const wallet = useAppSelector(selectWallet);
+  if (!wallet) {
+    return null;
+  }
+
   return (
     <div className={style.container}>
       <Subtitle>Rendimento Total</Subtitle>
-      <Results boughtAmount={3873.12} currentTotal={6000} />
+      <Results
+        boughtAmount={wallet.total_invested}
+        currentTotal={wallet.wallet_total}
+      />
       <Subtitle
         style={{
           marginTop: 43,
@@ -19,42 +29,21 @@ export default function Wallet() {
       >
         Ações
       </Subtitle>
-      <StockItem
-        ticker="CSNA3"
-        name="CIA SIDERURGICA NACIONAL"
-        walletPercentage={15}
-        totalYield={4.18}
-        yieldPercentage={0.36}
-        lastPrice={30.55}
-        buyPosition={1156.72}
-        currentPosition={1160.9}
-        amount={38}
-        averagePrice={30.44}
-      />
-      <StockItem
-        ticker="CSNA3"
-        name="CIA SIDERURGICA NACIONAL"
-        walletPercentage={15}
-        totalYield={4.18}
-        yieldPercentage={0.36}
-        lastPrice={30.55}
-        buyPosition={1156.72}
-        currentPosition={1160.9}
-        amount={38}
-        averagePrice={30.44}
-      />{" "}
-      <StockItem
-        ticker="CSNA3"
-        name="CIA SIDERURGICA NACIONAL"
-        walletPercentage={15}
-        totalYield={4.18}
-        yieldPercentage={0.36}
-        lastPrice={30.55}
-        buyPosition={1156.72}
-        currentPosition={1160.9}
-        amount={38}
-        averagePrice={30.44}
-      />
+      {wallet.stocks.map((stock) => (
+        <StockItem
+          key={stock.ticker}
+          ticker={stock.ticker}
+          name={stock.company_name}
+          walletPercentage={stock.proportion * 100}
+          totalYield={stock.curr_return}
+          yieldPercentage={stock.curr_return_percent}
+          lastPrice={stock.current_price}
+          buyPosition={stock.invested_value}
+          currentPosition={stock.current_total}
+          amount={stock.amount}
+          averagePrice={stock.mean_price}
+        />
+      ))}
     </div>
   );
 }

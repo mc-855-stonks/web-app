@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { selectStatus, getProfile } from "slices/profileSlice";
+import { selectStatus, getProfile, clearStatus } from "slices/profileSlice";
 import { getUserSessionId } from "utils/userSession";
 import Notification from "components/Notification";
 import Header from "components/Header";
@@ -29,6 +29,7 @@ export default function ProfilePage() {
             <Notification
               type="success"
               message="Seu perfil foi alterado com sucesso"
+              onDismiss={() => dispatch(clearStatus())}
             />
           )}
           <Header>Configurações</Header>

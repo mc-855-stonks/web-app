@@ -6,7 +6,7 @@ import style from "./style.module.css";
 interface Props<T extends DisplayValue> {
   value: string;
   displayValue: T;
-  onOptionSelected: (v: string) => void;
+  onOptionSelected: (v: string, displayValue: string) => void;
 }
 
 export default function Option<T extends DisplayValue>({
@@ -18,7 +18,7 @@ export default function Option<T extends DisplayValue>({
     <button
       type="button"
       className={style.container}
-      onClick={() => onOptionSelected(value)}
+      onClick={() => onOptionSelected(value, displayValue.toString())}
     >
       {displayValue}
     </button>
