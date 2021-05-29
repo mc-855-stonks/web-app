@@ -39,6 +39,7 @@ export default function StockItem({
   yieldPercentage,
 }: Props) {
   const dispatch = useAppDispatch();
+
   return (
     <div className={style.container}>
       <img className={style.logo} alt="" />
@@ -51,7 +52,7 @@ export default function StockItem({
       <button
         type="button"
         className={style.edit}
-        onClick={() => dispatch(showEditModal())}
+        onClick={() => dispatch(showEditModal(ticker))}
       >
         <img src={editIcon} alt="edit" className={style["edit-image"]} />
       </button>

@@ -9,6 +9,7 @@ export const investorProfileMapping = (() => {
     return {
       value: InvestorProfile[it as keyof typeof InvestorProfile],
       displayValue: it,
+      displayValueString: it,
     };
   });
 })();

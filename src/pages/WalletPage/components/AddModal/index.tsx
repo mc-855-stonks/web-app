@@ -25,14 +25,8 @@ import style from "./style.module.css";
 
 export default function AddModal() {
   const dispatch = useAppDispatch();
-  const {
-    amount,
-    operationDate,
-    price,
-    stockTicker,
-    side,
-    showAddFormErrors,
-  } = useAppSelector(selectAddForm);
+  const { amount, operationDate, price, stockTicker, side, showAddFormErrors } =
+    useAppSelector(selectAddForm);
   const {
     validAmount,
     validStockTicker,
@@ -45,6 +39,7 @@ export default function AddModal() {
     return {
       value: it.ticker,
       displayValue: it.ticker,
+      displayValueString: it.ticker,
     };
   });
   const buyChecked = side === "buy";
@@ -91,7 +86,7 @@ export default function AddModal() {
       <Input
         style={{ marginBottom: 16, marginTop: 16 }}
         type="text"
-        label="Data de compra"
+        label="Data da operação"
         value={operationDate}
         placeholder="__ / __ / ____"
         errorMessage="Campo obrigatório"
@@ -111,7 +106,7 @@ export default function AddModal() {
         <Input
           style={{ width: 250 }}
           type="text"
-          label="Preço de compra"
+          label="Preço"
           value={price}
           errorMessage="Campo obrigatório"
           errorMode={showAddFormErrors && !validPrice}

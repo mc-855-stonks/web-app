@@ -1,15 +1,14 @@
-import { DisplayValue } from "components/SelectInput";
 import React from "react";
 
 import style from "./style.module.css";
 
-interface Props<T extends DisplayValue> {
+interface Props<T> {
   value: string;
   displayValue: T;
-  onOptionSelected: (v: string, displayValue: string) => void;
+  onOptionSelected: (v: string) => void;
 }
 
-export default function Option<T extends DisplayValue>({
+export default function Option<T>({
   value,
   displayValue,
   onOptionSelected,
@@ -18,7 +17,7 @@ export default function Option<T extends DisplayValue>({
     <button
       type="button"
       className={style.container}
-      onClick={() => onOptionSelected(value, displayValue.toString())}
+      onClick={() => onOptionSelected(value)}
     >
       {displayValue}
     </button>

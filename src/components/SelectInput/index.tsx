@@ -8,16 +8,13 @@ import style from "./style.module.css";
 
 import dropIcon from "./imgs/drop.svg";
 
-export interface DisplayValue {
-  toString: () => string;
-}
-
-export interface OptionProp<T extends DisplayValue> {
+export interface OptionProp<T> {
   value: string;
   displayValue: T;
+  displayValueString: string;
 }
 
-interface Props<T extends DisplayValue> {
+interface Props<T> {
   errorMode?: boolean;
   errorMessage?: string;
   label?: string;
@@ -28,7 +25,7 @@ interface Props<T extends DisplayValue> {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-export default function SelectInput<T extends DisplayValue>({
+export default function SelectInput<T>({
   errorMode,
   errorMessage,
   label,
@@ -53,11 +50,11 @@ export default function SelectInput<T extends DisplayValue>({
   useEffect(() => {
     if (valueRef.current !== value) {
       const filteredOption =
-        options?.filter((it) => it.displayValue.toString() === value) || [];
+        options?.filter((it) => it.displayValueString === value) || [];
       if (onOptionSelected && filteredOption.length > 0) {
         onOptionSelected(
           filteredOption[0].value,
-          filteredOption[0].displayValue.toString()
+          filteredOption[0].displayValueString
         );
       }
     }
@@ -68,9 +65,10 @@ export default function SelectInput<T extends DisplayValue>({
     setVisibleOptions(true);
   }
 
-  function onOptionSelectedHandler(v: string, displayValue: string) {
-    if (onOptionSelected) {
-      onOptionSelected(v, displayValue);
+  function onOptionSelectedHandler(v: string) {
+    const option = options ? options.filter((it) => it.value === v) : [];
+    if (onOptionSelected && option.length === 1) {
+      onOptionSelected(v, option[0].displayValueString);
     }
     setVisibleOptions(false);
   }
@@ -83,10 +81,7 @@ export default function SelectInput<T extends DisplayValue>({
 
     const result =
       options?.filter((it) =>
-        it.displayValue
-          .toString()
-          .toLowerCase()
-          .includes(trimmedValue || "")
+        it.displayValueString.toLowerCase().includes(trimmedValue || "")
       ) || [];
 
     return result;

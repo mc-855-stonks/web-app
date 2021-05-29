@@ -5,8 +5,17 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import moment from "moment";
-import { createOperation, CreateOperationResponse } from "services/operation";
+import {
+  createOperation,
+  CreateOperationResponse,
+  GetOperationsResponse,
+  getOperations,
+  Operation,
+  updateOperation as updateOperationService,
+  UpdateOperationResponse,
+} from "services/operation";
 import { getWalletSummary, WalletResponse } from "services/wallet";
+import { formatCurrency } from "utils/formatters";
 import type { AsyncThunkConfig, RootState } from "../store";
 
 interface AddForm {
@@ -18,6 +27,16 @@ interface AddForm {
   showAddFormErrors: boolean;
 }
 
+interface EditForm {
+  selectedOperation: number;
+  selectedOperationText: string;
+  operationDate: string;
+  amount: string;
+  price: string;
+  side: "buy" | "sell" | "";
+  showEditFormErrors: boolean;
+}
+
 interface WalletState {
   notificationMessage: string;
   status: "success" | "error" | "loading" | "";
@@ -25,7 +44,22 @@ interface WalletState {
   editModalVisible: boolean;
   wallet: WalletResponse | null;
   addForm: AddForm;
+  editForm: EditForm;
+  editingTicker: string;
+  editingTickerOperations: Array<Operation>;
 }
+
+export const fetchEditingTickerOperations: AsyncThunk<
+  GetOperationsResponse,
+  void,
+  AsyncThunkConfig
+> = createAsyncThunk<GetOperationsResponse, void, AsyncThunkConfig>(
+  "wallet/fetchEditingTickerOperations",
+  async (_, { getState }) => {
+    const { editingTicker } = getState().wallet;
+    return Promise.resolve(getOperations(editingTicker));
+  }
+);
 
 export const fetchWalletSummary: AsyncThunk<
   WalletResponse,
@@ -81,11 +115,58 @@ export const createNewOperation: AsyncThunk<
   }
 );
 
+export const updateOperation: AsyncThunk<
+  UpdateOperationResponse,
+  void,
+  AsyncThunkConfig
+> = createAsyncThunk<UpdateOperationResponse, void, AsyncThunkConfig>(
+  "wallet/updateOperation",
+  async (_, { getState, dispatch }) => {
+    const { wallet } = getState();
+    const { editForm } = wallet;
+    const { amount, operationDate, price, selectedOperation, side } = editForm;
+    const {
+      validAmount,
+      validOperationDate,
+      validPrice,
+      validSelectedOperation,
+      validSide,
+    } = selectValidEditForm(getState());
+    if (
+      !validAmount ||
+      !validOperationDate ||
+      !validPrice ||
+      !validSelectedOperation ||
+      !validSide
+    ) {
+      dispatch(showEditFormErrors());
+      throw new Error("invalid params");
+    }
+
+    const formatedDate = moment(operationDate, "DD/MM/yyyy").format(
+      "yyyy-MM-DD"
+    );
+    const result = await updateOperationService(
+      selectedOperation,
+      formatedDate,
+      side,
+      parseInt(amount, 10),
+      parseFloat(price),
+      wallet.editingTicker
+    );
+    dispatch(fetchWalletSummary());
+
+    return result;
+  }
+);
+
 const initialState: WalletState = {
   status: "",
   notificationMessage: "",
   addModalVisible: false,
   editModalVisible: false,
+  editingTicker: "",
+  editingTickerOperations: [],
   wallet: null,
   addForm: {
     showAddFormErrors: false,
@@ -94,6 +175,15 @@ const initialState: WalletState = {
     amount: "",
     price: "",
     side: "",
+  },
+  editForm: {
+    selectedOperationText: "",
+    amount: "",
+    price: "",
+    side: "",
+    operationDate: "",
+    selectedOperation: -1,
+    showEditFormErrors: false,
   },
 };
 
@@ -111,11 +201,14 @@ export const walletSlice = createSlice({
       state.addModalVisible = false;
       state.addForm = initialState.addForm;
     },
-    showEditModal: (state) => {
+    showEditModal: (state, action: PayloadAction<string>) => {
       state.editModalVisible = true;
+      state.editingTicker = action.payload;
     },
     hideEditModal: (state) => {
       state.editModalVisible = false;
+      state.editingTicker = "";
+      state.editForm = initialState.editForm;
     },
     clearAddForm: (state) => {
       state.addForm = initialState.addForm;
@@ -141,6 +234,42 @@ export const walletSlice = createSlice({
     },
     showAddFormErrors: (state) => {
       state.addForm.showAddFormErrors = true;
+    },
+    showEditFormErrors: (state) => {
+      state.editForm.showEditFormErrors = true;
+    },
+    updateEditFormSelectedOperationText: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.editForm.selectedOperationText = action.payload;
+    },
+    updateEditFormSelectedOperation: (state, action: PayloadAction<number>) => {
+      const operation = state.editingTickerOperations.filter(
+        (it) => it.id === action.payload
+      );
+      if (operation.length === 1) {
+        state.editForm.selectedOperation = action.payload;
+        state.editForm.amount = operation[0].amount.toString();
+        state.editForm.price = formatCurrency(operation[0].price);
+        state.editForm.side = operation[0].side;
+        state.editForm.operationDate = moment(
+          operation[0].date,
+          "yyyy-MM-DD"
+        ).format("DD/MM/yyyy");
+      }
+    },
+    updateEditFormAmount: (state, action: PayloadAction<string>) => {
+      state.editForm.amount = action.payload;
+    },
+    updateEditFormPrice: (state, action: PayloadAction<string>) => {
+      state.editForm.price = action.payload;
+    },
+    updateEditFormOperationDate: (state, action: PayloadAction<string>) => {
+      state.editForm.operationDate = action.payload;
+    },
+    editFormSelectSide: (state, action: PayloadAction<"buy" | "sell">) => {
+      state.editForm.side = action.payload;
     },
   },
   extraReducers: {
@@ -171,6 +300,36 @@ export const walletSlice = createSlice({
       state.notificationMessage = "Houve um erro para adicionar a operação";
       state.status = "error";
     },
+    [fetchEditingTickerOperations.pending.type]: (state) => {
+      state.status = "loading";
+    },
+    [fetchEditingTickerOperations.fulfilled.type]: (
+      state,
+      action: PayloadAction<GetOperationsResponse>
+    ) => {
+      state.status = "";
+      state.editingTickerOperations = action.payload.data;
+      state.addForm = initialState.addForm; // editing form
+    },
+    [fetchEditingTickerOperations.rejected.type]: (state) => {
+      state.notificationMessage = "Houve um erro para editar as suas operações";
+      state.status = "error";
+      state.editModalVisible = false;
+      state.editingTicker = "";
+    },
+    [updateOperation.pending.type]: (state) => {
+      state.status = "loading";
+    },
+    [updateOperation.fulfilled.type]: (state) => {
+      state.status = "success";
+      state.notificationMessage = "Successo ao editar a operação";
+      state.editModalVisible = false;
+      state.editForm = initialState.editForm;
+    },
+    [updateOperation.rejected.type]: (state) => {
+      state.notificationMessage = "Houve um erro para editar a operação";
+      state.status = "error";
+    },
   },
 });
 
@@ -187,6 +346,13 @@ export const {
   showAddFormErrors,
   clearAddForm,
   clearStatus,
+  updateEditFormSelectedOperationText,
+  updateEditFormSelectedOperation,
+  updateEditFormAmount,
+  updateEditFormOperationDate,
+  updateEditFormPrice,
+  showEditFormErrors,
+  editFormSelectSide,
 } = walletSlice.actions;
 
 export const selectNotificationMessage = (state: RootState) =>
@@ -201,13 +367,8 @@ export const selectStocks = (state: RootState) =>
   state.wallet.wallet ? state.wallet.wallet.stocks : [];
 export const selectAddForm = (state: RootState) => state.wallet.addForm;
 export const selectValidAddForm = (state: RootState) => {
-  const {
-    amount,
-    operationDate,
-    price,
-    side,
-    stockTicker,
-  } = state.wallet.addForm;
+  const { amount, operationDate, price, side, stockTicker } =
+    state.wallet.addForm;
   const date = moment(operationDate, "DD/MM/yyyy");
   return {
     validStockTicker: stockTicker !== "",
@@ -215,6 +376,27 @@ export const selectValidAddForm = (state: RootState) => {
     validPrice: price !== "" && !Number.isNaN(parseFloat(price)),
     validSide: side !== "",
     validOperationDate: date.isValid(),
+  };
+};
+
+export const selectEditingTickerOperations = (state: RootState) =>
+  state.wallet.editingTickerOperations;
+
+export const selectEditingTicker = (state: RootState) =>
+  state.wallet.editingTicker;
+
+export const selectEditForm = (state: RootState) => state.wallet.editForm;
+
+export const selectValidEditForm = (state: RootState) => {
+  const { amount, operationDate, price, selectedOperation, side } =
+    state.wallet.editForm;
+  const date = moment(operationDate, "DD/MM/yyyy");
+  return {
+    validAmount: amount !== "" && !Number.isNaN(parseInt(amount, 10)),
+    validPrice: price !== "" && !Number.isNaN(parseFloat(price)),
+    validOperationDate: date.isValid(),
+    validSelectedOperation: selectedOperation !== -1,
+    validSide: side !== "",
   };
 };
 
