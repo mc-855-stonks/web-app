@@ -1,6 +1,8 @@
 import React from "react";
 import dashboardStyle from "pages/DashboardPage/components/Dashboard/style.module.css";
 import performanceStyle from "pages/DashboardPage/components/Dashboard/components/Performance/style.module.css";
+import BarChart from "components/Charts/BarChart";
+import incomeStyle from "./style.module.css";
 import TimeSelector from "../TimeSelector";
 
 export default function MonthlyIncome() {
@@ -8,6 +10,9 @@ export default function MonthlyIncome() {
     <div className={dashboardStyle.card}>
       <h2 className={performanceStyle.chartTitle}>Rendimento Mensal (R$)</h2>
       <TimeSelector />
+      <div className={incomeStyle.barChartContainer}>
+        <BarChart />
+      </div>
     </div>
   );
 }
