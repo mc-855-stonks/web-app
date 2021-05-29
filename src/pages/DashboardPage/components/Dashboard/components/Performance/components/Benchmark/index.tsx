@@ -7,7 +7,12 @@ export default function Benchmark() {
   return (
     <div className={dashboardStyle.card}>
       <h2 className={performanceStyle.chartTitle}>Benchmark</h2>
-      <TimeSelector />
+      <TimeSelector
+        displayType="12-months"
+        selectTwelveMonths={() => { }}
+        selectSixMonths={() => { }}
+        selectThreeMonths={() => { }}
+      />
     </div>
   );
 }
