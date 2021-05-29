@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #aaaaaa;
+  font-size: 15px;
+}
+
+.date-side {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.operation-details {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
