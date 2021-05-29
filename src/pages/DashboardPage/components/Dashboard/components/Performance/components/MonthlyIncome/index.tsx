@@ -2,25 +2,13 @@ import React from "react";
 import dashboardStyle from "pages/DashboardPage/components/Dashboard/style.module.css";
 import performanceStyle from "pages/DashboardPage/components/Dashboard/components/Performance/style.module.css";
 import BarChart from "components/Charts/BarChart";
+import { selectData } from "slices/monthlyIncomeSlice";
+import { useAppSelector } from "hooks";
 import incomeStyle from "./style.module.css";
 import TimeSelector from "../TimeSelector";
 
 export default function MonthlyIncome() {
-  const data = [
-    { name: "Mar/2020", value: 4000, },
-    { name: "", value: 3000, },
-    { name: "", value: -2000, },
-    { name: "", value: 2780, },
-    { name: "", value: -300, },
-    { name: "", value: 2390, },
-    { name: "", value: 2390, },
-    { name: "", value: -1500, },
-    { name: "", value: 500, },
-    { name: "", value: 1800, },
-    { name: "", value: -3000, },
-    { name: "Abr/2021", value: 3490, },
-  ];
-
+  const data = useAppSelector(selectData);
   return (
     <div className={dashboardStyle.card}>
       <h2 className={performanceStyle.chartTitle}>Rendimento Mensal (R$)</h2>

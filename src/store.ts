@@ -8,6 +8,7 @@ import profileReducer from "./slices/profileSlice";
 import walletReducer from "./slices/walletSlice";
 import stockReducer from "./slices/stockSlice";
 import portfolioReducer from "./slices/portfolioSlice";
+import monthlyIncomeReducer from "./slices/monthlyIncomeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     wallet: walletReducer,
     stock: stockReducer,
     portfolio: portfolioReducer,
+    monthlyIncome: monthlyIncomeReducer,
   },
 });
 
