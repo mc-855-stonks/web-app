@@ -3,3 +3,38 @@
     margin-bottom: 15px;
     margin-left: -35px;
 }
+
+.displayTypeGroups {
+    display: grid;
+    grid-template-columns: min-content min-content min-content;
+    grid-column-gap: 12px;
+    text-align: center;
+}
+
+.displayType {
+    width: 46.32px;
+    height: 21.27px;
+    border-radius: 20px;
+    background-color: #BEBEBE;
+    font-family: var(--font-family-default);
+    font-weight: 700;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 22px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.displayTypeEnabled {
+    width: 46.32px;
+    height: 21.27px;
+    border-radius: 20px;
+    background-color: #004275;
+    font-family: var(--font-family-default);
+    font-weight: 700;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 22px;
+    color: #FFFFFF;
+    cursor: pointer;
+}

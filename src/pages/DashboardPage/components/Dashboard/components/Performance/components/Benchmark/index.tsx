@@ -99,10 +99,15 @@ export default function Benchmark() {
           lineDataList={[
             { dataKey: "ibov", name: "IBOV", color: "#E8C603", },
             { dataKey: "cdi", name: "CDI", color: "#3F84BF", },
-            { dataKey: "ipca", name: "IPCA", color: "#A5C1CE", },
+            //{ dataKey: "ipca", name: "IPCA", color: "#A5C1CE", },
           ]}
           tickFormatter={(tick: any) => { return `${tick}%`; }}
         />
+      </div>
+      <div className={benchmarkStyle.displayTypeGroups}>
+        <div className={benchmarkStyle.displayTypeEnabled}>IBOV</div>
+        <div className={benchmarkStyle.displayTypeEnabled}>CDI</div>
+        <div className={benchmarkStyle.displayType}>IPCA</div>
       </div>
     </div>
   );
