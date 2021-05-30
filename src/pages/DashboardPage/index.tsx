@@ -12,30 +12,38 @@ import {
   getMonthlyIncome,
   selectStatus as selectMonthlyIncomeStatus,
 } from "slices/monthlyIncomeSlice";
+import {
+  getBenchmark,
+  selectStatus as selectBenchmarkStatus,
+} from "slices/benchmarkSlice";
 import Loading from "components/LoadingOverlay";
 import Dashboard from "./components/Dashboard";
 
 const getDashboardStatus = (
   portfolioStatus: string,
   monthlyIncomeStatus: string,
+  benchmarkStatus: string,
 ) => {
   if (
     portfolioStatus === "error" ||
-    monthlyIncomeStatus === "error"
+    monthlyIncomeStatus === "error" ||
+    benchmarkStatus === "error"
   ) {
     return "error";
   }
 
   if (
     portfolioStatus === "loading" ||
-    monthlyIncomeStatus === "loading"
+    monthlyIncomeStatus === "loading" ||
+    benchmarkStatus === "loading"
   ) {
     return "loading";
   }
 
   if (
     portfolioStatus === "success" &&
-    monthlyIncomeStatus === "success"
+    monthlyIncomeStatus === "success" &&
+    benchmarkStatus === "success"
   ) {
     return "success";
   }
@@ -47,10 +55,12 @@ export default function DashboardPage() {
   const dispatch = useAppDispatch();
   const portfolioStatus = useAppSelector(selectPortfolioStatus);
   const monthIncomeStatus = useAppSelector(selectMonthlyIncomeStatus);
-  // TO DO: Incluir demais estados aqui, exemplo: walletSummaryStatus
+  const benchmarkStatus = useAppSelector(selectBenchmarkStatus);
+
   const dashboardStatus = getDashboardStatus(
     portfolioStatus,
-    monthIncomeStatus
+    monthIncomeStatus,
+    benchmarkStatus,
   );
 
   switch (dashboardStatus) {
@@ -60,7 +70,7 @@ export default function DashboardPage() {
       if (getUserSessionId()) {
         dispatch(getPortfolio());
         dispatch(getMonthlyIncome());
-        // TO DO: Incluir demais eventos aqui, exemplo: dispatch(getWalletSummary())
+        dispatch(getBenchmark());
         return <div />;
       }
       return <Redirect to="/login" />;

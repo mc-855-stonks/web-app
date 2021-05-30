@@ -2,93 +2,61 @@ import React from "react";
 import dashboardStyle from "pages/DashboardPage/components/Dashboard/style.module.css";
 import performanceStyle from "pages/DashboardPage/components/Dashboard/components/Performance/style.module.css";
 import LineChart from "components/Charts/LineChart";
+import {
+  selectData,
+  selectDisplayTypes,
+  selectTimeSelectionType,
+  updateDisplayType,
+  updateTimeSelectionType,
+} from "slices/benchmarkSlice";
+import { useAppSelector, useAppDispatch } from "hooks";
 import benchmarkStyle from "./style.module.css";
 import TimeSelector from "../TimeSelector";
 
+const LINE_DATA_MAP = new Map([
+  ["return", { name: "Carteira", color: "#A5C1CE", }],
+  ["ibov", { name: "IBOV", color: "#E8C603", }],
+  ["cdi", { name: "CDI", color: "#3F84BF", }],
+  ["ipca", { name: "IPCA", color: "#993399", }],
+]);
+
+const getLineDataItem = (displayType: string) => {
+  const dataMapItem = LINE_DATA_MAP.get(displayType);
+  if (!dataMapItem) {
+    return { dataKey: "", name: "", color: "", };
+  }
+  return {
+    dataKey: displayType,
+    name: dataMapItem.name,
+    color: dataMapItem.color,
+  };
+};
+
 export default function Benchmark() {
-  const data = [
-    {
-      name: "Abr/2020",
-      ibov: 40,
-      cdi: 24,
-      ipca: 24,
-    },
-    {
-      name: "",
-      ibov: 20,
-      cdi: 10,
-      ipca: 15,
-    },
-    {
-      name: "",
-      ibov: 19,
-      cdi: 31,
-      ipca: 44,
-    },
-    {
-      name: "",
-      ibov: 66,
-      cdi: 13,
-      ipca: 58,
-    },
-    {
-      name: "",
-      ibov: 98,
-      cdi: 5,
-      ipca: 10,
-    },
-    {
-      name: "",
-      ibov: 80,
-      cdi: 10,
-      ipca: 16,
-    },
-    {
-      name: "",
-      ibov: 29,
-      cdi: 7,
-      ipca: 67,
-    },
-    {
-      name: "",
-      ibov: 20,
-      cdi: 98,
-      ipca: 21,
-    },
-    {
-      name: "",
-      ibov: 27,
-      cdi: 39,
-      ipca: 20,
-    },
-    {
-      name: "",
-      ibov: 18,
-      cdi: 48,
-      ipca: 21,
-    },
-    {
-      name: "",
-      ibov: 23,
-      cdi: 38,
-      ipca: 25,
-    },
-    {
-      name: "Abr/2021",
-      ibov: 34,
-      cdi: 43,
-      ipca: 21,
-    },
-  ];
+  const data = useAppSelector(selectData);
+  const displayTypes = useAppSelector(selectDisplayTypes);
+  const timeSelectionType = useAppSelector(selectTimeSelectionType);
+  const dispatch = useAppDispatch();
+  const lineDataList = displayTypes.map(getLineDataItem);
+
+  const ibovSelectionStyle = displayTypes.includes("ibov")
+    ? benchmarkStyle.displayTypeEnabled
+    : benchmarkStyle.displayType;
+  const cdiSelectionStyle = displayTypes.includes("cdi")
+    ? benchmarkStyle.displayTypeEnabled
+    : benchmarkStyle.displayType;
+  const ipcaSelectionStyle = displayTypes.includes("ipca")
+    ? benchmarkStyle.displayTypeEnabled
+    : benchmarkStyle.displayType;
 
   return (
     <div className={dashboardStyle.card}>
       <h2 className={performanceStyle.chartTitle}>Benchmark</h2>
       <TimeSelector
-        displayType="12-months"
-        selectTwelveMonths={() => { }}
-        selectSixMonths={() => { }}
-        selectThreeMonths={() => { }}
+        displayType={timeSelectionType}
+        selectTwelveMonths={() => dispatch(updateTimeSelectionType("12-months"))}
+        selectSixMonths={() => dispatch(updateTimeSelectionType("6-months"))}
+        selectThreeMonths={() => dispatch(updateTimeSelectionType("3-months"))}
       />
       <div className={benchmarkStyle.lineChartContainer}>
         <LineChart
@@ -96,18 +64,29 @@ export default function Benchmark() {
           width={430}
           height={220}
           xAxisDataKey="name"
-          lineDataList={[
-            { dataKey: "ibov", name: "IBOV", color: "#E8C603", },
-            { dataKey: "cdi", name: "CDI", color: "#3F84BF", },
-            //{ dataKey: "ipca", name: "IPCA", color: "#A5C1CE", },
-          ]}
+          lineDataList={lineDataList}
           tickFormatter={(tick: any) => { return `${tick}%`; }}
         />
       </div>
       <div className={benchmarkStyle.displayTypeGroups}>
-        <div className={benchmarkStyle.displayTypeEnabled}>IBOV</div>
-        <div className={benchmarkStyle.displayTypeEnabled}>CDI</div>
-        <div className={benchmarkStyle.displayType}>IPCA</div>
+        <div
+          className={ibovSelectionStyle}
+          onClick={() => dispatch(updateDisplayType("ibov"))}
+        >
+          IBOV
+        </div>
+        <div
+          className={cdiSelectionStyle}
+          onClick={() => dispatch(updateDisplayType("cdi"))}
+        >
+          CDI
+        </div>
+        <div
+          className={ipcaSelectionStyle}
+          onClick={() => dispatch(updateDisplayType("ipca"))}
+        >
+          IPCA
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import {
   AsyncThunk,
   createAsyncThunk,
 } from "@reduxjs/toolkit";
+import { getChartDateLabel } from "utils/date";
 import {
   getMonthlyIncome as getMonthlyIncomeService,
   MonthlyIncomeData,
@@ -31,21 +32,6 @@ const initialState: MonthlyIncomeState = {
   status: "",
 };
 
-const MONTH_LABEL_LIST = [
-  "Jan",
-  "Fev",
-  "Mar",
-  "Abr",
-  "Mai",
-  "Jun",
-  "Jul",
-  "Ago",
-  "Set",
-  "Out",
-  "Nov",
-  "Dez",
-];
-
 export const getMonthlyIncome: AsyncThunk<
   Array<MonthlyIncomeData>,
   void,
@@ -57,14 +43,6 @@ export const getMonthlyIncome: AsyncThunk<
     return data;
   }
 );
-
-const getChartDateLabel = (date: string) => {
-  const yearMonth = date.split("-");
-  if (!yearMonth || yearMonth.length < 2) {
-    return "";
-  }
-  return `${MONTH_LABEL_LIST[Number(yearMonth[1]) - 1]}/${yearMonth[0]}`;
-};
 
 const getLabeledChartPointData = (income: MonthlyIncomeData) => {
   return {
@@ -93,8 +71,13 @@ const getMonthlyIncomeChartData = (
   
   const { length } = orderedMonthList;
   const lastMonthChartData = getLabeledChartPointData(orderedMonthList[length - 1]);
-  const intermediaryMonthChartData = orderedMonthList.slice(1, length - 1).map(getNonLabeledChartPointData);
-  return [firstMonthChartData].concat(intermediaryMonthChartData).concat(lastMonthChartData);
+  const intermediaryMonthChartData = orderedMonthList
+    .slice(1, length - 1)
+    .map(getNonLabeledChartPointData);
+
+  return [firstMonthChartData]
+    .concat(intermediaryMonthChartData)
+    .concat(lastMonthChartData);
 };
 
 export const monthlyIncomeSlice = createSlice({
