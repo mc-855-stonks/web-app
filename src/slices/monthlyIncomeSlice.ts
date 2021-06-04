@@ -8,6 +8,7 @@ import { getChartDateLabel } from "utils/date";
 import {
   getMonthlyIncome as getMonthlyIncomeService,
   MonthlyIncomeData,
+  MonthlyIncomeResponse,
 } from "services/monthlyIncome";
 import type { RootState, AsyncThunkConfig } from "store";
 
@@ -33,10 +34,10 @@ const initialState: MonthlyIncomeState = {
 };
 
 export const getMonthlyIncome: AsyncThunk<
-  Array<MonthlyIncomeData>,
+  MonthlyIncomeResponse,
   void,
   AsyncThunkConfig
-> = createAsyncThunk<Array<MonthlyIncomeData>, void, AsyncThunkConfig>(
+> = createAsyncThunk<MonthlyIncomeResponse, void, AsyncThunkConfig>(
   "monthlyIncome/getMonthlyIncome",
   async () => {
     const data = await getMonthlyIncomeService();
@@ -97,12 +98,12 @@ export const monthlyIncomeSlice = createSlice({
     },
     [getMonthlyIncome.fulfilled.type]: (
       state,
-      action: PayloadAction<Array<MonthlyIncomeData>>
+      action: PayloadAction<MonthlyIncomeResponse>
     ) => {
       state.monthsDataMap = new Map([
-        ["3-months", getMonthlyIncomeChartData(action.payload, 3)],
-        ["6-months", getMonthlyIncomeChartData(action.payload, 6)],
-        ["12-months", getMonthlyIncomeChartData(action.payload, 12)],
+        ["3-months", getMonthlyIncomeChartData(action.payload.returns, 3)],
+        ["6-months", getMonthlyIncomeChartData(action.payload.returns, 6)],
+        ["12-months", getMonthlyIncomeChartData(action.payload.returns, 12)],
       ]);
       state.status = "success";
     },
