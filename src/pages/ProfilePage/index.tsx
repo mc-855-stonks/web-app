@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { selectStatus, getProfile, clearStatus } from "slices/profileSlice";
@@ -12,29 +12,24 @@ import ProfileContainer from "./components/ProfileContainer";
 export default function ProfilePage() {
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectStatus);
+  const loading = status === "loading";
 
-  switch (status) {
-    case "loading":
-      return <Loading />;
-    case "":
-      if (getUserSessionId()) {
-        dispatch(getProfile());
-        return <div />;
-      }
-      return <Redirect to="/login" />;
-    default:
-      return (
-        <AppPage>
-          {status === "edit-profile-success" && (
-            <Notification
-              type="success"
-              message="Seu perfil foi alterado com sucesso"
-              onDismiss={() => dispatch(clearStatus())}
-            />
-          )}
-          <Header>Configurações</Header>
-          <ProfileContainer />
-        </AppPage>
-      );
-  }
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [dispatch]);
+
+  return (
+    <AppPage>
+      {loading && <Loading />}
+      {status === "edit-profile-success" && (
+        <Notification
+          type="success"
+          message="Seu perfil foi alterado com sucesso"
+          onDismiss={() => dispatch(clearStatus())}
+        />
+      )}
+      <Header>Configurações</Header>
+      <ProfileContainer />
+    </AppPage>
+  );
 }

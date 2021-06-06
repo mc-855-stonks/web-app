@@ -7,3 +7,12 @@
   flex-direction: column;
   min-width: 280px;
 }
+
+.logo {
+  object-fit: contain;
+  height: 90px;
+  margin-left: 35px;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}

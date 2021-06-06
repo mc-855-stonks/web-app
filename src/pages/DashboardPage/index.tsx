@@ -1,6 +1,6 @@
 import AppPage from "components/AppPage";
 import Header from "components/Header";
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getUserSessionId } from "utils/userSession";
@@ -22,7 +22,7 @@ import Dashboard from "./components/Dashboard";
 const getDashboardStatus = (
   portfolioStatus: string,
   monthlyIncomeStatus: string,
-  benchmarkStatus: string,
+  benchmarkStatus: string
 ) => {
   if (
     portfolioStatus === "error" ||
@@ -60,26 +60,22 @@ export default function DashboardPage() {
   const dashboardStatus = getDashboardStatus(
     portfolioStatus,
     monthIncomeStatus,
-    benchmarkStatus,
+    benchmarkStatus
   );
 
-  switch (dashboardStatus) {
-    case "loading":
-      return <Loading />;
-    case "":
-      if (getUserSessionId()) {
-        dispatch(getPortfolio());
-        dispatch(getMonthlyIncome());
-        dispatch(getBenchmark());
-        return <div />;
-      }
-      return <Redirect to="/login" />;
-    default:
-      return (
-        <AppPage>
-          <Header>Dashboard</Header>
-          <Dashboard />
-        </AppPage>
-      );
-  }
+  const loading = dashboardStatus === "loading";
+
+  useEffect(() => {
+    dispatch(getPortfolio());
+    dispatch(getMonthlyIncome());
+    dispatch(getBenchmark());
+  }, [dispatch]);
+
+  return (
+    <AppPage>
+      {loading && <Loading />}
+      <Header>Dashboard</Header>
+      <Dashboard />
+    </AppPage>
+  );
 }
