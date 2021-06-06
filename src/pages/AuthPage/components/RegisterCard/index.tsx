@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import { investorProfileMapping } from "types/InvestorProfile";
@@ -22,6 +22,7 @@ import {
   selectPasswordConfirmationEqualsStatus,
   selectInvalidFieldsStatus,
   register,
+  clearForm,
 } from "slices/registerSlice";
 
 import Card from "../Card";
@@ -51,6 +52,12 @@ export default function RegisterCard() {
     selectPasswordConfirmationEqualsStatus
   );
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearForm());
+    };
+  }, [dispatch]);
 
   const onProfileSelected = (value: string, displayValue: string) => {
     dispatch(updateInvestorProfileDisplayText(displayValue));

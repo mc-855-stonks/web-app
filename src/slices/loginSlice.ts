@@ -44,6 +44,11 @@ export const loginSlice = createSlice({
     clearStatus: (state) => {
       state.status = "";
     },
+    clearForm: (state) => {
+      state.email = initialState.email;
+      state.password = initialState.password;
+      state.status = initialState.status;
+    },
   },
   extraReducers: {
     [login.pending.type]: (state) => {
@@ -58,7 +63,8 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { updateEmail, updatePassword, clearStatus } = loginSlice.actions;
+export const { updateEmail, updatePassword, clearStatus, clearForm } =
+  loginSlice.actions;
 
 export const selectEmail = (state: RootState) => state.login.email;
 export const selectPassword = (state: RootState) => state.login.password;

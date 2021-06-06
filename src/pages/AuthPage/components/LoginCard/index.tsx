@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "hooks";
@@ -10,11 +10,15 @@ import {
   selectPassword,
   selectStatus,
   login,
+  clearForm,
 } from "slices/loginSlice";
+
+import { getUserSessionId } from "utils/userSession";
 
 import Input from "components/Input";
 import Button from "components/Button";
 import Title from "components/Title";
+
 import Card from "../Card";
 import styleLogin from "./style.module.css";
 import stylePage from "../../style.module.css";
@@ -26,7 +30,13 @@ export default function LoginCard() {
   const errorMode = status === "error";
   const dispatch = useAppDispatch();
 
-  if (status === "success") {
+  useEffect(() => {
+    return () => {
+      dispatch(clearForm());
+    };
+  }, [dispatch]);
+
+  if (status === "success" && getUserSessionId()) {
     return <Redirect to="/dashboard" />;
   }
 

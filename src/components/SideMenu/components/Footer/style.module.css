@@ -26,11 +26,17 @@
 .icon {
   width: 29px;
   height: 29px;
-  cursor: pointer;
 }
 
 .info-icon {
   height: 26px;
   width: 26px;
   cursor: pointer;
+}
+
+.footer-button {
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
 }

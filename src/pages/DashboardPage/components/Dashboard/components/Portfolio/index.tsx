@@ -1,15 +1,19 @@
 import React from "react";
 import dashboardStyle from "pages/DashboardPage/components/Dashboard/style.module.css";
+
 import DoughnutChart, {
   DoughnutDatasetPointType,
 } from "components/Charts/DoughnutChart";
+
 import {
   selectDisplayType,
   selectData,
   updateDisplayType,
 } from "slices/portfolioSlice";
 import { useAppDispatch, useAppSelector } from "hooks";
+
 import Legend from "./components/Legend";
+
 import portfolioStyle from "./style.module.css";
 
 const generateRandomHexadecimalColor = () => {

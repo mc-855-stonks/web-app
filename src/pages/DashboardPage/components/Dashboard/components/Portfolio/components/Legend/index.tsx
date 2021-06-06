@@ -16,7 +16,7 @@ export default function Legend({ data }: Props) {
   return (
     <div className={style.legendGroup}>
       {data.map((legendPoint) => (
-        <div className={style.legendRow}>
+        <div key={legendPoint.name} className={style.legendRow}>
           <div
             className={style.legendBullet}
             style={{ backgroundColor: legendPoint.color }}

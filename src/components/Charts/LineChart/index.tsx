@@ -32,17 +32,14 @@ export default function LineChart({
   tickFormatter,
 }: Props) {
   return (
-    <LineChartRecharts
-      width={width}
-      height={height}
-      data={dataset}
-    >
+    <LineChartRecharts width={width} height={height} data={dataset}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey={xAxisDataKey} />
       <YAxis tickFormatter={tickFormatter} />
       <Tooltip />
-      {lineDataList.map((lineData) => 
+      {lineDataList.map((lineData) => (
         <Line
+          key={lineData.name}
           type="monotone"
           dataKey={lineData.dataKey}
           stroke={lineData.color}
@@ -50,7 +47,7 @@ export default function LineChart({
           dot={false}
           strokeWidth={2}
         />
-      )}
+      ))}
     </LineChartRecharts>
   );
 }

@@ -30,7 +30,7 @@ export default function DoughnutChart({
         dataKey="value"
       >
         {dataset.map((entry, index) => (
-          <Cell fill={colors[index % colors.length]} />
+          <Cell key={entry.name} fill={colors[index % colors.length]} />
         ))}
       </Pie>
     </PieChart>

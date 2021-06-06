@@ -74,6 +74,14 @@ export const registerSlice = createSlice({
     clearStatus: (state) => {
       state.status = "";
     },
+    clearForm: (state) => {
+      state.name = initialState.name;
+      state.password = initialState.password;
+      state.passwordConfirmation = initialState.passwordConfirmation;
+      state.passwordConfirmationEquals =
+        initialState.passwordConfirmationEquals;
+      state.status = initialState.status;
+    },
     updateName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
       state.invalidName = state.name.trim() === "";
@@ -137,6 +145,7 @@ export const {
   updateName,
   updatePasswordConfirmation,
   clearStatus,
+  clearForm,
 } = registerSlice.actions;
 
 export const selectFormData = (state: RootState) => {
