@@ -25,15 +25,18 @@ import {
   updateEditFormSelectedOperationText,
   editFormSelectSide,
   updateOperation,
+  selectDeletingModalVisible,
+  deleteOperation as deleteOperationAction,
 } from "slices/walletSlice";
 
 import OperationSelectOption from "./components/OperationSelectOption";
 
 import style from "./style.module.css";
 
-export default function AddModal() {
+export default function EditModal() {
   const dispatch = useAppDispatch();
   const editingTicker = useAppSelector(selectEditingTicker);
+  const deleteOperation = useAppSelector(selectDeletingModalVisible);
   const {
     selectedOperationText,
     price,
@@ -78,10 +81,25 @@ export default function AddModal() {
     dispatch(fetchEditingTickerOperations());
   }, [dispatch]);
 
+  const buttonStyle = deleteOperation
+    ? {
+        backgroundColor: "#E7423C",
+      }
+    : {};
+
+  const onButtonClick = () => {
+    if (deleteOperation) {
+      dispatch(deleteOperationAction());
+    } else {
+      dispatch(updateOperation());
+    }
+  };
+
   return (
     <Modal onClose={() => dispatch(hideEditModal())}>
       <Title style={{ marginTop: 48, marginBottom: 46 }}>
-        Editar registro do ativo {editingTicker}
+        {deleteOperation ? "Deletar" : "Editar"} registro do ativo{" "}
+        {editingTicker}
       </Title>
       <SelectInput
         value={selectedOperationText}
@@ -96,6 +114,7 @@ export default function AddModal() {
         errorMessage="Campo obrigatório"
       />
       <Input
+        disabled={deleteOperation}
         style={{ marginBottom: 16 }}
         type="text"
         label="Data da operação"
@@ -107,12 +126,14 @@ export default function AddModal() {
       <div className={style["operation-type-fields"]}>
         Operação efetuada
         <Checkbox
+          disabled={deleteOperation}
           label="Compra"
           style={{ marginLeft: 25 }}
           checked={buyChecked}
           onChange={() => dispatch(editFormSelectSide("buy"))}
         />
         <Checkbox
+          disabled={deleteOperation}
           label="Venda"
           style={{ marginLeft: 25 }}
           checked={sellChecked}
@@ -122,6 +143,7 @@ export default function AddModal() {
 
       <div className={style["stock-info-fields"]}>
         <Input
+          disabled={deleteOperation}
           style={{ width: 150, marginRight: 24 }}
           type="text"
           label="Quantidade"
@@ -131,6 +153,7 @@ export default function AddModal() {
           errorMessage="Campo obrigatório"
         />
         <Input
+          disabled={deleteOperation}
           style={{ width: 250 }}
           type="text"
           label="Preço"
@@ -141,10 +164,14 @@ export default function AddModal() {
         />
       </div>
       <Button
-        style={{ marginTop: 40 }}
-        value="EDITAR REGISTRO DA AÇÃO"
+        style={{ marginTop: 40, ...buttonStyle }}
+        value={
+          deleteOperation
+            ? "DELETAR REGISTRO DA AÇÃO"
+            : "EDITAR REGISTRO DA AÇÃO"
+        }
         disabled={selectedOperation === -1}
-        onClick={() => dispatch(updateOperation())}
+        onClick={onButtonClick}
       />
     </Modal>
   );

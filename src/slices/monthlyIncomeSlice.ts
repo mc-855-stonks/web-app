@@ -18,18 +18,22 @@ interface ChartPointData {
 }
 
 interface MonthlyIncomeState {
-  displayType: string;
-  monthsDataMap: Map<string, Array<ChartPointData>>;
+  displayType: "3-months" | "6-months" | "12-months";
+  monthsDataMap: {
+    "3-months": Array<ChartPointData>;
+    "6-months": Array<ChartPointData>;
+    "12-months": Array<ChartPointData>;
+  };
   status: string;
 }
 
 const initialState: MonthlyIncomeState = {
   displayType: "12-months",
-  monthsDataMap: new Map([
-    ["3-months", []],
-    ["6-months", []],
-    ["12-months", []],
-  ]),
+  monthsDataMap: {
+    "3-months": [],
+    "6-months": [],
+    "12-months": [],
+  },
   status: "",
 };
 
@@ -58,20 +62,22 @@ const getNonLabeledChartPointData = (income: MonthlyIncomeData) => {
 
 const getMonthlyIncomeChartData = (
   data: Array<MonthlyIncomeData>,
-  monthsNumber: number,
+  monthsNumber: number
 ) => {
   const orderedMonthList = data.slice(0, monthsNumber).reverse();
   if (!orderedMonthList || orderedMonthList.length === 0) {
     return [];
   }
-  
+
   const firstMonthChartData = getLabeledChartPointData(orderedMonthList[0]);
   if (orderedMonthList.length < 2) {
     return [firstMonthChartData];
   }
-  
+
   const { length } = orderedMonthList;
-  const lastMonthChartData = getLabeledChartPointData(orderedMonthList[length - 1]);
+  const lastMonthChartData = getLabeledChartPointData(
+    orderedMonthList[length - 1]
+  );
   const intermediaryMonthChartData = orderedMonthList
     .slice(1, length - 1)
     .map(getNonLabeledChartPointData);
@@ -85,7 +91,10 @@ export const monthlyIncomeSlice = createSlice({
   name: "monthlyIncome",
   initialState,
   reducers: {
-    updateDisplayType: (state, action: PayloadAction<string>) => {
+    updateDisplayType: (
+      state,
+      action: PayloadAction<"3-months" | "6-months" | "12-months">
+    ) => {
       state.displayType = action.payload;
     },
   },
@@ -100,11 +109,11 @@ export const monthlyIncomeSlice = createSlice({
       state,
       action: PayloadAction<MonthlyIncomeResponse>
     ) => {
-      state.monthsDataMap = new Map([
-        ["3-months", getMonthlyIncomeChartData(action.payload.returns, 3)],
-        ["6-months", getMonthlyIncomeChartData(action.payload.returns, 6)],
-        ["12-months", getMonthlyIncomeChartData(action.payload.returns, 12)],
-      ]);
+      state.monthsDataMap = {
+        "3-months": getMonthlyIncomeChartData(action.payload.returns, 3),
+        "6-months": getMonthlyIncomeChartData(action.payload.returns, 6),
+        "12-months": getMonthlyIncomeChartData(action.payload.returns, 12),
+      };
       state.status = "success";
     },
   },
@@ -115,9 +124,9 @@ export const selectDisplayType = (state: RootState) =>
   state.monthlyIncome.displayType;
 export const selectStatus = (state: RootState) => state.monthlyIncome.status;
 export const selectData = (state: RootState) => {
-  return state.monthlyIncome.monthsDataMap.get(
-    state.monthlyIncome.displayType
-  ) || [];
+  return (
+    state.monthlyIncome.monthsDataMap[state.monthlyIncome.displayType] || []
+  );
 };
 
 export default monthlyIncomeSlice.reducer;

@@ -93,3 +93,23 @@ export const updateOperation = async (
   >("PUT", "operation/", request);
   return response.data;
 };
+
+export interface DeleteOperationRequest {
+  id: number;
+}
+
+export interface DeleteOperationResponse {
+  status: string;
+  message: string;
+}
+
+export const deleteOperation = async (id: number) => {
+  const request = {
+    id,
+  };
+  const response = await doAuthenticatedRequest<
+    DeleteOperationResponse,
+    DeleteOperationRequest
+  >("DELETE", "operation/", request);
+  return response.data;
+};

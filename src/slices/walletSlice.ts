@@ -12,7 +12,9 @@ import {
   getOperations,
   Operation,
   updateOperation as updateOperationService,
+  deleteOperation as deleteOperationService,
   UpdateOperationResponse,
+  DeleteOperationResponse,
 } from "services/operation";
 import { getWalletSummary, WalletResponse } from "services/wallet";
 import { formatCurrency } from "utils/formatters";
@@ -42,6 +44,7 @@ interface WalletState {
   status: "success" | "error" | "loading" | "";
   addModalVisible: boolean;
   editModalVisible: boolean;
+  deleteModalVisible: boolean;
   wallet: WalletResponse | null;
   addForm: AddForm;
   editForm: EditForm;
@@ -160,11 +163,29 @@ export const updateOperation: AsyncThunk<
   }
 );
 
+export const deleteOperation: AsyncThunk<
+  DeleteOperationResponse,
+  void,
+  AsyncThunkConfig
+> = createAsyncThunk<DeleteOperationResponse, void, AsyncThunkConfig>(
+  "wallet/deleteOperation",
+  async (_, { getState, dispatch }) => {
+    const { wallet } = getState();
+    const { editForm } = wallet;
+    const { selectedOperation } = editForm;
+    const result = await deleteOperationService(selectedOperation);
+    dispatch(fetchWalletSummary());
+
+    return result;
+  }
+);
+
 const initialState: WalletState = {
   status: "",
   notificationMessage: "",
   addModalVisible: false,
   editModalVisible: false,
+  deleteModalVisible: false,
   editingTicker: "",
   editingTickerOperations: [],
   wallet: null,
@@ -207,6 +228,16 @@ export const walletSlice = createSlice({
     },
     hideEditModal: (state) => {
       state.editModalVisible = false;
+      state.deleteModalVisible = false;
+      state.editingTicker = "";
+      state.editForm = initialState.editForm;
+    },
+    showDeleteModal: (state, action: PayloadAction<string>) => {
+      state.deleteModalVisible = true;
+      state.editingTicker = action.payload;
+    },
+    hideDeleteModal: (state) => {
+      state.deleteModalVisible = false;
       state.editingTicker = "";
       state.editForm = initialState.editForm;
     },
@@ -330,6 +361,19 @@ export const walletSlice = createSlice({
       state.notificationMessage = "Houve um erro para editar a operação";
       state.status = "error";
     },
+    [deleteOperation.pending.type]: (state) => {
+      state.status = "loading";
+    },
+    [deleteOperation.fulfilled.type]: (state) => {
+      state.status = "success";
+      state.notificationMessage = "Successo ao remover a operação";
+      state.deleteModalVisible = false;
+      state.editForm = initialState.editForm;
+    },
+    [deleteOperation.rejected.type]: (state) => {
+      state.notificationMessage = "Houve um erro para remover a operação";
+      state.status = "error";
+    },
   },
 });
 
@@ -353,6 +397,8 @@ export const {
   updateEditFormPrice,
   showEditFormErrors,
   editFormSelectSide,
+  hideDeleteModal,
+  showDeleteModal,
 } = walletSlice.actions;
 
 export const selectNotificationMessage = (state: RootState) =>
@@ -360,7 +406,9 @@ export const selectNotificationMessage = (state: RootState) =>
 export const selectAddModalVisible = (state: RootState) =>
   state.wallet.addModalVisible;
 export const selectEditModalVisible = (state: RootState) =>
-  state.wallet.editModalVisible;
+  state.wallet.editModalVisible || state.wallet.deleteModalVisible;
+export const selectDeletingModalVisible = (state: RootState) =>
+  state.wallet.deleteModalVisible;
 export const selectWallet = (state: RootState) => state.wallet.wallet;
 export const selectStatus = (state: RootState) => state.wallet.status;
 export const selectStocks = (state: RootState) =>

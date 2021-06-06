@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useAppDispatch } from "hooks";
-import { showEditModal } from "slices/walletSlice";
+import { showDeleteModal, showEditModal } from "slices/walletSlice";
 
 import StockInfo from "./components/StockInfo";
 import Yield from "./components/Yield";
@@ -12,6 +12,7 @@ import Summary from "./components/Summary";
 import style from "./style.module.css";
 
 import editIcon from "./imgs/edit.svg";
+import deleteIcon from "./imgs/delete.svg";
 
 interface Props {
   ticker: string;
@@ -49,13 +50,23 @@ export default function StockItem({
       <Position buyPosition={buyPosition} currentPosition={currentPosition} />
       <div className={style.separator} />
       <Summary amount={amount} avgPrice={averagePrice} />
-      <button
-        type="button"
-        className={style.edit}
-        onClick={() => dispatch(showEditModal(ticker))}
-      >
-        <img src={editIcon} alt="edit" className={style["edit-image"]} />
-      </button>
+      <div className={style["action-icons"]}>
+        <button
+          type="button"
+          className={style["icon-button"]}
+          style={{ marginRight: 10 }}
+          onClick={() => dispatch(showDeleteModal(ticker))}
+        >
+          <img src={deleteIcon} alt="delete" className={style.icon} />
+        </button>
+        <button
+          type="button"
+          className={style["icon-button"]}
+          onClick={() => dispatch(showEditModal(ticker))}
+        >
+          <img src={editIcon} alt="edit" className={style.icon} />
+        </button>
+      </div>
     </div>
   );
 }

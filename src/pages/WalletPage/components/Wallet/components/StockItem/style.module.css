@@ -26,20 +26,22 @@
   margin-right: 35px;
 }
 
-.edit {
+.action-icons {
   position: absolute;
+  display: flex;
   top: 14px;
-  right: 37px;
-  height: 16px;
-  width: 16px;
+  right: 15px;
+}
+
+.icon-button {
   padding: 0;
-  cursor: pointer;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
+  cursor: pointer;
 }
 
-.edit-image {
-  height: 100%;
-  width: 100%;
+.icon {
+  height: 16px;
+  width: 16px;
 }

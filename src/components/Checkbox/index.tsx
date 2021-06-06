@@ -7,6 +7,7 @@ interface Props {
   style?: React.CSSProperties;
   checked?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  disabled?: boolean;
 }
 
 export default function Checkbox({
@@ -14,11 +15,13 @@ export default function Checkbox({
   style: propStyle,
   checked,
   onChange,
+  disabled,
 }: Props) {
   return (
     <div style={propStyle}>
       <label className={style.label}>
         <input
+          disabled={disabled}
           className="checkbox"
           type="checkbox"
           checked={checked}
@@ -34,4 +37,5 @@ Checkbox.defaultProps = {
   style: {},
   checked: false,
   onChange: () => {},
+  disabled: false,
 };

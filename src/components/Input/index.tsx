@@ -10,6 +10,7 @@ interface Props {
   value?: string;
   errorMode?: boolean;
   errorMessage?: string;
+  disabled?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -22,11 +23,13 @@ export default function Input({
   style: propStyle,
   errorMode,
   errorMessage,
+  disabled,
 }: Props) {
   return (
     <div className={style.container} style={propStyle}>
       <div className={style.label}>{label}</div>
       <input
+        disabled={disabled}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
@@ -48,4 +51,5 @@ Input.defaultProps = {
   errorMessage: "",
   value: "",
   onChange: () => {},
+  disabled: false,
 };

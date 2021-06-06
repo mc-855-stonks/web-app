@@ -20,20 +20,24 @@ interface ChartPointData {
 }
 
 interface BenchmarkState {
-  timeSelectionType: string;
+  timeSelectionType: "3-months" | "6-months" | "12-months";
   displayTypes: Array<string>;
-  monthsDataMap: Map<string, Array<ChartPointData>>;
+  monthsDataMap: {
+    "3-months": Array<ChartPointData>;
+    "6-months": Array<ChartPointData>;
+    "12-months": Array<ChartPointData>;
+  };
   status: string;
 }
 
 const initialState: BenchmarkState = {
   timeSelectionType: "12-months",
-  displayTypes: ["return", "ibov", "cdi", "ipca",],
-  monthsDataMap: new Map([
-    ["3-months", []],
-    ["6-months", []],
-    ["12-months", []],
-  ]),
+  displayTypes: ["return", "ibov", "cdi", "ipca"],
+  monthsDataMap: {
+    "3-months": [],
+    "6-months": [],
+    "12-months": [],
+  },
   status: "",
 };
 
@@ -52,26 +56,26 @@ export const getBenchmark: AsyncThunk<
 const getLabeledChartPointData = (benchmarkData: BenchmarkData) => {
   return {
     name: getChartDateLabel(benchmarkData.date),
-    return: benchmarkData.return*100,
-    ibov: benchmarkData.ibov*100,
-    cdi: benchmarkData.cdi*100,
-    ipca: benchmarkData.ipca*100,
+    return: benchmarkData.return * 100,
+    ibov: benchmarkData.ibov * 100,
+    cdi: benchmarkData.cdi * 100,
+    ipca: benchmarkData.ipca * 100,
   };
 };
 
 const getNonLabeledChartPointData = (benchmarkData: BenchmarkData) => {
   return {
     name: "",
-    return: benchmarkData.return*100,
-    ibov: benchmarkData.ibov*100,
-    cdi: benchmarkData.cdi*100,
-    ipca: benchmarkData.ipca*100,
+    return: benchmarkData.return * 100,
+    ibov: benchmarkData.ibov * 100,
+    cdi: benchmarkData.cdi * 100,
+    ipca: benchmarkData.ipca * 100,
   };
 };
 
 const getBenchmarkChartData = (
   data: Array<Array<BenchmarkData>>,
-  monthsNumber: number,
+  monthsNumber: number
 ) => {
   let orderedMonthList = data.slice(0, monthsNumber).reverse();
   if (!orderedMonthList || orderedMonthList.length === 0) {
@@ -85,20 +89,20 @@ const getBenchmarkChartData = (
     const remainingDays = orderedMonthList[0]
       .slice(1, firstMonthLength - 1)
       .map(getNonLabeledChartPointData);
-    
+
     return [firstDayChartData].concat(remainingDays);
   }
-  
-  const lastMonthLength = orderedMonthList[monthsNumber-1].length;
+
+  const lastMonthLength = orderedMonthList[monthsNumber - 1].length;
   const lastDayChartData = getLabeledChartPointData(
-    orderedMonthList[monthsNumber-1][lastMonthLength-1]
+    orderedMonthList[monthsNumber - 1][lastMonthLength - 1]
   );
   const dayGroupedData = orderedMonthList.flat();
   const daysLength = dayGroupedData.length;
   const intermediaryDayChartData = dayGroupedData
-    .slice(1, daysLength-1)
+    .slice(1, daysLength - 1)
     .map(getNonLabeledChartPointData);
-  
+
   return [firstDayChartData]
     .concat(intermediaryDayChartData)
     .concat(lastDayChartData);
@@ -110,12 +114,18 @@ export const benchmarkSlice = createSlice({
   reducers: {
     updateDisplayType: (state, action: PayloadAction<string>) => {
       if (state.displayTypes.includes(action.payload)) {
-        state.displayTypes.splice(state.displayTypes.indexOf(action.payload), 1);
+        state.displayTypes.splice(
+          state.displayTypes.indexOf(action.payload),
+          1
+        );
       } else {
         state.displayTypes.push(action.payload);
       }
     },
-    updateTimeSelectionType: (state, action: PayloadAction<string>) => {
+    updateTimeSelectionType: (
+      state,
+      action: PayloadAction<"3-months" | "6-months" | "12-months">
+    ) => {
       state.timeSelectionType = action.payload;
     },
   },
@@ -130,26 +140,25 @@ export const benchmarkSlice = createSlice({
       state,
       action: PayloadAction<Array<Array<BenchmarkData>>>
     ) => {
-      state.monthsDataMap = new Map([
-        ["3-months", getBenchmarkChartData(action.payload, 3)],
-        ["6-months", getBenchmarkChartData(action.payload, 6)],
-        ["12-months", getBenchmarkChartData(action.payload, 12)],
-      ]);
+      state.monthsDataMap = {
+        "3-months": getBenchmarkChartData(action.payload, 3),
+        "6-months": getBenchmarkChartData(action.payload, 6),
+        "12-months": getBenchmarkChartData(action.payload, 12),
+      };
       state.status = "success";
     },
   },
 });
 
-export const { updateDisplayType, updateTimeSelectionType } = benchmarkSlice.actions;
+export const { updateDisplayType, updateTimeSelectionType } =
+  benchmarkSlice.actions;
 export const selectDisplayTypes = (state: RootState) =>
   state.benchmark.displayTypes;
 export const selectTimeSelectionType = (state: RootState) =>
   state.benchmark.timeSelectionType;
 export const selectStatus = (state: RootState) => state.benchmark.status;
 export const selectData = (state: RootState) => {
-  return state.benchmark.monthsDataMap.get(
-    state.benchmark.timeSelectionType
-  ) || [];
+  return state.benchmark.monthsDataMap[state.benchmark.timeSelectionType] || [];
 };
 
 export default benchmarkSlice.reducer;

@@ -11,6 +11,6 @@
   font-size: 18px;
 }
 .button:disabled {
-  background-color: lightgray;
+  background-color: lightgray !important;
   cursor: initial;
 }
