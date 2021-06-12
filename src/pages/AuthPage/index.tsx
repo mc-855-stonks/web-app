@@ -17,6 +17,8 @@ import Notification from "components/Notification";
 import LoginCard from "./components/LoginCard";
 import RegisterCard from "./components/RegisterCard";
 
+import backgroundImage from "./imgs/background.svg";
+
 import styles from "./style.module.css";
 
 export default function AuthPage() {
@@ -37,7 +39,10 @@ export default function AuthPage() {
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{ backgroundImage: `url("${backgroundImage}")` }}
+    >
       {(loadingLogin || loadingRegister) && <LoadingOverlay />}
       {(errorLogin || errorRegister) && (
         <Notification

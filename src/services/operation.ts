@@ -96,6 +96,7 @@ export const updateOperation = async (
 
 export interface DeleteOperationRequest {
   id: number;
+  ticker: string;
 }
 
 export interface DeleteOperationResponse {
@@ -103,9 +104,10 @@ export interface DeleteOperationResponse {
   message: string;
 }
 
-export const deleteOperation = async (id: number) => {
+export const deleteOperation = async (id: number, ticker: string) => {
   const request = {
     id,
+    ticker,
   };
   const response = await doAuthenticatedRequest<
     DeleteOperationResponse,

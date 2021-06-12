@@ -171,9 +171,12 @@ export const deleteOperation: AsyncThunk<
   "wallet/deleteOperation",
   async (_, { getState, dispatch }) => {
     const { wallet } = getState();
-    const { editForm } = wallet;
+    const { editForm, editingTicker } = wallet;
     const { selectedOperation } = editForm;
-    const result = await deleteOperationService(selectedOperation);
+    const result = await deleteOperationService(
+      selectedOperation,
+      editingTicker
+    );
     dispatch(fetchWalletSummary());
 
     return result;
