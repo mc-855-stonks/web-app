@@ -25,10 +25,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --frozen-lockfile
-      - if: github.ref == 'refs/heads/develop'
       - run: yarn run build:qa --if-present
-      - if: github.ref == 'refs/heads/main'
-      - run: yarn run build:production --if-present
       - run: yarn test
       - name: Deploy application to Heroku QA
         if: github.ref == 'refs/heads/develop'
