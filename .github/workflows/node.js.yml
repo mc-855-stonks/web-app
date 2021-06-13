@@ -25,9 +25,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --frozen-lockfile
-      - run: yarn run build --if-present
       - run: yarn test
       - name: Deploy application to Heroku QA
+        run: yarn run build:qa --if-present
         if: github.ref == 'refs/heads/develop'
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
@@ -38,6 +38,7 @@ jobs:
           delay: 120
           rollbackonhealthcheckfailed: true
       - name: Deploy application to Heroku Production
+        run: yarn run build:production --if-present
         if: github.ref == 'refs/heads/main'
         uses: akhileshns/heroku-deploy@v3.12.12
         with:

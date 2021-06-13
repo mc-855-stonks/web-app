@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
+    "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-prettier": "^3.4.0",
     "express": "^4.17.1",
@@ -45,7 +46,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix"
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
+    "build:qa": "env-cmd -f .env.qa react-scripts build",
+    "build:production": "env-cmd -f .env.production react-scripts build"
   },
   "eslintConfig": {
     "extends": [
