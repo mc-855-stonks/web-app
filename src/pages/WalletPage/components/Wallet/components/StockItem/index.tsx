@@ -15,6 +15,7 @@ import editIcon from "./imgs/edit.svg";
 import deleteIcon from "./imgs/delete.svg";
 
 interface Props {
+  logo: string;
   ticker: string;
   name: string;
   walletPercentage: number;
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export default function StockItem({
+  logo,
   amount,
   averagePrice,
   buyPosition,
@@ -43,7 +45,7 @@ export default function StockItem({
 
   return (
     <div className={style.container}>
-      <img className={style.logo} alt="" />
+      <img className={style.logo} src={logo} alt="" />
       <StockInfo ticker={ticker} name={name} percentage={walletPercentage} />
       <Yield totalYield={totalYield} yieldPercentage={yieldPercentage} />
       <LastPrice price={lastPrice} />

@@ -2,7 +2,9 @@ import React from "react";
 import { useAppSelector } from "hooks";
 
 import Subtitle from "components/Subtitle";
+
 import { selectWallet } from "slices/walletSlice";
+import { selectStocks } from "slices/stockSlice";
 
 import Results from "./components/Results";
 import StockItem from "./components/StockItem";
@@ -11,9 +13,14 @@ import style from "./style.module.css";
 
 export default function Wallet() {
   const wallet = useAppSelector(selectWallet);
+  const stocks = useAppSelector(selectStocks);
   if (!wallet) {
     return null;
   }
+
+  const getStockLogo = (ticker: string) => {
+    return stocks.find((it) => it.ticker === ticker)?.image || "";
+  };
 
   return (
     <div className={style.container}>
@@ -31,6 +38,7 @@ export default function Wallet() {
       </Subtitle>
       {wallet.stocks.map((stock) => (
         <StockItem
+          logo={getStockLogo(stock.ticker)}
           key={stock.ticker}
           ticker={stock.ticker}
           name={stock.company_name}
