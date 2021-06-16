@@ -1,4 +1,6 @@
+import { useAppSelector } from "hooks";
 import React from "react";
+import { selectHideValues } from "slices/settingsSlice";
 import { formatCurrency } from "utils/formatters";
 
 import style from "./style.module.css";
@@ -9,15 +11,18 @@ interface Props {
 }
 
 export default function Summary({ amount, avgPrice }: Props) {
+  const hideValues = useAppSelector(selectHideValues);
   return (
     <div className={style.container}>
       <div className={style.item}>
         Quantidade
-        <div className={style.value}>{amount}</div>
+        <div className={style.value}>{hideValues ? "*****" : amount}</div>
       </div>
       <div className={style.item}>
         Preço de compra
-        <div className={style.value}>R${formatCurrency(avgPrice)}</div>
+        <div className={style.value}>
+          R${hideValues ? "*****" : formatCurrency(avgPrice)}
+        </div>
       </div>
     </div>
   );

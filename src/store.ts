@@ -10,6 +10,7 @@ import stockReducer from "./slices/stockSlice";
 import portfolioReducer from "./slices/portfolioSlice";
 import monthlyIncomeReducer from "./slices/monthlyIncomeSlice";
 import benchmarkReducer from "./slices/benchmarkSlice";
+import settingsReducer from "./slices/settingsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     portfolio: portfolioReducer,
     monthlyIncome: monthlyIncomeReducer,
     benchmark: benchmarkReducer,
+    settings: settingsReducer,
   },
 });
 

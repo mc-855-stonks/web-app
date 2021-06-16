@@ -110,9 +110,12 @@ export const monthlyIncomeSlice = createSlice({
       action: PayloadAction<MonthlyIncomeResponse>
     ) => {
       state.monthsDataMap = {
-        "3-months": getMonthlyIncomeChartData(action.payload.returns, 3),
-        "6-months": getMonthlyIncomeChartData(action.payload.returns, 6),
-        "12-months": getMonthlyIncomeChartData(action.payload.returns, 12),
+        "3-months": getMonthlyIncomeChartData(action.payload.returns || [], 3),
+        "6-months": getMonthlyIncomeChartData(action.payload.returns || [], 6),
+        "12-months": getMonthlyIncomeChartData(
+          action.payload.returns || [],
+          12
+        ),
       };
       state.status = "success";
     },
