@@ -1,5 +1,7 @@
 import React from "react";
 import classNames from "classnames";
+import { useAppSelector } from "hooks";
+import { selectHideValues } from "slices/settingsSlice";
 import { formatCurrency } from "utils/formatters";
 
 import style from "./style.module.css";
@@ -21,6 +23,8 @@ export default function WalletSummary({
   alfa,
   beta,
 }: Props) {
+  const hideValues = useAppSelector(selectHideValues);
+
   function yieldPercentage(): string {
     const percentage = totalWealth > 0 ? totalYield / (totalWealth / 100) : 0;
     if (percentage > 0) {
@@ -35,7 +39,7 @@ export default function WalletSummary({
         <div className={style.column}>
           <div className={style["summary-title"]}>Patrimônio Total</div>
           <div className={style["summary-content"]}>
-            R${formatCurrency(totalWealth)}
+            R${hideValues ? "*****" : formatCurrency(totalWealth)}
           </div>
         </div>
         <div className={style.separator} />
@@ -50,7 +54,7 @@ export default function WalletSummary({
               },
             ])}
           >
-            R${formatCurrency(totalYield)}
+            R${hideValues ? "*****" : formatCurrency(totalYield)}
             <div className={style["yield-percentage"]}>
               ({yieldPercentage()}%)
             </div>

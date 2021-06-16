@@ -1,4 +1,6 @@
+import { useAppSelector } from "hooks";
 import React from "react";
+import { selectHideValues } from "slices/settingsSlice";
 import style from "./style.module.css";
 
 interface LegendPointData {
@@ -13,6 +15,7 @@ interface Props {
 }
 
 export default function Legend({ data }: Props) {
+  const hideValues = useAppSelector(selectHideValues);
   return (
     <div className={style.legendGroup}>
       {data.map((legendPoint) => (
@@ -26,7 +29,7 @@ export default function Legend({ data }: Props) {
             {`${Math.round(legendPoint.percentage)}%`}
           </div>
           <div className={style.legendText}>
-            {`R$ ${legendPoint.value.toFixed(2)}`}
+            {`R$ ${hideValues ? "*****" : legendPoint.value.toFixed(2)}`}
           </div>
         </div>
       ))}
