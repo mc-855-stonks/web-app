@@ -8,6 +8,7 @@ import { getChartDateLabel } from "utils/date";
 import {
   getBenchmark as getBenchmarkService,
   BenchmarkData,
+  BenchmarkResponse,
 } from "services/benchmark";
 import type { RootState, AsyncThunkConfig } from "store";
 
@@ -42,10 +43,10 @@ const initialState: BenchmarkState = {
 };
 
 export const getBenchmark: AsyncThunk<
-  Array<Array<BenchmarkData>>,
+  BenchmarkResponse,
   void,
   AsyncThunkConfig
-> = createAsyncThunk<Array<Array<BenchmarkData>>, void, AsyncThunkConfig>(
+> = createAsyncThunk<BenchmarkResponse, void, AsyncThunkConfig>(
   "benchmark/getBenchmark",
   async () => {
     const data = await getBenchmarkService();
@@ -138,12 +139,12 @@ export const benchmarkSlice = createSlice({
     },
     [getBenchmark.fulfilled.type]: (
       state,
-      action: PayloadAction<Array<Array<BenchmarkData>>>
+      action: PayloadAction<BenchmarkResponse>
     ) => {
       state.monthsDataMap = {
-        "3-months": getBenchmarkChartData(action.payload, 3),
-        "6-months": getBenchmarkChartData(action.payload, 6),
-        "12-months": getBenchmarkChartData(action.payload, 12),
+        "3-months": getBenchmarkChartData(action.payload.data, 3),
+        "6-months": getBenchmarkChartData(action.payload.data, 6),
+        "12-months": getBenchmarkChartData(action.payload.data, 12),
       };
       state.status = "success";
     },
