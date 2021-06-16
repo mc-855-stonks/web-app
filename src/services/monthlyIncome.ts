@@ -12,7 +12,7 @@ export interface MonthlyIncomeResponse {
 export const getMonthlyIncome = async () => {
   const response = await doAuthenticatedRequest<MonthlyIncomeResponse>(
     "GET",
-    "performance/",
+    "return/",
   );
   return response.data;
 };
