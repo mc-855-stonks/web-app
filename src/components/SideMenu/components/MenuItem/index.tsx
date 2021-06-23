@@ -1,16 +1,19 @@
 import React from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 
 import style from "./style.module.css";
 
 interface Props {
   value: string;
   icon: string;
+  activeIcon: string;
   to: string;
 }
 
-export default function MenuItem({ value, icon, to }: Props) {
+export default function MenuItem({ value, icon, activeIcon, to }: Props) {
+  const active = useRouteMatch(to);
+
   return (
     <NavLink
       to={to}
@@ -19,7 +22,7 @@ export default function MenuItem({ value, icon, to }: Props) {
     >
       <div className={style.container}>
         <div className={style.content}>
-          <img src={icon} alt="" className={style.icon} />
+          <img src={active ? activeIcon : icon} alt="" className={style.icon} />
           {value}
         </div>
         <div className={style.separator} />

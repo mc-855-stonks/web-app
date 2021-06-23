@@ -13,6 +13,7 @@ import style from "./style.module.css";
 
 import editIcon from "./imgs/edit.svg";
 import deleteIcon from "./imgs/delete.svg";
+import defaultStockImage from "./imgs/default.png";
 
 interface Props {
   logo: string;
@@ -45,7 +46,11 @@ export default function StockItem({
 
   return (
     <div className={style.container}>
-      <img className={style.logo} src={logo} alt="" />
+      <img
+        className={style.logo}
+        src={logo === "" ? defaultStockImage : logo}
+        alt=""
+      />
       <StockInfo ticker={ticker} name={name} percentage={walletPercentage} />
       <Yield totalYield={totalYield} yieldPercentage={yieldPercentage} />
       <LastPrice price={lastPrice} />
