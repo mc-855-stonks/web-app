@@ -11,12 +11,7 @@ export default function Benefits() {
             imageName="image1"
             titleTop="Acompanhamento diário"
             titleBottom="dos seus rendimentos"
-            description=" Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industrys standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged."
+            description="Na tela de Carteira, o rendimento diário dos seus ativos estará disponível, podendo ser facilmente analisado qual ativo teve melhor resultado naquele dia, qual o valor obtido no dia e o valor atual em relação ao valor de compra."
           />
         </div>
         <div className={style.tirdBenefit}>
@@ -24,12 +19,7 @@ export default function Benefits() {
             imageName="image3"
             titleTop="Comparações com índices"
             titleBottom="do mercado"
-            description=" Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industrys standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged."
+            description="Também poderá acompanhar a evolução de seus rendimentos por meio de uma visão completa. Contando com gráficos de benchmark de mercado e os índices comparativos mais relevantes da bolsa."
           />
         </div>
       </div>
@@ -38,12 +28,7 @@ export default function Benefits() {
           imageName="image2"
           titleTop="Estatítiscas sobre"
           titleBottom="sua carteira"
-          description=" Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industrys standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only
-        five centuries, but also the leap into electronic typesetting,
-        remaining essentially unchanged."
+          description="Na tela de Dashboard, você poderá ver quais setores da economia concentram seus investimentos e os meses que seu dinheiro rendeu mais. Além de ver o rendimento total da sua carteira desde o início de seus investimentos até a data presente."
         />
       </div>
     </div>

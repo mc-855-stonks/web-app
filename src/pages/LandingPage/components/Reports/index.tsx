@@ -13,16 +13,14 @@ export default function Reports() {
         />
         <div className={style.item}>
           <h3 className={style.quote}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industrys standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged.
+            A minha corretora não mostra o rendimento bruto da minha carteira,
+            minha posição é zerada todo dia. Faltava essa visualização, pois me
+            fazia usar o Excel para fazer este acompanhamento. Agora com Rendeu
+            não preciso mais! Tenho uma forma de ver a real valorização do meu
+            dinheiro e das minhas possíveis vantagens futuras.
           </h3>
           <h3 className={style.author}>
-            <b>João da Silva</b> | Estudante universitário e Estagiário em Data
-            Science
+            <b>Leonardo Yudi</b> | Estudante universitário & Estagiário em P&D
           </h3>
         </div>
         <div className={style.line} />

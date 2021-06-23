@@ -8,11 +8,10 @@ export default function Presentation() {
       <div className={style.item}>
         <h1 className={(style.titleTop, style.title)}>Acompanhe</h1>
         <h1 className={style.title}>seus rendimentos!</h1>
-        <h1 className={style.description}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industrys standard dummy tex ever
-          since the 1500s
-        </h1>
+        <p className={style.description}>
+          Tenha acesso à informações sobre seus rendimentos diários de forma
+          simples e atualizada automaticamente
+        </p>
       </div>
       <div>
         <img
