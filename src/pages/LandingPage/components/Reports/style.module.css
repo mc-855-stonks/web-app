@@ -1,39 +1,42 @@
 .container {
-    display: flex;
-    width: 800px;
-    padding-top: 300px;
-    padding-bottom: 300px;
-    padding-left: 280px;
+  display: flex;
+  justify-content: center;
+  padding-top: 300px;
+  padding-bottom: 300px;
+}
+
+.item {
+  max-width: 800px;
 }
 
 .quote-image {
-    align-items: right;
-    height: 50px;
-    width: 60px;
+  align-items: right;
+  height: 50px;
+  width: 60px;
 }
 
 .quote {
-    font-weight: normal;
-    font-size: 22px;
-    text-align: center;
-    margin-top: 28px;
-    margin-left: 28px;
-    color: #505050;
+  font-weight: normal;
+  font-size: 22px;
+  text-align: center;
+  margin-top: 28px;
+  margin-left: 28px;
+  color: #505050;
 }
 
 .author {
-    font-weight: normal;
-    font-size: 22px;
-    text-align: center;
-    margin-top: 22px;
-    margin-left: 28px;
-    color: #505050;
+  font-weight: normal;
+  font-size: 22px;
+  text-align: center;
+  margin-top: 22px;
+  margin-left: 28px;
+  color: #505050;
 }
 
 .line {
-    color: black;
-    background-color: black;
-    height: 3px;
-    width: 800px;
-    margin-top: 22px;
+  color: black;
+  background-color: black;
+  height: 3px;
+  width: 800px;
+  margin-top: 22px;
 }

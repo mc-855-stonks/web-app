@@ -1,17 +1,18 @@
 .container {
-    padding-left: 40px;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
 }
 
 .label {
-    font-weight: bolder;
-    font-size: 16px;
-    text-align: left;
-    color:white;
-    margin-top: 56px;
+  font-weight: bolder;
+  font-size: 16px;
+  text-align: left;
+  color: white;
 }
 
 .info {
-    font-weight: normal;
-    font-size: 16px;
-    color:white;
+  font-weight: normal;
+  font-size: 16px;
+  color: white;
 }

@@ -9,10 +9,8 @@ interface Props {
 export default function SiteInfo({ label, info }: Props) {
   return (
     <div className={style.container}>
-      <div className={style.item}>
-        <h3 className={style.label}>{label}</h3>
-        <h3 className={style.info}>{info}</h3>
-      </div>
+      <h3 className={style.label}>{label}</h3>
+      <h3 className={style.info}>{info}</h3>
     </div>
   );
 }

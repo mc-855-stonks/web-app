@@ -1,18 +1,21 @@
 .container {
-    width: 100%;
-    display: flex;
-    padding-bottom: 140px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 140px;
 }
 
-.firstBenefit {
-    padding-bottom: 360px;
-    padding-left: 150px;
+.item {
+  display: flex;
+  flex-direction: column;
 }
 
-.secondBenefit {
-    padding-top: 560px;
+.first-benefit {
+  margin-bottom: 360px;
 }
 
-.tirdBenefit {
-    padding-left: 150px;
+.second-benefit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

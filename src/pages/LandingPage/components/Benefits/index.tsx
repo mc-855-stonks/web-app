@@ -6,7 +6,7 @@ export default function Benefits() {
   return (
     <div className={style.container}>
       <div className={style.item}>
-        <div className={style.firstBenefit}>
+        <div className={style["first-benefit"]}>
           <BenefitItem
             imageName="image1"
             titleTop="Acompanhamento diário"
@@ -14,7 +14,7 @@ export default function Benefits() {
             description="Na tela de Carteira, o rendimento diário dos seus ativos estará disponível, podendo ser facilmente analisado qual ativo teve melhor resultado naquele dia, qual o valor obtido no dia e o valor atual em relação ao valor de compra."
           />
         </div>
-        <div className={style.tirdBenefit}>
+        <div>
           <BenefitItem
             imageName="image3"
             titleTop="Comparações com índices"
@@ -23,7 +23,7 @@ export default function Benefits() {
           />
         </div>
       </div>
-      <div className={style.secondBenefit}>
+      <div className={style["second-benefit"]}>
         <BenefitItem
           imageName="image2"
           titleTop="Estatítiscas sobre"

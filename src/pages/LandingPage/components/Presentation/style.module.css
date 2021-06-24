@@ -1,26 +1,28 @@
 .container {
-    display: flex;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .ilustration-image {
-    align-items:flex-end;
+  align-items: flex-end;
 }
 
 .item {
-    padding-top: 140px;
+  padding-top: 140px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 130px;
 }
 
 .title {
-    font-weight: bold;
-    font-size: 48px;
-    padding-left: 130px;
+  font-weight: bold;
+  font-size: 48px;
 }
 
 .description {
-    font-weight: normal;
-    font-size: 24px;
-    padding-left: 130px;
-    padding-top: 30px;
-    padding-right: 10px;
+  font-weight: normal;
+  font-size: 24px;
+  padding-top: 30px;
+  padding-right: 10px;
 }
