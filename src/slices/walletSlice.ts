@@ -5,6 +5,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import moment from "moment";
+import ehDiaUtil from "eh-dia-util";
 import {
   createOperation,
   CreateOperationResponse,
@@ -426,7 +427,8 @@ export const selectValidAddForm = (state: RootState) => {
     validAmount: amount !== "" && !Number.isNaN(parseInt(amount, 10)),
     validPrice: price !== "" && !Number.isNaN(parseFloat(price)),
     validSide: side !== "",
-    validOperationDate: date.isValid(),
+    validOperationDate:
+      date.isValid() && ehDiaUtil(moment(date).format("YYYY-MM-DD")),
   };
 };
 
@@ -445,7 +447,8 @@ export const selectValidEditForm = (state: RootState) => {
   return {
     validAmount: amount !== "" && !Number.isNaN(parseInt(amount, 10)),
     validPrice: price !== "" && !Number.isNaN(parseFloat(price)),
-    validOperationDate: date.isValid(),
+    validOperationDate:
+      date.isValid() && ehDiaUtil(moment(date).format("YYYY-MM-DD")),
     validSelectedOperation: selectedOperation !== -1,
     validSide: side !== "",
   };

@@ -121,7 +121,7 @@ export default function EditModal() {
         value={operationDate}
         onChange={(e) => dispatch(updateEditFormOperationDate(e.target.value))}
         errorMode={showEditFormErrors && !validOperationDate}
-        errorMessage="Campo obrigatório"
+        errorMessage="A data precisa ser um dia útil"
       />
       <div className={style["operation-type-fields"]}>
         Operação efetuada

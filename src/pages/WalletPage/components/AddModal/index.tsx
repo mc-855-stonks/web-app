@@ -89,7 +89,7 @@ export default function AddModal() {
         label="Data da operação"
         value={operationDate}
         placeholder="__ / __ / ____"
-        errorMessage="Campo obrigatório"
+        errorMessage="A data precisa ser um dia útil"
         errorMode={showAddFormErrors && !validOperationDate}
         onChange={(e) => dispatch(updateAddFormOperationDate(e.target.value))}
       />
