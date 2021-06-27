@@ -11,6 +11,7 @@ import portfolioReducer from "./slices/portfolioSlice";
 import monthlyIncomeReducer from "./slices/monthlyIncomeSlice";
 import benchmarkReducer from "./slices/benchmarkSlice";
 import settingsReducer from "./slices/settingsSlice";
+import performanceReducer from "./slices/performanceSlice";
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     monthlyIncome: monthlyIncomeReducer,
     benchmark: benchmarkReducer,
     settings: settingsReducer,
+    performance: performanceReducer,
   },
 });
 
