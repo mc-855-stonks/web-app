@@ -33,15 +33,11 @@ export default function BarChart({
   barColor,
 }: Props) {
   return (
-    <BarChartRecharts
-      width={width}
-      height={height}
-      data={dataset}
-    >
+    <BarChartRecharts width={width} height={height} data={dataset}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey={xAxisDataKey} />
       <YAxis dataKey={yAxisDataKey} />
-      <Tooltip />
+      <Tooltip formatter={(item: any) => `${item.toFixed(2)}`} />
       <Bar dataKey={yAxisDataKey} name={tooltipName} fill={barColor} />
     </BarChartRecharts>
   );

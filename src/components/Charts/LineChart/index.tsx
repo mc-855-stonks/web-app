@@ -36,7 +36,7 @@ export default function LineChart({
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey={xAxisDataKey} />
       <YAxis tickFormatter={tickFormatter} />
-      <Tooltip />
+      <Tooltip formatter={(item: any) => `${item.toFixed(2)}`} />
       {lineDataList.map((lineData) => (
         <Line
           key={lineData.name}

@@ -16,30 +16,39 @@ import Legend from "./components/Legend";
 
 import portfolioStyle from "./style.module.css";
 
-const generateRandomHexadecimalColor = () => {
-  const n = (Math.random() * 0xfffff * 1000000).toString(16).toUpperCase();
-  return `#${n.slice(0, 6)}`;
-};
-
-const getRandomHexadecimalColor = (lastColors: Array<string>) => {
-  let color = generateRandomHexadecimalColor();
-  while (lastColors.includes(color)) {
-    color = generateRandomHexadecimalColor();
-  }
-  lastColors.push(color);
-  return color;
-};
+const colors = [
+  "#174271",
+  "#2B6EBC",
+  "#4F84BA",
+  "#5796D4",
+  "#8CB2D5",
+  "#443908",
+  "#675919",
+  "#B19A32",
+  "#E3C643",
+  "#E8D362",
+  "#3E2908",
+  "#8B5B1C",
+  "#CB8733",
+  "#EA9E2D",
+  "#E4B876",
+  "#1C3520",
+  "#39673F",
+  "#389A46",
+  "#63B26E",
+  "#85B38E",
+];
 
 const getLegendPointData = (
   datasetPoint: DoughnutDatasetPointType,
   valueSum: number,
-  lastColors: Array<string>
+  color: string
 ) => {
   return {
     name: datasetPoint.name,
     value: datasetPoint.value,
     percentage: (datasetPoint.value / valueSum) * 100,
-    color: getRandomHexadecimalColor(lastColors),
+    color,
   };
 };
 
@@ -49,8 +58,9 @@ const getChartLegendData = (dataset: Array<DoughnutDatasetPointType>) => {
   }
   const chartValues = dataset.map((x) => x.value);
   const valueSum = chartValues.reduce((accum, curr) => accum + curr);
-  const colors: Array<string> = [];
-  return dataset.map((x) => getLegendPointData(x, valueSum, colors));
+  return dataset.map((x, i) =>
+    getLegendPointData(x, valueSum, colors[i % colors.length])
+  );
 };
 
 export default function Portfolio() {
