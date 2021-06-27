@@ -5,13 +5,22 @@ import { Redirect } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getUserSessionId } from "utils/userSession";
 import {
+  getPerformance,
+  selectStatus as selectPerformanceStatus,
+} from "slices/performanceSlice";
+import {
   getPortfolio,
   selectStatus as selectPortfolioStatus,
 } from "slices/portfolioSlice";
 import {
+  getDailyIncome,
   getMonthlyIncome,
   selectStatus as selectMonthlyIncomeStatus,
 } from "slices/monthlyIncomeSlice";
+import {
+  fetchWalletSummary,
+  selectStatus as selectWalletStatus,
+} from "slices/walletSlice";
 import {
   getBenchmark,
   selectStatus as selectBenchmarkStatus,
@@ -22,12 +31,16 @@ import Dashboard from "./components/Dashboard";
 const getDashboardStatus = (
   portfolioStatus: string,
   monthlyIncomeStatus: string,
-  benchmarkStatus: string
+  benchmarkStatus: string,
+  performanceStatus: string,
+  walletStatus: string
 ) => {
   if (
     portfolioStatus === "error" ||
     monthlyIncomeStatus === "error" ||
-    benchmarkStatus === "error"
+    benchmarkStatus === "error" ||
+    performanceStatus === "error" ||
+    walletStatus === "error"
   ) {
     return "error";
   }
@@ -35,7 +48,9 @@ const getDashboardStatus = (
   if (
     portfolioStatus === "loading" ||
     monthlyIncomeStatus === "loading" ||
-    benchmarkStatus === "loading"
+    benchmarkStatus === "loading" ||
+    walletStatus === "loading" ||
+    performanceStatus === "loading"
   ) {
     return "loading";
   }
@@ -43,7 +58,9 @@ const getDashboardStatus = (
   if (
     portfolioStatus === "success" &&
     monthlyIncomeStatus === "success" &&
-    benchmarkStatus === "success"
+    benchmarkStatus === "success" &&
+    walletStatus === "success" &&
+    performanceStatus === "success"
   ) {
     return "success";
   }
@@ -53,14 +70,18 @@ const getDashboardStatus = (
 
 export default function DashboardPage() {
   const dispatch = useAppDispatch();
+  const performanceStatus = useAppSelector(selectPerformanceStatus);
   const portfolioStatus = useAppSelector(selectPortfolioStatus);
   const monthIncomeStatus = useAppSelector(selectMonthlyIncomeStatus);
   const benchmarkStatus = useAppSelector(selectBenchmarkStatus);
+  const walletStatus = useAppSelector(selectWalletStatus);
 
   const dashboardStatus = getDashboardStatus(
     portfolioStatus,
     monthIncomeStatus,
-    benchmarkStatus
+    benchmarkStatus,
+    performanceStatus,
+    walletStatus
   );
 
   const loading = dashboardStatus === "loading";
@@ -69,6 +90,9 @@ export default function DashboardPage() {
     dispatch(getPortfolio());
     dispatch(getMonthlyIncome());
     dispatch(getBenchmark());
+    dispatch(getPerformance());
+    dispatch(getDailyIncome());
+    dispatch(fetchWalletSummary());
   }, [dispatch]);
 
   return (

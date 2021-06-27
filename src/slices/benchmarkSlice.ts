@@ -17,7 +17,6 @@ interface ChartPointData {
   return: number;
   ibov: number;
   cdi: number;
-  ipca: number;
 }
 
 interface BenchmarkState {
@@ -33,7 +32,7 @@ interface BenchmarkState {
 
 const initialState: BenchmarkState = {
   timeSelectionType: "12-months",
-  displayTypes: ["return", "ibov", "cdi", "ipca"],
+  displayTypes: ["return", "ibov", "cdi"],
   monthsDataMap: {
     "3-months": [],
     "6-months": [],
@@ -60,7 +59,6 @@ const getLabeledChartPointData = (benchmarkData: BenchmarkData) => {
     return: benchmarkData.return * 100,
     ibov: benchmarkData.ibov * 100,
     cdi: benchmarkData.cdi * 100,
-    ipca: benchmarkData.ipca * 100,
   };
 };
 
@@ -70,7 +68,6 @@ const getNonLabeledChartPointData = (benchmarkData: BenchmarkData) => {
     return: benchmarkData.return * 100,
     ibov: benchmarkData.ibov * 100,
     cdi: benchmarkData.cdi * 100,
-    ipca: benchmarkData.ipca * 100,
   };
 };
 

@@ -1,28 +1,23 @@
 import React from "react";
 import classNames from "classnames";
+import { useAppSelector } from "hooks";
+import { selectHideValues } from "slices/settingsSlice";
+import { selectPerformance } from "slices/performanceSlice";
 import { formatCurrency } from "utils/formatters";
+import { selectDailyReturn } from "slices/monthlyIncomeSlice";
+import { selectWallet } from "slices/walletSlice";
 
 import style from "./style.module.css";
 
-interface Props {
-  totalWealth: number;
-  totalYield: number;
-  sharpe: number;
-  volatility: number;
-  alfa: number;
-  beta: number;
-}
+export default function WalletSummary() {
+  const { alpha, beta, sharpe, volatility } = useAppSelector(selectPerformance);
+  const returns = useAppSelector(selectDailyReturn);
+  const hideValues = useAppSelector(selectHideValues);
+  const wallet = useAppSelector(selectWallet);
+  const totalWealth = wallet ? wallet.wallet_total : 0;
 
-export default function WalletSummary({
-  totalWealth,
-  totalYield,
-  sharpe,
-  volatility,
-  alfa,
-  beta,
-}: Props) {
   function yieldPercentage(): string {
-    const percentage = totalWealth > 0 ? totalYield / (totalWealth / 100) : 0;
+    const percentage = totalWealth > 0 ? returns / (totalWealth / 100) : 0;
     if (percentage > 0) {
       return `+${formatCurrency(percentage)}`;
     }
@@ -35,7 +30,7 @@ export default function WalletSummary({
         <div className={style.column}>
           <div className={style["summary-title"]}>Patrimônio Total</div>
           <div className={style["summary-content"]}>
-            R${formatCurrency(totalWealth)}
+            R${hideValues ? "*****" : formatCurrency(totalWealth)}
           </div>
         </div>
         <div className={style.separator} />
@@ -45,12 +40,12 @@ export default function WalletSummary({
             className={classNames([
               style["summary-content"],
               {
-                [style["positive-yield"]]: totalYield >= 0,
-                [style["negative-yield"]]: totalYield < 0,
+                [style["positive-yield"]]: returns >= 0,
+                [style["negative-yield"]]: returns < 0,
               },
             ])}
           >
-            R${formatCurrency(totalYield)}
+            R${hideValues ? "*****" : formatCurrency(returns)}
             <div className={style["yield-percentage"]}>
               ({yieldPercentage()}%)
             </div>
@@ -74,7 +69,9 @@ export default function WalletSummary({
         <div className={style.separator} />
         <div className={style.column}>
           <div className={style["indicator-title"]}>Alfa</div>
-          <div className={style["indicator-value"]}>{formatCurrency(alfa)}</div>
+          <div className={style["indicator-value"]}>
+            {formatCurrency(alpha)}
+          </div>
         </div>
         <div className={style.separator} />
         <div className={style.column}>

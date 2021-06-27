@@ -5,7 +5,6 @@ export interface BenchmarkData {
   return: number;
   ibov: number;
   cdi: number;
-  ipca: number;
 }
 
 export interface BenchmarkResponse {
@@ -15,7 +14,7 @@ export interface BenchmarkResponse {
 export const getBenchmark = async () => {
   const response = await doAuthenticatedRequest<BenchmarkResponse>(
     "GET",
-    "benchmark/",
+    "benchmark/"
   );
   return response.data;
 };

@@ -12,7 +12,19 @@ export interface MonthlyIncomeResponse {
 export const getMonthlyIncome = async () => {
   const response = await doAuthenticatedRequest<MonthlyIncomeResponse>(
     "GET",
-    "return/",
+    "return/"
+  );
+  return response.data;
+};
+
+export interface GetDailyIncomeResponse {
+  returns: number;
+}
+
+export const getDailyIncome = async () => {
+  const response = await doAuthenticatedRequest<GetDailyIncomeResponse>(
+    "GET",
+    "return/daily"
   );
   return response.data;
 };

@@ -14,16 +14,15 @@ import benchmarkStyle from "./style.module.css";
 import TimeSelector from "../TimeSelector";
 
 const LINE_DATA_MAP = new Map([
-  ["return", { name: "Carteira", color: "#A5C1CE", }],
-  ["ibov", { name: "IBOV", color: "#E8C603", }],
-  ["cdi", { name: "CDI", color: "#3F84BF", }],
-  ["ipca", { name: "IPCA", color: "#993399", }],
+  ["return", { name: "Carteira", color: "#A5C1CE" }],
+  ["ibov", { name: "IBOV", color: "#E8C603" }],
+  ["cdi", { name: "CDI", color: "#3F84BF" }],
 ]);
 
 const getLineDataItem = (displayType: string) => {
   const dataMapItem = LINE_DATA_MAP.get(displayType);
   if (!dataMapItem) {
-    return { dataKey: "", name: "", color: "", };
+    return { dataKey: "", name: "", color: "" };
   }
   return {
     dataKey: displayType,
@@ -45,16 +44,15 @@ export default function Benchmark() {
   const cdiSelectionStyle = displayTypes.includes("cdi")
     ? benchmarkStyle.displayTypeEnabled
     : benchmarkStyle.displayType;
-  const ipcaSelectionStyle = displayTypes.includes("ipca")
-    ? benchmarkStyle.displayTypeEnabled
-    : benchmarkStyle.displayType;
 
   return (
     <div className={dashboardStyle.card}>
       <h2 className={performanceStyle.chartTitle}>Benchmark</h2>
       <TimeSelector
         displayType={timeSelectionType}
-        selectTwelveMonths={() => dispatch(updateTimeSelectionType("12-months"))}
+        selectTwelveMonths={() =>
+          dispatch(updateTimeSelectionType("12-months"))
+        }
         selectSixMonths={() => dispatch(updateTimeSelectionType("6-months"))}
         selectThreeMonths={() => dispatch(updateTimeSelectionType("3-months"))}
       />
@@ -65,7 +63,9 @@ export default function Benchmark() {
           height={220}
           xAxisDataKey="name"
           lineDataList={lineDataList}
-          tickFormatter={(tick: any) => { return `${tick}%`; }}
+          tickFormatter={(tick: any) => {
+            return `${tick}%`;
+          }}
         />
       </div>
       <div className={benchmarkStyle.displayTypeGroups}>
@@ -80,12 +80,6 @@ export default function Benchmark() {
           onClick={() => dispatch(updateDisplayType("cdi"))}
         >
           CDI
-        </div>
-        <div
-          className={ipcaSelectionStyle}
-          onClick={() => dispatch(updateDisplayType("ipca"))}
-        >
-          IPCA
         </div>
       </div>
     </div>

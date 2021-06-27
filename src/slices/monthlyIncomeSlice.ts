@@ -7,6 +7,7 @@ import {
 import { getChartDateLabel } from "utils/date";
 import {
   getMonthlyIncome as getMonthlyIncomeService,
+  getDailyIncome as getDailyIncomeSevice,
   MonthlyIncomeData,
   MonthlyIncomeResponse,
 } from "services/monthlyIncome";
@@ -25,6 +26,7 @@ interface MonthlyIncomeState {
     "12-months": Array<ChartPointData>;
   };
   status: string;
+  dailyIncome: number;
 }
 
 const initialState: MonthlyIncomeState = {
@@ -35,7 +37,17 @@ const initialState: MonthlyIncomeState = {
     "12-months": [],
   },
   status: "",
+  dailyIncome: 0,
 };
+
+export const getDailyIncome: AsyncThunk<number, void, AsyncThunkConfig> =
+  createAsyncThunk<number, void, AsyncThunkConfig>(
+    "monthlyIncome/getDailyIncome",
+    async () => {
+      const data = await getDailyIncomeSevice();
+      return data.returns;
+    }
+  );
 
 export const getMonthlyIncome: AsyncThunk<
   MonthlyIncomeResponse,
@@ -119,6 +131,9 @@ export const monthlyIncomeSlice = createSlice({
       };
       state.status = "success";
     },
+    [getDailyIncome.fulfilled.type]: (state, action: PayloadAction<number>) => {
+      state.dailyIncome = action.payload;
+    },
   },
 });
 
@@ -131,5 +146,7 @@ export const selectData = (state: RootState) => {
     state.monthlyIncome.monthsDataMap[state.monthlyIncome.displayType] || []
   );
 };
+export const selectDailyReturn = (state: RootState) =>
+  state.monthlyIncome.dailyIncome;
 
 export default monthlyIncomeSlice.reducer;
