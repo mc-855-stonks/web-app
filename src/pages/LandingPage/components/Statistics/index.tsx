@@ -8,7 +8,7 @@ export default function Statistics() {
       <div className={style.content}>
         <StatisticsItem
           title="62%"
-          description="dos nossos entrevistados dizeram que possuem um perfil de investidor agressivo e apontaram como maior medo a queda repentina dos investimentos."
+          description="dos nossos entrevistados disseram que possuem um perfil de investidor agressivo e apontaram como maior medo a queda repentina dos investimentos."
         />
         <div className={style.line} />
         <StatisticsItem

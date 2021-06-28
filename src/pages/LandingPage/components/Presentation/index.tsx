@@ -9,7 +9,7 @@ export default function Presentation() {
         <h1 className={(style.titleTop, style.title)}>Acompanhe</h1>
         <h1 className={style.title}>seus rendimentos!</h1>
         <p className={style.description}>
-          Tenha acesso à informações sobre seus rendimentos diários de forma
+          Tenha acesso às informações sobre seus rendimentos diários de forma
           simples e atualizada automaticamente
         </p>
       </div>
