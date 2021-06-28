@@ -75,27 +75,29 @@ const getBenchmarkChartData = (
   data: Array<Array<BenchmarkData>>,
   monthsNumber: number
 ) => {
-  let orderedMonthList = data.slice(0, monthsNumber).reverse();
+  const sliceNumber = (monthsNumber <= data.length) ? monthsNumber : data.length;
+  const orderedMonthList = data.slice(0, sliceNumber).reverse();
   if (!orderedMonthList || orderedMonthList.length === 0) {
     return [];
   }
-  orderedMonthList = orderedMonthList.map((daysList) => daysList.reverse());
+  const orderedMonthListReversed = orderedMonthList.map((daysList) => daysList.reverse());
+  const firstMonthOrderedMonthList = orderedMonthListReversed[0];
 
-  const firstDayChartData = getLabeledChartPointData(orderedMonthList[0][0]);
-  if (orderedMonthList.length < 2) {
-    const firstMonthLength = orderedMonthList[0].length;
-    const remainingDays = orderedMonthList[0]
+  const firstDayChartData = getLabeledChartPointData(firstMonthOrderedMonthList[0]);
+  if (orderedMonthListReversed.length < 2) {
+    const firstMonthLength = orderedMonthListReversed[0].length;
+    const remainingDays = orderedMonthListReversed[0]
       .slice(1, firstMonthLength - 1)
       .map(getNonLabeledChartPointData);
 
     return [firstDayChartData].concat(remainingDays);
   }
 
-  const lastMonthLength = orderedMonthList[monthsNumber - 1].length;
+  const lastMonthLength = orderedMonthList[orderedMonthListReversed.length-1].length;
   const lastDayChartData = getLabeledChartPointData(
-    orderedMonthList[monthsNumber - 1][lastMonthLength - 1]
+    orderedMonthList[orderedMonthListReversed.length-1][lastMonthLength - 1]
   );
-  const dayGroupedData = orderedMonthList.flat();
+  const dayGroupedData = orderedMonthListReversed.flat();
   const daysLength = dayGroupedData.length;
   const intermediaryDayChartData = dayGroupedData
     .slice(1, daysLength - 1)
@@ -143,6 +145,7 @@ export const benchmarkSlice = createSlice({
         "6-months": getBenchmarkChartData(action.payload.data, 6),
         "12-months": getBenchmarkChartData(action.payload.data, 12),
       };
+      console.log(state.monthsDataMap);
       state.status = "success";
     },
   },
