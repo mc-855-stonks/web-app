@@ -145,7 +145,6 @@ export const benchmarkSlice = createSlice({
         "6-months": getBenchmarkChartData(action.payload.data, 6),
         "12-months": getBenchmarkChartData(action.payload.data, 12),
       };
-      console.log(state.monthsDataMap);
       state.status = "success";
     },
   },
