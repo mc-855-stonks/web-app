@@ -35,7 +35,7 @@ export default function WalletSummary() {
         </div>
         <div className={style.separator} />
         <div className={style.column}>
-          <div className={style["summary-title"]}>Rendimento</div>
+          <div className={style["summary-title"]}>Rendimento (24h)</div>
           <div
             className={classNames([
               style["summary-content"],

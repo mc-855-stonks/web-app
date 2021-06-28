@@ -19,9 +19,9 @@ export const getChartDateLabel = (date: string) => {
     return "";
   }
   if (yearMonth.length === 3) {
-    return `${yearMonth[2]}/${MONTH_LABEL_LIST[Number(yearMonth[1]) - 1]}/${
-      yearMonth[0]
-    }`;
+    return `${yearMonth[2]}/${
+      MONTH_LABEL_LIST[parseInt(yearMonth[1], 10) - 1]
+    }/${yearMonth[0]}`;
   }
-  return `${MONTH_LABEL_LIST[Number(yearMonth[1]) - 1]}/${yearMonth[0]}`;
+  return `${MONTH_LABEL_LIST[parseInt(yearMonth[1], 10) - 1]}/${yearMonth[0]}`;
 };

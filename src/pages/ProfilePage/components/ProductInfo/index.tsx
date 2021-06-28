@@ -17,7 +17,7 @@ export default function ProductInfo() {
           <h2
             className={`${stylesProductInfo.productInfoText} ${stylesProductInfo.productInfoTextAbout}`}
           >
-            O nomedosite foi desenvolvido para a disciplina MC855 - Projeto em
+            O Rendeu™ foi desenvolvido para a disciplina MC855 - Projeto em
             Sistemas de Computação da Universidade Estadual de Campinas
             (Unicamp) ministrada pelo Professor Doutor Arthur João Catto no 1°
             semestre de 2021.
@@ -59,7 +59,7 @@ export default function ProductInfo() {
           <h2
             className={`${stylesProductInfo.productInfoText} ${stylesProductInfo.productInfoTextAbout}`}
           >
-            nomedosite@gmail.com
+            contato@rendeu.com
           </h2>
         </div>
       </div>
