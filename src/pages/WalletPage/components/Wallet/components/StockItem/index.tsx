@@ -64,14 +64,14 @@ export default function StockItem({
           style={{ marginRight: 10 }}
           onClick={() => dispatch(showDeleteModal(ticker))}
         >
-          <img src={deleteIcon} alt="delete" className={style.icon} />
+          <img src={deleteIcon} alt="Deletar" className={style.icon} />
         </button>
         <button
           type="button"
           className={style["icon-button"]}
           onClick={() => dispatch(showEditModal(ticker))}
         >
-          <img src={editIcon} alt="edit" className={style.icon} />
+          <img src={editIcon} alt="Editar" className={style.icon} />
         </button>
       </div>
     </div>

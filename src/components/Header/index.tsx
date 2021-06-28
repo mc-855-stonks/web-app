@@ -22,7 +22,11 @@ export default function Header({ children, className, onClickAdd }: Props) {
             type="button"
             className={style["action-icon"]}
           >
-            <img src={addIcon} alt="add" className={style.icon} />
+            <img
+              src={addIcon}
+              alt="Adicionar Operação"
+              className={style.icon}
+            />
           </button>
         )}
       </div>

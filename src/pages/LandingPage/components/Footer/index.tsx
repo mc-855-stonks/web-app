@@ -14,7 +14,7 @@ export default function Footer() {
         <div className={style.contact}>
           <SiteInfo label="Contato" info="contato@rendeu.com" />
         </div>
-        <SiteInfo label="Criação" info="@2021 Rendeu" />
+        <SiteInfo label="Criação" info="@2021 Rendeu™" />
       </div>
     </div>
   );
