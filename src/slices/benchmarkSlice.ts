@@ -112,13 +112,11 @@ export const benchmarkSlice = createSlice({
       state,
       action: PayloadAction<BenchmarkResponse>
     ) => {
-      console.log("data", action.payload.data);
       state.monthsDataMap = {
         "3-months": getBenchmarkChartData(action.payload.data, 3),
         "6-months": getBenchmarkChartData(action.payload.data, 6),
         "12-months": getBenchmarkChartData(action.payload.data, 12),
       };
-      console.log(state.monthsDataMap);
       state.status = "success";
     },
   },
