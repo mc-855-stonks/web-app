@@ -92,7 +92,7 @@ const getMonthlyIncomeChartData = (
   );
   const intermediaryMonthChartData = orderedMonthList
     .slice(1, length - 1)
-    .map(getNonLabeledChartPointData);
+    .map(getLabeledChartPointData);
 
   return [firstMonthChartData]
     .concat(intermediaryMonthChartData)
