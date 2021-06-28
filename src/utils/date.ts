@@ -18,5 +18,10 @@ export const getChartDateLabel = (date: string) => {
   if (!yearMonth || yearMonth.length < 2) {
     return "";
   }
+  if (yearMonth.length === 3) {
+    return `${yearMonth[2]}/${MONTH_LABEL_LIST[Number(yearMonth[1]) - 1]}/${
+      yearMonth[0]
+    }`;
+  }
   return `${MONTH_LABEL_LIST[Number(yearMonth[1]) - 1]}/${yearMonth[0]}`;
 };

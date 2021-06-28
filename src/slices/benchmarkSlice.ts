@@ -56,16 +56,7 @@ export const getBenchmark: AsyncThunk<
 const getLabeledChartPointData = (benchmarkData: BenchmarkData) => {
   return {
     name: getChartDateLabel(benchmarkData.date),
-    return: benchmarkData.return * 100,
-    ibov: benchmarkData.ibov * 100,
-    cdi: benchmarkData.cdi * 100,
-  };
-};
-
-const getNonLabeledChartPointData = (benchmarkData: BenchmarkData) => {
-  return {
-    name: "",
-    return: benchmarkData.return * 100,
+    return: benchmarkData.return,
     ibov: benchmarkData.ibov * 100,
     cdi: benchmarkData.cdi * 100,
   };
@@ -75,37 +66,18 @@ const getBenchmarkChartData = (
   data: Array<Array<BenchmarkData>>,
   monthsNumber: number
 ) => {
-  const sliceNumber = (monthsNumber <= data.length) ? monthsNumber : data.length;
-  const orderedMonthList = data.slice(0, sliceNumber).reverse();
+  const sliceNumber = monthsNumber <= data.length ? monthsNumber : data.length;
+  let orderedMonthList = data.slice(0, sliceNumber).reverse();
+  orderedMonthList = orderedMonthList.map((monthData) =>
+    monthData.slice().reverse()
+  );
+
   if (!orderedMonthList || orderedMonthList.length === 0) {
     return [];
   }
-  const orderedMonthListReversed = orderedMonthList.map((daysList) => daysList.reverse());
-  const firstMonthOrderedMonthList = orderedMonthListReversed[0];
 
-  const firstDayChartData = getLabeledChartPointData(firstMonthOrderedMonthList[0]);
-  if (orderedMonthListReversed.length < 2) {
-    const firstMonthLength = orderedMonthListReversed[0].length;
-    const remainingDays = orderedMonthListReversed[0]
-      .slice(1, firstMonthLength - 1)
-      .map(getNonLabeledChartPointData);
-
-    return [firstDayChartData].concat(remainingDays);
-  }
-
-  const lastMonthLength = orderedMonthList[orderedMonthListReversed.length-1].length;
-  const lastDayChartData = getLabeledChartPointData(
-    orderedMonthList[orderedMonthListReversed.length-1][lastMonthLength - 1]
-  );
-  const dayGroupedData = orderedMonthListReversed.flat();
-  const daysLength = dayGroupedData.length;
-  const intermediaryDayChartData = dayGroupedData
-    .slice(1, daysLength - 1)
-    .map(getNonLabeledChartPointData);
-
-  return [firstDayChartData]
-    .concat(intermediaryDayChartData)
-    .concat(lastDayChartData);
+  const dayGroupedData = orderedMonthList.flat();
+  return dayGroupedData.map((value) => getLabeledChartPointData(value));
 };
 
 export const benchmarkSlice = createSlice({
@@ -140,11 +112,13 @@ export const benchmarkSlice = createSlice({
       state,
       action: PayloadAction<BenchmarkResponse>
     ) => {
+      console.log("data", action.payload.data);
       state.monthsDataMap = {
         "3-months": getBenchmarkChartData(action.payload.data, 3),
         "6-months": getBenchmarkChartData(action.payload.data, 6),
         "12-months": getBenchmarkChartData(action.payload.data, 12),
       };
+      console.log(state.monthsDataMap);
       state.status = "success";
     },
   },
